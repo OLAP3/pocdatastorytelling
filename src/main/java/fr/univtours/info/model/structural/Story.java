@@ -6,4 +6,7 @@ import fr.univtours.info.model.presentational.*;
 
 
 public interface Story {
+
+    public void addText(String theText);
+    public void addAct(Act anAct);
 }
