@@ -5,5 +5,6 @@ import fr.univtours.info.model.structural.*;
 
 public interface Observation {
     public void addText(String aText);
-    public void produced(Insight anInsight);
+    public void generates(AnalyticalQuestion anAnalyticalQuestion);
+    public void produces(Insight anInsight);
 }
