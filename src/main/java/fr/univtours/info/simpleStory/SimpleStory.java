@@ -1,9 +1,8 @@
 package fr.univtours.info.simpleStory;
 
 import fr.univtours.info.model.intentional.Goal;
-import fr.univtours.info.model.intentional.Protagonist;
-import fr.univtours.info.model.structural.Act;
-import fr.univtours.info.model.structural.Story;
+import fr.univtours.info.model.discursal.Act;
+import fr.univtours.info.model.discursal.Story;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -26,9 +25,10 @@ public class SimpleStory implements Story {
     }
 
     @Override
-    public void addAct(Act anAct) {
+    public void includes(Act anAct) {
         this.theActs.add(anAct);
     }
+
 
     @Override
     public void has(Goal aGoal) {

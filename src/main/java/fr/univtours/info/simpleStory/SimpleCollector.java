@@ -17,10 +17,15 @@ public class SimpleCollector implements Collector {
     ResultSet resultset;
     Collection<Insight> theInsights;
 
-    public SimpleCollector(String sqlQuery) throws Exception{
-        this.connectToPostgresql();
-        this.sqlQuery=sqlQuery;
-        theInsights=new ArrayList<Insight>();
+    public SimpleCollector(String sqlQuery) {
+        try {
+            this.connectToPostgresql();
+            this.sqlQuery = sqlQuery;
+            theInsights = new ArrayList<Insight>();
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
     }
 
 

@@ -1,7 +1,7 @@
 package fr.univtours.info.model.presentational;
 
 
-import fr.univtours.info.model.structural.*;
+import fr.univtours.info.model.discursal.*;
 
 import java.util.Collection;
 
