@@ -7,42 +7,57 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Properties;
 
 public class SimpleCollector implements Collector {
     Connection conn;
-    public SimpleCollector() throws Exception{
+    String sqlQuery;
+    ResultSet resultset;
+    Collection<Insight> theInsights;
+
+    public SimpleCollector(String sqlQuery) throws Exception{
         this.connectToPostgresql();
+        this.sqlQuery=sqlQuery;
+        theInsights=new ArrayList<Insight>();
     }
 
 
     void connectToPostgresql() throws Exception{
         String url = "jdbc:postgresql://localhost/marcel";
         Properties props = new Properties();
-        props.setProperty("user","");
+        props.setProperty("user","marcel");
         props.setProperty("password","");
-        props.setProperty("ssl","true");
+       // props.setProperty("ssl","true");
         conn = DriverManager.getConnection(url, props);
-
         //String url = "jdbc:postgresql://localhost/test?user=fred&password=secret&ssl=true";
         //Connection conn = DriverManager.getConnection(url);
     }
 
-    String  sendQuery(String theQuery) throws Exception{
-        String SQL = theQuery;
+
+    void sendQuery() throws Exception{
         Statement stmt = conn.createStatement();
-        ResultSet rs = stmt.executeQuery(SQL) ;
-        return rs.toString();
+        ResultSet rs = stmt.executeQuery(this.sqlQuery) ;
+        this.resultset=rs;
+        // now produces insights
+        Insight i = new SimpleInsight(resultset);
+        theInsights.add(i);
     }
 
     @Override
-    public Insight fetches() {
-        return null ;
+    public boolean hasInsight() {
+        return true;
     }
 
     @Override
-    public void run() {
+    public Collection<Insight> fetches() {
+        return theInsights ;
+    }
 
+    @Override
+    public void run() throws Exception{
+        this.sendQuery();
     }
 }
 
