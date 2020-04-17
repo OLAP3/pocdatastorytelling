@@ -8,7 +8,7 @@ public class StoryCreator {
 
 
 
-    public static void main() throws Exception{
+    public static void main(String args) throws Exception{
         VisualStory vs=new SimpleVisualStory();
         SimpleCollector col=new SimpleCollector();
         System.out.println(col.sendQuery("Select * from names"));
