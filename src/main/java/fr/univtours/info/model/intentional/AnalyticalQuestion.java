@@ -5,4 +5,7 @@ import fr.univtours.info.model.structural.*;
 
 
 public interface AnalyticalQuestion {
+
+
+    public Goal posed(); // getGoal
 }

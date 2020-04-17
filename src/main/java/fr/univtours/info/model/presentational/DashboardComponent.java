@@ -5,6 +5,8 @@ import fr.univtours.info.model.structural.*;
 
 
 public interface DashboardComponent {
-    public void renders(Episode anEpisode);
+    public void renders(Episode anEpisode); //addEpisode
+
+    public Episode render(); //getEpisode
 
 }
