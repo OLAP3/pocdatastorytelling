@@ -10,4 +10,8 @@ public interface Goal {
 
     Collection<Exploration> solves();
     Collection<AnalyticalQuestion> poses();
+
+    public void bringOut(Protagonist aProtagonist);
+    public void bringOut(Message aMessage);
+
 }

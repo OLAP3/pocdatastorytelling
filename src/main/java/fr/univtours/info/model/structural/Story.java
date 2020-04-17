@@ -10,9 +10,9 @@ import java.util.Collection;
 public interface Story {
 
     public void addText(String theText);
-    public void addAct(Act anAct);
-    public void has(Goal aGoal);
+    public void includes(Act anAct); //addAct
+    public void has(Goal aGoal); //setGoal
 
     public Collection<Act> includes();
-    public Goal has();
+    public Goal has(); //getGoal
 }
