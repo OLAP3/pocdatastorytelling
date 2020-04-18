@@ -13,7 +13,7 @@ public class SimpleDashboard implements Dashboard {
     }
 
     @Override
-    public void add(DashboardComponent aDashboardComponent) {
+    public void contains(DashboardComponent aDashboardComponent) {
 
     }
 

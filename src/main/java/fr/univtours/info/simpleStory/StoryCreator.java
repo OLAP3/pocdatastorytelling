@@ -88,18 +88,25 @@ public class StoryCreator {
                     Act currentAct=new SimpleAct();
                     theStory.includes(currentAct);
                     Message currentMessage = new SimpleMessage();
+                    currentAct.narrates(currentMessage);
+                    // ask for text
                 }
 
                 Observation currentObservation = new SimpleObservation();
+                Episode currentEpisode= new SimpleEpisode();
+                currentEpisode.narrates(currentObservation);
+
                 // how many protagonists
                 int nbProtagonists = 1; // fake
                 for(int i=0;i<nbProtagonists;i++){
                     Protagonist aProtagonist = new SimpleProtagonist();
+                    currentEpisode.playsIn(aProtagonist);
                 }
 
             }
 
             // ask more analytical questions? else stop
+            stop=true; //fake
         }
 
         // ask to complement the story, acts, episodes with texts
@@ -108,9 +115,12 @@ public class StoryCreator {
         VisualStory vs=new SimpleVisualStory();
         for(Act act : theStory.includes()){
             Dashboard d = new SimpleDashboard();
+            vs.contains(d);
+
 
             for(Episode ep : act.includes()){
                 DashboardComponent dbc = new SimpleDashboardComponent();
+                d.contains(dbc);
             }
 
 

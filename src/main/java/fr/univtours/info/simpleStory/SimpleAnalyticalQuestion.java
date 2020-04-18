@@ -31,11 +31,13 @@ public class SimpleAnalyticalQuestion implements AnalyticalQuestion {
 
     @Override
     public Goal posed() {
+
         return null;
     }
 
     @Override
     public Collection<Collector> implement() {
-        return null;
+
+        return theCollectors;
     }
 }

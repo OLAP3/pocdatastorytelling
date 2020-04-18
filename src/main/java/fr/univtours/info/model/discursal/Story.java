@@ -9,6 +9,8 @@ import java.util.Collection;
 public interface Story {
 
     public void addText(String theText);
+    public String getText();
+
     public void includes(Act anAct); //addAct
     public void has(Goal aGoal); //setGoal
 

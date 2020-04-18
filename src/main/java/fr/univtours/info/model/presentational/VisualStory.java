@@ -8,7 +8,7 @@ public interface VisualStory {
     public void print();
 
     public void renders(Story aStory);
-    public void add(Dashboard aDashboard);
+    public void contains(Dashboard aDashboard);
 
     public Collection<Dashboard> contains(); //getDashboard
     public Story renders();

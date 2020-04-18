@@ -14,14 +14,20 @@ public class SimpleStory implements Story {
     private Goal theGoal;
 
     public SimpleStory(){
-
+        theActs=new ArrayList<Act>();
     }
 
 
 
     @Override
     public void addText(String theText) {
+
         this.text=theText;
+    }
+
+    @Override
+    public String getText() {
+        return text;
     }
 
     @Override
@@ -32,16 +38,19 @@ public class SimpleStory implements Story {
 
     @Override
     public void has(Goal aGoal) {
+
         this.theGoal=aGoal;
     }
 
     @Override
     public Collection<Act> includes() {
+
         return this.theActs;
     }
 
     @Override
     public Goal has() {
+
         return this.theGoal;
     }
 }

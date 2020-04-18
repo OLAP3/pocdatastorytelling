@@ -8,7 +8,7 @@ import java.util.Collection;
 
 public interface Dashboard {
     public void renders(Act anAct);
-    public void add(DashboardComponent aDashboardComponent);
+    public void contains(DashboardComponent aDashboardComponent);//add
 
     public Collection<DashboardComponent> contains(); //getComponent
     public Act renders();

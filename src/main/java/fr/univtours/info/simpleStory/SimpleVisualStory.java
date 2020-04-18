@@ -22,7 +22,7 @@ public class SimpleVisualStory implements VisualStory {
     }
 
     @Override
-    public void add(Dashboard aDashboard) {
+    public void contains(Dashboard aDashboard) {
 
     }
 
