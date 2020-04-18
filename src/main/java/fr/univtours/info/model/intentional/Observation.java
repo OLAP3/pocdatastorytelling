@@ -12,4 +12,7 @@ public interface Observation {
 
     public void produces(Insight anInsight);
     public Collection<Insight> produces();
+
+    public void bringsOut(Protagonist aProtagonist) ;
+    public Collection<Protagonist>  bringsOut();
 }

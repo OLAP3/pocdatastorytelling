@@ -65,11 +65,14 @@ public class StoryCreator {
          */
 
         Story theStory=new SimpleStory();
-
         Goal theGoal = new SimpleGoal();
         theStory.has(theGoal);
+        Act currentAct =null;
+        Message currentMessage=null;
 
-        Exploration theExploration = new SimpleExploration();
+        Exploration theExploration = new SimpleExploration(); // only one exploration
+        theGoal.solves(theExploration);
+
         boolean stop=false;
 
         while(!stop){
@@ -85,23 +88,33 @@ public class StoryCreator {
                 // ask if new act
                 boolean newAct=true; //Fake
                 if(newAct){
-                    Act currentAct=new SimpleAct();
+                    currentAct=new SimpleAct();
                     theStory.includes(currentAct);
-                    Message currentMessage = new SimpleMessage();
+                    currentMessage = new SimpleMessage();
                     currentAct.narrates(currentMessage);
                     // ask for text
                 }
 
                 Observation currentObservation = new SimpleObservation();
+
+                for(Insight i : col){
+                    // may ask the author if insight is accepted or not
+                    currentObservation.produces(i);
+
+                }
                 Episode currentEpisode= new SimpleEpisode();
                 currentEpisode.narrates(currentObservation);
+                currentAct.includes(currentEpisode);
+                currentMessage.bringsOut(currentObservation);
 
                 // how many protagonists
                 int nbProtagonists = 1; // fake
                 for(int i=0;i<nbProtagonists;i++){
                     Protagonist aProtagonist = new SimpleProtagonist();
                     currentEpisode.playsIn(aProtagonist);
+                    currentObservation.bringsOut(aProtagonist);
                 }
+
 
             }
 

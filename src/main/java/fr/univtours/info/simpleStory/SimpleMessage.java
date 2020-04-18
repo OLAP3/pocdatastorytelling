@@ -4,20 +4,28 @@ import fr.univtours.info.model.intentional.Goal;
 import fr.univtours.info.model.intentional.Message;
 import fr.univtours.info.model.intentional.Observation;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Set;
 
 public class SimpleMessage implements Message {
     String theText;
+    Collection<Observation> theObservations;
+
+    public SimpleMessage(){
+        theObservations = new ArrayList<Observation>();
+    }
 
     @Override
     public void addText(String aText) {
+
         this.theText=aText;
     }
 
     @Override
     public String getText() {
-        return theText;
+        return
+                theText;
     }
 
     @Override
@@ -31,7 +39,8 @@ public class SimpleMessage implements Message {
     }
 
     @Override
-    public Collection<Observation> getObservation() {
+    public Collection<Observation> bringsOut() {
+
         return null;
     }
 }
