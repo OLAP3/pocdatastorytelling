@@ -113,21 +113,9 @@ public class StoryCreator {
         //theStory.addText("ask the author");
 
         VisualStory vs=new SimpleVisualStory();
-        for(Act act : theStory.includes()){
-            Dashboard d = new SimpleDashboard();
-            vs.contains(d);
-
-
-            for(Episode ep : act.includes()){
-                DashboardComponent dbc = new SimpleDashboardComponent();
-                d.contains(dbc);
-            }
-
-
-        }
-        // for all acts/episode of the story -> renders
-        vs.renders(theStory);
-        vs.print();
+        vs.renders(theStory);  // just attach
+        vs.renders(); // and then renders
+        vs.print(); // and then prints
     }
 
 }

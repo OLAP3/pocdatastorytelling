@@ -3,6 +3,8 @@ package fr.univtours.info.simpleStory;
 import fr.univtours.info.model.factual.Collector;
 import fr.univtours.info.model.factual.Insight;
 
+import java.io.File;
+import java.io.FileReader;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -38,6 +40,15 @@ public class SimpleCollector implements Collector {
         conn = DriverManager.getConnection(url, props);
         //String url = "jdbc:postgresql://localhost/test?user=fred&password=secret&ssl=true";
         //Connection conn = DriverManager.getConnection(url);
+
+        //FileReader fr=new FileReader(new File("/src/main/resources/application.properties"));
+        //props.load(fr);
+        //url=props.getProperty("'spring.datasource.url");
+        //String passwd=props.getProperty("'spring.datasource.password");
+        //String user=props.getProperty("'spring.datasource.user");
+        // props.setProperty("user",user);
+        // props.setProperty("password",passwd);
+
     }
 
 
@@ -47,12 +58,17 @@ public class SimpleCollector implements Collector {
         this.resultset=rs;
         // now produces insights
         Insight i = new SimpleInsight(resultset);
-        theInsights.add(i);
+        this.fetches(i);
     }
 
     @Override
     public boolean hasInsight() {
         return true;
+    }
+
+    @Override
+    public void fetches(Insight anInsight) {
+        theInsights.add(anInsight);
     }
 
     @Override

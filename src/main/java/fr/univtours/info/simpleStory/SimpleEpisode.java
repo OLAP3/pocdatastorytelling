@@ -13,8 +13,10 @@ public class SimpleEpisode implements Episode {
     Collection<Protagonist> theProtagonists;
 
     public SimpleEpisode(){
+
         theProtagonists=new ArrayList<Protagonist>();
     }
+
     @Override
     public void addText(String theText) {
 
@@ -22,21 +24,30 @@ public class SimpleEpisode implements Episode {
 
     @Override
     public String getText() {
+
         return theText;
     }
 
     @Override
     public void narrates(Observation anObservation) {
+
         this.theObservation=anObservation;
     }
 
     @Override
+    public Observation narrates() {
+        return theObservation;
+    }
+
+    @Override
     public void playsIn(Protagonist aProtagonist) {
+
         theProtagonists.add(aProtagonist);
     }
 
     @Override
     public Collection<Protagonist> playsIn() {
+
         return theProtagonists;
     }
 }

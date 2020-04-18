@@ -9,8 +9,10 @@ public interface Episode {
 
     public void addText(String theText);
     public String getText();
-    public void narrates(Observation anObservation); //addObservation
-    public void playsIn(Protagonist aProtagonist); //addProtagonist
 
+    public void narrates(Observation anObservation); //addObservation
+    public Observation narrates(); // get observation
+
+    public void playsIn(Protagonist aProtagonist); //addProtagonist
     public Collection<Protagonist> playsIn(); //getProtagonist
 }

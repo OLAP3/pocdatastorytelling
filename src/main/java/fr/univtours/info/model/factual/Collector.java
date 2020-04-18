@@ -7,6 +7,7 @@ import java.util.Collection;
 public interface Collector {
 
     public boolean hasInsight();
+    public void fetches(Insight anInsight);
     public Collection<Insight> fetches();
 
     public void run() throws Exception; //collectors can go mad

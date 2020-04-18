@@ -4,26 +4,43 @@ import fr.univtours.info.model.discursal.Act;
 import fr.univtours.info.model.presentational.Dashboard;
 import fr.univtours.info.model.presentational.DashboardComponent;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 public class SimpleDashboard implements Dashboard {
+    Act theAct;
+    Collection<DashboardComponent> theComponents;
+    String theRendering="";
+
+    public SimpleDashboard(){
+        theComponents=new ArrayList<DashboardComponent>();
+    }
+
     @Override
     public void renders(Act anAct) {
-
+        this.theAct=anAct;
     }
 
     @Override
     public void contains(DashboardComponent aDashboardComponent) {
-
+        theComponents.add(aDashboardComponent);
     }
 
     @Override
     public Collection<DashboardComponent> contains() {
-        return null;
+        return theComponents;
     }
 
     @Override
     public Act renders() {
-        return null;
+        for(DashboardComponent dc : theComponents){
+            dc.render();
+            theRendering=theRendering+ ((SimpleDashboardComponent) dc).getRendering();
+        }
+        return theAct;
+    }
+
+    public String getRendering(){
+        return theRendering;
     }
 }
