@@ -32,6 +32,8 @@ public class SimpleCollector implements Collector {
 
 
     void connectToPostgresql() throws Exception{
+
+        /*
         String url = "jdbc:postgresql://localhost/marcel";
         Properties props = new Properties();
         props.setProperty("user","marcel");
@@ -40,14 +42,21 @@ public class SimpleCollector implements Collector {
         conn = DriverManager.getConnection(url, props);
         //String url = "jdbc:postgresql://localhost/test?user=fred&password=secret&ssl=true";
         //Connection conn = DriverManager.getConnection(url);
+*/
 
-        //FileReader fr=new FileReader(new File("/src/main/resources/application.properties"));
-        //props.load(fr);
-        //url=props.getProperty("'spring.datasource.url");
-        //String passwd=props.getProperty("'spring.datasource.password");
-        //String user=props.getProperty("'spring.datasource.user");
-        // props.setProperty("user",user);
-        // props.setProperty("password",passwd);
+        FileReader fr=new FileReader(new File("src/main/resources/application.properties"));
+        Properties props = new Properties();
+        props.load(fr);
+        String url=props.getProperty("spring.datasource.url");
+        String passwd=props.getProperty("spring.datasource.password");
+        String user=props.getProperty("spring.datasource.user");
+        url=url +  "?user=" + user + "&password=" + passwd;
+        System.out.println(url);
+
+        conn = DriverManager.getConnection(url);
+
+
+
 
     }
 

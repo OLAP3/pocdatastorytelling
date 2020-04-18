@@ -77,7 +77,15 @@ public class StoryCreator {
 
         while(!stop){
             // ask SQL query
-            String query="select * from names"; //fake
+            String query="select sum(lo_revenue), d_year, p_brand \n" +
+                    "from lineorder, date, part, supplier \n" +
+                    " where lo_orderdate = d_datekey \n" +
+                    " and lo_partkey = p_partkey \n" +
+                    " and lo_suppkey = s_suppkey \n" +
+                    " and p_category = 'MFGR#12' \n" +
+                    " and s_region = 'AMERICA' \n" +
+                    " group by d_year, p_brand \n" +
+                    " order by d_year, p_brand;"; //fake
             AnalyticalQuestion anAnalyticalQuestion = new SimpleAnalyticalQuestion(query);
             Collection<Insight> col = anAnalyticalQuestion.answer();
             theGoal.poses(anAnalyticalQuestion);
