@@ -3,10 +3,7 @@ package fr.univtours.info.pocdatastory;
 import fr.univtours.info.model.factual.Insight;
 import fr.univtours.info.simpleStory.SimpleCollector;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Iterator;
 
@@ -17,15 +14,15 @@ public class RandomEndPoint {
     @PostMapping("api/random")
     @ResponseBody
     public String sayHello(@RequestParam(name="msg", required=false) String msg) {
-        System.out.println(msg);
-        return "Done";
+        //System.out.println(msg);
+
+        return msg;
     }
 
     @PostMapping(value="api/form", consumes = "application/json")
     @ResponseBody
     public String form(@RequestBody FormObject fo) {
-
-        //SimpleCollector col=new SimpleCollector("select * from supplier;");
+        //public String form(@RequestBody String fo) {
         SimpleCollector col=new SimpleCollector(fo.fn);
         try {
             col.run();
@@ -34,7 +31,8 @@ public class RandomEndPoint {
         }
         Iterator<Insight> it= col.fetches().iterator();
         String res=it.next().toString();
-        //System.out.println(it.next());
+
+
 
 
        // return fo.fn;
@@ -43,8 +41,12 @@ public class RandomEndPoint {
         //return Math.random();
     }
 
+    /*
     static class FormObject {
         String fn;
         String ln;
-    }
+        FormObject(){
+
+        }
+    }*/
 }

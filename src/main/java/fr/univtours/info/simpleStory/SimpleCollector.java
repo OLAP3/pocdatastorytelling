@@ -5,10 +5,7 @@ import fr.univtours.info.model.factual.Insight;
 
 import java.io.File;
 import java.io.FileReader;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Properties;
@@ -87,6 +84,7 @@ public class SimpleCollector implements Collector {
 
     @Override
     public void run() throws Exception{
+        //throw(new SQLException(sqlQuery));
         this.sendQuery();
     }
 }
