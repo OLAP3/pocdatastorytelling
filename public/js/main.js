@@ -19,6 +19,15 @@ function formHandler() {
     let last_name = document.getElementById("lname").value;
     console.log(first_name);
     console.log(last_name);
+
+    let msg = {"fn" : first_name, "ln": last_name};
+
+    let changeDiv = function (result) {
+        let div = document.getElementById("toreplace");
+        div.innerHTML = result;
+    };
+
+    elsaRequest(msg, "form", changeDiv, undefined);
 }
 
 function elsaRequest(body, endpoint, callback, errorCallback) {
