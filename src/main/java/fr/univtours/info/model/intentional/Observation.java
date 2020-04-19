@@ -8,7 +8,7 @@ public interface Observation {
     public void addText(String aText);
     public String getTxt();
 
-    public void generates(AnalyticalQuestion anAnalyticalQuestion);
+    public void poses(AnalyticalQuestion anAnalyticalQuestion);
 
     public void produces(Insight anInsight);
     public Collection<Insight> produces();

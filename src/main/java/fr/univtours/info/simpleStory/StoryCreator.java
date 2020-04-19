@@ -104,6 +104,8 @@ public class StoryCreator {
                 }
 
                 Observation currentObservation = new SimpleObservation();
+                anAnalyticalQuestion.generates(currentObservation);
+                currentObservation.addText(anAnalyticalQuestion.toString());
 
                 for(Insight i : col){
                     // may ask the author if insight is accepted or not

@@ -28,7 +28,7 @@ public class SimpleObservation implements Observation {
     }
 
     @Override
-    public void generates(AnalyticalQuestion anAnalyticalQuestion) {
+    public void poses(AnalyticalQuestion anAnalyticalQuestion) {
 
     }
 
@@ -36,6 +36,7 @@ public class SimpleObservation implements Observation {
     public void produces(Insight anInsight) {
 
         theInsights.add(anInsight);
+
     }
 
     @Override

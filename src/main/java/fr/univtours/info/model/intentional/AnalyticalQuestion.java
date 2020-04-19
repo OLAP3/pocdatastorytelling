@@ -12,4 +12,7 @@ public interface AnalyticalQuestion {
     public Collection<Collector> implement();
 
     public Collection<Insight> answer(); //triggers collector creation
+
+    public void generates(Observation anObservation);
+    public Collection<Observation> generates();
 }

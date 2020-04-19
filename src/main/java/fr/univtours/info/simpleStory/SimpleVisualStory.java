@@ -8,6 +8,8 @@ import fr.univtours.info.model.discursal.Story;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
+import org.apache.pdfbox.pdmodel.font.PDFont;
+import org.apache.pdfbox.pdmodel.font.PDTrueTypeFont;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
 
 
@@ -26,7 +28,8 @@ public class SimpleVisualStory implements VisualStory {
 
     @Override
     public void print() {
-        System.out.println(theRendering);
+
+        //System.out.println(theRendering);
     }
 
     @Override
@@ -82,11 +85,45 @@ public class SimpleVisualStory implements VisualStory {
         //Creating PDF document object
         PDDocument document = new PDDocument();
 
-        //Saving the document
-        document.save("");
-
         System.out.println("PDF created");
 
+        for (int i=0; i<2; i++) {
+            //Creating a blank page
+            PDPage blankPage = new PDPage();
+
+            //Adding the blank page to the document
+            document.addPage( blankPage );
+
+            PDPageContentStream contentStream = new PDPageContentStream(document, blankPage);
+            contentStream.beginText();
+            String text=new String(theRendering);
+
+
+            contentStream.setFont(PDType1Font.TIMES_ROMAN, 10);
+            //Setting the leading
+            contentStream.setLeading(14.5f);
+
+            //Setting the position for the line
+            contentStream.newLineAtOffset(25, 725);
+
+            String[] toPrint = text.split("\n");
+            for (int x=0; x<toPrint.length; x++){
+                contentStream.showText(toPrint[x]);
+                contentStream.newLine();
+            }
+
+
+            contentStream.endText();
+            System.out.println("Content added");
+            contentStream.close();
+
+        }
+
+
+        //Closing the document
+        //document.close();
+
+        /*
         PDPage my_page = new PDPage();
         document.addPage(my_page);
 
@@ -113,8 +150,10 @@ public class SimpleVisualStory implements VisualStory {
         //Closing the content stream
         contentStream.close();
 
+
+         */
         //Saving the document
-        document.save("");
+        document.save("/Users/marcel/Desktop/test.pdf");
 
         //Closing the document
         document.close();

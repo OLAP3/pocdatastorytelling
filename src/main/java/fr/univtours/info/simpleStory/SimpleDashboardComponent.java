@@ -22,6 +22,7 @@ public class SimpleDashboardComponent implements DashboardComponent {
         Iterator<Insight> iti= theObservation.produces().iterator();
         Insight theInsight=iti.next(); //only 1 insight
         String stringInsight=theInsight.toString();
+
         theRendering=stringInsight;
         return theEpisode;
     }
