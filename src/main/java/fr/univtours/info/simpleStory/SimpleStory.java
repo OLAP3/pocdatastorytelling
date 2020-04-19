@@ -26,7 +26,7 @@ public class SimpleStory implements Story {
     }
 
     @Override
-    public String getText() {
+    public String toString() {
         return text;
     }
 

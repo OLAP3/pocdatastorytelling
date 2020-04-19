@@ -12,6 +12,7 @@ public class SimpleObservation implements Observation {
     String theText;
     Collection<Insight> theInsights;
     Collection<Protagonist> theProtagonists;
+    AnalyticalQuestion theAnalyticalQuestion;
 
     public SimpleObservation(){
         theInsights = new ArrayList<Insight>();
@@ -19,6 +20,7 @@ public class SimpleObservation implements Observation {
     }
     @Override
     public void addText(String aText) {
+
         this.theText=aText;
     }
 
@@ -33,6 +35,16 @@ public class SimpleObservation implements Observation {
     }
 
     @Override
+    public void generates(AnalyticalQuestion anAnalyticalQuestion) {
+        theAnalyticalQuestion=anAnalyticalQuestion;
+    }
+
+    @Override
+    public AnalyticalQuestion generates() {
+        return theAnalyticalQuestion;
+    }
+
+    @Override
     public void produces(Insight anInsight) {
 
         theInsights.add(anInsight);
@@ -41,8 +53,7 @@ public class SimpleObservation implements Observation {
 
     @Override
     public Collection<Insight> produces() {
-        return
-                theInsights;
+        return theInsights;
     }
 
     @Override

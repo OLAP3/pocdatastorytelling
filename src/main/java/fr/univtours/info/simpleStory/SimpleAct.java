@@ -22,7 +22,7 @@ public class SimpleAct implements Act {
     }
 
     @Override
-    public String getText() {
+    public String toString() {
         return text;
     }
 
@@ -33,7 +33,9 @@ public class SimpleAct implements Act {
 
     @Override
     public void narrates(Message aMessage) {
+
         this.theMessage=aMessage;
+        this.text=theMessage.toString();
     }
 
     @Override

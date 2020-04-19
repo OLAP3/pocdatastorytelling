@@ -85,7 +85,7 @@ public class StoryCreator {
                     " and p_category = 'MFGR#12' \n" +
                     " and s_region = 'AMERICA' \n" +
                     " group by d_year, p_brand \n" +
-                    " order by d_year, p_brand;"; //fake
+                    " order by d_year, p_brand;\n"; //fake
             AnalyticalQuestion anAnalyticalQuestion = new SimpleAnalyticalQuestion(query);
             Collection<Insight> col = anAnalyticalQuestion.answer();
             theGoal.poses(anAnalyticalQuestion);
@@ -99,23 +99,30 @@ public class StoryCreator {
                     currentAct=new SimpleAct();
                     theStory.includes(currentAct);
                     currentMessage = new SimpleMessage();
-                    currentAct.narrates(currentMessage);
+
                     // ask for text
                 }
 
                 Observation currentObservation = new SimpleObservation();
                 anAnalyticalQuestion.generates(currentObservation);
-                currentObservation.addText(anAnalyticalQuestion.toString());
+                currentObservation.generates(anAnalyticalQuestion);
+
+                //currentMessage.bringsOut(currentObservation);
+                //currentObservation.addText(anAnalyticalQuestion.toString());
 
                 for(Insight i : col){
                     // may ask the author if insight is accepted or not
                     currentObservation.produces(i);
 
                 }
+
+
+
                 Episode currentEpisode= new SimpleEpisode();
                 currentEpisode.narrates(currentObservation);
                 currentAct.includes(currentEpisode);
                 currentMessage.bringsOut(currentObservation);
+                currentAct.narrates(currentMessage);
 
                 // how many protagonists
                 int nbProtagonists = 1; // fake

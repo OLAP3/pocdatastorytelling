@@ -8,7 +8,7 @@ import java.util.Collection;
 public interface Episode {
 
     public void addText(String theText);
-    public String getText();
+    public String toString();
 
     public void narrates(Observation anObservation); //addObservation
     public Observation narrates(); // get observation

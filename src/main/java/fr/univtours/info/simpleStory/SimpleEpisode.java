@@ -23,7 +23,7 @@ public class SimpleEpisode implements Episode {
     }
 
     @Override
-    public String getText() {
+    public String toString() {
 
         return theText;
     }

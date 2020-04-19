@@ -14,7 +14,8 @@ public class SimpleProtagonist implements Protagonist {
 
 
     @Override
-    public String getText( ) {
+    public String toString() {
+
         return text;
     }
 

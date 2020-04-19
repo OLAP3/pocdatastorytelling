@@ -9,10 +9,11 @@ import java.util.Collection;
 import java.util.Set;
 
 public class SimpleMessage implements Message {
-    String theText;
+    String theText="";
     Collection<Observation> theObservations;
 
     public SimpleMessage(){
+
         theObservations = new ArrayList<Observation>();
     }
 
@@ -23,14 +24,15 @@ public class SimpleMessage implements Message {
     }
 
     @Override
-    public String getText() {
-        return
-                theText;
+    public String toString() {
+        return theText;
     }
 
     @Override
     public void bringsOut(Observation anObservation) {
-
+        theObservations.add(anObservation);
+        theText = theText + anObservation.generates().toString();  // in this implementation, message gets the  question
+        // should be more sophisticated than just concatenate queries
     }
 
     @Override

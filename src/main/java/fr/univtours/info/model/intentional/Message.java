@@ -5,7 +5,7 @@ import java.util.Collection;
 
 public interface Message {
     public void addText(String aText);
-    public String getText();
+    public String toString(); // replace by getText()?
 
     public void bringsOut(Observation anObservation);
     public void bringsOut(Goal aGoal);

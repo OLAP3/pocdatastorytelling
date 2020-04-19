@@ -37,6 +37,7 @@ public class RandomEndPoint {
         //System.out.println(it.next());
 
 
+       // return fo.fn;
         return res;
 //        return "<h2>Bonjour "+fo.fn+"</h2>";
         //return Math.random();

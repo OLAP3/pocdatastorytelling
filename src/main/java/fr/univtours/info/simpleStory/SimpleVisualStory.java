@@ -67,6 +67,7 @@ public class SimpleVisualStory implements VisualStory {
 
     @Override
     public Story renders() {
+        theRendering=theRendering + theStory.toString();
         for(Dashboard d : theDashboards){
             d.renders();
             theRendering=theRendering + ((SimpleDashboard) d).getRendering();
