@@ -5,10 +5,20 @@ const server_domain = "localhost:8080";
 
 function demoListnener() {
     let demodiv = document.getElementById('demodiv');
+
     let fgood = function (result){
         demodiv.innerText = result;
     };
+
     elsaRequest("gimme tha numberrr !", "random", fgood, null);
+}
+
+function formHandler() {
+    console.log("test");
+    let first_name = document.getElementById("fname").innerText;
+    let last_name = document.getElementById("lname").innerText;
+    console.log(first_name);
+    console.log(last_name);
 }
 
 function elsaRequest(body, endpoint, callback, errorCallback) {
