@@ -21,7 +21,7 @@ public class RandomEndPoint {
         return "Done";
     }
 
-    @PostMapping("api/form")
+    @PostMapping(value="api/form", consumes = "application/json")
     @ResponseBody
     public String form(@RequestBody FormObject fo) {
 

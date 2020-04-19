@@ -30,10 +30,13 @@ function formHandler() {
     elsaRequest(msg, "form", changeDiv, undefined);
 }
 
-function elsaRequest(body, endpoint, callback, errorCallback) {
+function elsaRequest(body, endpoint, callback, errorCallback, is_json=false) {
     // construct server url for API request
     const url = "http://" + server_domain + "/api/" + endpoint;
     let xhr = new XMLHttpRequest();
+
+    if (is_json)
+        xhr.setRequestHeader('Content-Type', 'application/json');
 
     // modify callback to be executed when request completes
     function internCallback() {
