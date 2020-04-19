@@ -15,8 +15,8 @@ function demoListnener() {
 
 function formHandler() {
     console.log("test");
-    let first_name = document.getElementById("fname").innerText;
-    let last_name = document.getElementById("lname").innerText;
+    let first_name = document.getElementById("fname").value;
+    let last_name = document.getElementById("lname").value;
     console.log(first_name);
     console.log(last_name);
 }
