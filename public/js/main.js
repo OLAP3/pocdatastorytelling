@@ -15,16 +15,16 @@ function demoListnener() {
 
 function formHandler() {
     console.log("test");
-    let first_name = document.getElementById("fname").value;
-    let last_name = document.getElementById("lname").value;
+    let first_name = document.getElementById("query").value;
+    let last_name = document.getElementById("message").value;
     console.log(first_name);
     console.log(last_name);
 
     let msg = {"fn" : first_name, "ln": last_name};
 
     let changeDiv = function (result) {
-        let div = document.getElementById("toreplace");
-        div.innerHTML = result;
+        let div = document.getElementById("result");
+        div.innerText = result;
     };
 
     elsaRequest(msg, "form", changeDiv, undefined);

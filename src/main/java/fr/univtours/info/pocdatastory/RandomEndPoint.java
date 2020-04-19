@@ -17,7 +17,16 @@ public class RandomEndPoint {
     @PostMapping("api/random")
     @ResponseBody
     public String sayHello(@RequestParam(name="msg", required=false) String msg) {
-        SimpleCollector col=new SimpleCollector("Select * from names");
+        System.out.println(msg);
+        return "Done";
+    }
+
+    @PostMapping("api/form")
+    @ResponseBody
+    public String form(@RequestBody FormObject fo) {
+
+        //SimpleCollector col=new SimpleCollector("select * from supplier;");
+        SimpleCollector col=new SimpleCollector(fo.fn);
         try {
             col.run();
         }catch(Exception e){
@@ -27,15 +36,10 @@ public class RandomEndPoint {
         String res=it.next().toString();
         //System.out.println(it.next());
 
-        System.out.println(msg);
-        return res;
-        //return Math.random();
-    }
 
-    @PostMapping("api/form")
-    @ResponseBody
-    public String form(@RequestBody FormObject fo) {
-        return "<h2>Bonjour "+fo.fn+"</h2>";
+        return res;
+//        return "<h2>Bonjour "+fo.fn+"</h2>";
+        //return Math.random();
     }
 
     static class FormObject {

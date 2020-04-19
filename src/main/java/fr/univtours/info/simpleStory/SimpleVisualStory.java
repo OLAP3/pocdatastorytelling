@@ -5,6 +5,13 @@ import fr.univtours.info.model.discursal.Episode;
 import fr.univtours.info.model.presentational.*;
 import fr.univtours.info.model.discursal.Story;
 
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.PDPage;
+import org.apache.pdfbox.pdmodel.PDPageContentStream;
+import org.apache.pdfbox.pdmodel.font.PDType1Font;
+
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -61,6 +68,59 @@ public class SimpleVisualStory implements VisualStory {
             d.renders();
             theRendering=theRendering + ((SimpleDashboard) d).getRendering();
         }
+        try {
+            PDDocument pdf = createPDF();
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
         return theStory;
     }
+
+
+    public PDDocument createPDF() throws IOException {
+        //Creating PDF document object
+        PDDocument document = new PDDocument();
+
+        //Saving the document
+        document.save("");
+
+        System.out.println("PDF created");
+
+        PDPage my_page = new PDPage();
+        document.addPage(my_page);
+
+        PDPageContentStream contentStream = new PDPageContentStream(document, my_page);
+        //Begin the Content stream
+        contentStream.beginText();
+
+        //Setting the font to the Content stream
+        contentStream.setFont(PDType1Font.TIMES_ROMAN, 12);
+
+        //Setting the position for the line
+        contentStream.newLineAtOffset(25, 500);
+
+
+
+        //Adding text in the form of string
+        contentStream.showText(theRendering);
+
+        //Ending the content stream
+        contentStream.endText();
+
+        System.out.println("Content added");
+
+        //Closing the content stream
+        contentStream.close();
+
+        //Saving the document
+        document.save("");
+
+        //Closing the document
+        document.close();
+        return document;
+    }
+
+
+
 }

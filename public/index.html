@@ -6,19 +6,32 @@
     <script src="./js/main.js"></script>
 </head>
 <body>
-Hello world !
 
-<div id="demodiv"></div>
+<P>
+    This is a demo of simple data story creation.
+    Enter SQL queries over the SSB schema below and
+    validate observations, creating episodes, acts
+    and message of your story. Finally, render your
+    story and download it as a PDF file.
 
-<button onclick="demoListnener()">Click Me !</button>
+</P>
+
+
+
 
 <div id="toreplace">
-        <label for="fname">First name:</label><br>
-        <input type="text" id="fname" name="fname"><br>
-        <label for="lname">Last name:</label><br>
-        <input type="text" id="lname" name="lname">
+        <label for="query">SQL query:</label><br>
+        <input type="text" id="query" name="query"><br>
+        <label for="message">Message:</label><br>
+        <input type="text" id="message" name="message">
 
-    <button onclick="formHandler()">Envoyer</button>
+    <button onclick="formHandler()">Run</button>
 </div>
+
+<div id="result"></div>
+
+<button onclick="demoListnener()">Render !</button>
+<div id="demodiv"></div>
+
 </body>
 </html>
