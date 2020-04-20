@@ -18,52 +18,6 @@ public class StoryCreator {
 
     public static void main(String args[]) throws Exception{
 
-        /*
-        just a test
-         SimpleCollector col=new SimpleCollector("Select * from names");
-        col.run();
-        Iterator<Insight> it= col.fetches().iterator();
-        System.out.println(it.next());
-         */
-
-
-        /* logic: this is the algo in the paper
-
-\State create a new objects story, a  goal, an exploration
-
-\While{author has more analytical question}
-
-\State create a new analytical question
-
-\State create a new collector for the author's current query
-
-\State add the collector to the exploration
-
-\State run the collector and get insights
-
-\If{author considers insights constitute a worthy observation}
-
-\If{author considers it is a new act of the story}
-
-\State create a new act to the story and a new message
-
-\EndIf
-
-\State create a new observation, protagonists, episode
-
-\State add episode to the act
-\EndIf
-
-\EndWhile
-\State complement the story, acts, episodes with text
-
-\State create new dashboardComponents, dashboards and visual story
-
-\State \Return{the rendered visual story}
-
-
-         */
-
         Story theStory=new SimpleStory();
         Goal theGoal = new SimpleGoal();
         theStory.has(theGoal);

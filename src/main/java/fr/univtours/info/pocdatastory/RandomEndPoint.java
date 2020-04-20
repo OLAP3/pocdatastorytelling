@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Iterator;
+import java.util.List;
 
 
 @Controller
@@ -23,7 +24,7 @@ public class RandomEndPoint {
     @ResponseBody
     public String form(@RequestBody FormObject fo) {
         //public String form(@RequestBody String fo) {
-        SimpleCollector col=new SimpleCollector(fo.fn);
+        SimpleCollector col=new SimpleCollector(fo.getFn());
         try {
             col.run();
         }catch(Exception e){

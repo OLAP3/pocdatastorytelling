@@ -60,5 +60,8 @@ function elsaRequest(body, endpoint, callback, errorCallback, is_json=false) {
     // function to be called on state change
     xhr.onreadystatechange = internCallback;
     // send request
+
+    body=JSON.stringify(body);
+
     xhr.send(body);
 }

@@ -2,11 +2,10 @@ package fr.univtours.info.pocdatastory;
 
 public class FormObject {
 
-    String fn;
-    String ln;
+    private String fn;
+    private String ln;
 
     public FormObject(){
-
     }
 
     public void setFn(String fn) {
