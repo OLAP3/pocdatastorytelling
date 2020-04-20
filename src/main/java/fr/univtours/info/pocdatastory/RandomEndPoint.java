@@ -41,12 +41,5 @@ public class RandomEndPoint {
         //return Math.random();
     }
 
-    /*
-    static class FormObject {
-        String fn;
-        String ln;
-        FormObject(){
 
-        }
-    }*/
 }

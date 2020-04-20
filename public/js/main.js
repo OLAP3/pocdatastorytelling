@@ -27,7 +27,12 @@ function formHandler() {
         div.innerText = result;
     };
 
-    elsaRequest(msg, "form", changeDiv, undefined);
+   let pb = function (result) {
+        console.log("debug: ");
+        console.log(result);
+    };
+
+    elsaRequest(msg, "form", changeDiv, pb,true);
 }
 
 function elsaRequest(body, endpoint, callback, errorCallback, is_json=false) {
@@ -35,8 +40,7 @@ function elsaRequest(body, endpoint, callback, errorCallback, is_json=false) {
     const url = "http://" + server_domain + "/api/" + endpoint;
     let xhr = new XMLHttpRequest();
 
-    if (is_json)
-        xhr.setRequestHeader('Content-Type', 'application/json');
+
 
     // modify callback to be executed when request completes
     function internCallback() {
@@ -49,6 +53,10 @@ function elsaRequest(body, endpoint, callback, errorCallback, is_json=false) {
         }
     }
     xhr.open('POST', url);
+
+     if (is_json)
+            xhr.setRequestHeader('Content-Type', 'application/json');
+
     // function to be called on state change
     xhr.onreadystatechange = internCallback;
     // send request

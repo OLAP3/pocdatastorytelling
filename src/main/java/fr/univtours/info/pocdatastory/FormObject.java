@@ -5,6 +5,10 @@ public class FormObject {
     String fn;
     String ln;
 
+    public FormObject(){
+
+    }
+
     public void setFn(String fn) {
         this.fn = fn;
     }
