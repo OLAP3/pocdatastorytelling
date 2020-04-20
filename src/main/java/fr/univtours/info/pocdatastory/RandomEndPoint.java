@@ -20,6 +20,27 @@ public class RandomEndPoint {
         return msg;
     }
 
+    @PostMapping(value="api/query", consumes = "application/json")
+    @ResponseBody
+    public String query(@RequestBody SqlCollector query) {
+        SimpleCollector col=new SimpleCollector(query.getQuery());
+        try {
+            col.run();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        Iterator<Insight> it= col.fetches().iterator();
+        String res=it.next().toString();
+
+        if(res.length()>10000){
+            return("Query result too long, cannot be rendered");
+        }
+        else{
+            return res;
+
+        }
+    }
+
     @PostMapping(value="api/form", consumes = "application/json")
     @ResponseBody
     public String form(@RequestBody FormObject fo) {
@@ -33,14 +54,13 @@ public class RandomEndPoint {
         Iterator<Insight> it= col.fetches().iterator();
         String res=it.next().toString();
 
+        if(res.length()>1000){
+            return("Query result too long, cannot be rendered");
+        }
+        else{
+            return res;
 
-
-
-       // return fo.fn;
-        return res;
-//        return "<h2>Bonjour "+fo.fn+"</h2>";
-        //return Math.random();
+        }
     }
-
 
 }

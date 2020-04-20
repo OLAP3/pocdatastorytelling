@@ -4,7 +4,33 @@
     <meta charset="UTF-8">
     <title>POC Data StoryTelling</title>
     <script src="./js/main.js"></script>
+
+
+<style>
+.wrapper {
+display: grid;
+grid-template-columns: repeat(3, 1fr);
+grid-auto-rows: 200px;
+grid-column-gap: 50px;
+}
+
+.box1 {
+grid-column-start: 1;
+grid-column-end: 4;
+grid-row-start: 1;
+grid-row-end: 3;
+}
+
+.box2 {
+grid-column-start: 1;
+grid-row-start: 3;
+grid-row-end: 5;
+}
+</style>
+
+
 </head>
+
 <body>
 
 <P>
@@ -16,21 +42,74 @@
 
 </P>
 
+<div class="wrapper">
+    <div class="box1">This is the answer to your analytical question
+        <div id="result">
+            <textarea id="textresult" name="textresult" rows="20" cols="300">
+
+            </textarea><br>
+        </div>
+    </div>
+    <div class="box2">
+        <div id="toreplace">
+        <label for="query">Analytical question</label><br>
+        <textarea id="query" name="query" rows="20" cols="80"></textarea><br>
+        <!--
+           <input type="text"  id="query" name="query" ><br>
+           <label for="message">Message:</label><br>
+           <input type="text" id="message" name="message">
+           -->
+        <button onclick="SQLformHandler()">Run SQL collector</button>
+    </div></div>
+
+    <div class="box3">
+        <label for="observation">Observation</label><br>
+        <textarea id="observation" name="observation" rows="10" cols="80"></textarea><br>
+        <button onclick="observationformHandler()">Insert new observation</button>
+    </div>
 
 
+    <div class="box4">
+        <label for="episode">Episode</label><br>
+        <textarea id="episode" name="episode" rows="10" cols="80"></textarea><br>
+        <button onclick="episodeformHandler()">Insert new episode</button>
+    </div>
 
-<div id="toreplace">
-        <label for="query">SQL query:</label><br>
-        <input type="text" id="query" name="query"><br>
-        <label for="message">Message:</label><br>
-        <input type="text" id="message" name="message">
-    <button onclick="formHandler()">Run</button>
+    <div class="box5">
+        <label for="message">Messages</label><br>
+        <textarea id="message" name="message" rows="10" cols="80"></textarea><br>
+    </div>
+
+    <div class="box6">
+        <label for="act">Act</label><br>
+        <textarea id="act" name="act" rows="10" cols="80"></textarea><br>
+        <button onclick="actformHandler()">Insert new act</button>
+    </div>
+
+
+    <div class="box7">
+
+        <button onclick="renderListnener()">Render and download PDF</button>
+        <div id="demodiv"></div>
+
+    </div>
+
+    <div class="box8">
+        <label for="act">Protagonist</label><br>
+        <textarea id="protagonist" name="protagonist" rows="10" cols="80"></textarea><br>
+        <button onclick="protagonistformHandler()">Insert new protagonist</button>
+    </div>
+
+    <div class="box9">
+        <label for="story">Story</label><br>
+        <textarea id="story" name="story" rows="10" cols="80"></textarea><br>
+    </div>
 </div>
 
-<div id="result"></div>
 
-<button onclick="demoListnener()">Render !</button>
-<div id="demodiv"></div>
+
+
+
 
 </body>
 </html>

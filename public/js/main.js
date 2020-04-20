@@ -3,7 +3,7 @@
  */
 const server_domain = "localhost:8080";
 
-function demoListnener() {
+function renderListnener() {
     let demodiv = document.getElementById('demodiv');
 
     let fgood = function (result){
@@ -13,8 +13,28 @@ function demoListnener() {
     elsaRequest("gimme tha numberrr !", "random", fgood, null);
 }
 
+function SQLformHandler() {
+    let query = document.getElementById("query").value;
+
+    let msg = {"query" : query};
+
+    let changeDiv = function (result) {
+        let div = document.getElementById("result");
+
+        let textresult=document.getElementById("textresult");
+        textresult.innerText=result;
+    };
+
+   let pb = function (result) {
+        console.log("debug: ");
+        console.log(result);
+    };
+
+    elsaRequest(msg, "query", changeDiv, pb,true);
+}
+
+
 function formHandler() {
-    console.log("test");
     let first_name = document.getElementById("query").value;
     let last_name = document.getElementById("message").value;
     console.log(first_name);
