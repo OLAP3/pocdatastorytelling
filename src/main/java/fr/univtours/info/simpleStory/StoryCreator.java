@@ -20,6 +20,8 @@ public class StoryCreator {
 
         Story theStory=new SimpleStory();
         Goal theGoal = new SimpleGoal();
+        String goalText="a straight story";
+        theGoal.addText(goalText);
         theStory.has(theGoal);
         Act currentAct =null;
         Message currentMessage=null;
@@ -40,7 +42,8 @@ public class StoryCreator {
                     " and s_region = 'AMERICA' \n" +
                     " group by d_year, p_brand \n" +
                     " order by d_year, p_brand;\n"; //fake
-            AnalyticalQuestion anAnalyticalQuestion = new SimpleAnalyticalQuestion(query);
+            AnalyticalQuestion anAnalyticalQuestion = new SimpleAnalyticalQuestion();
+            anAnalyticalQuestion.addText(query);
             Collection<Insight> col = anAnalyticalQuestion.answer();
             theGoal.poses(anAnalyticalQuestion);
 

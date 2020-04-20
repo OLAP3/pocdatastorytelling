@@ -52,9 +52,6 @@ public class SimpleCollector implements Collector {
 
         conn = DriverManager.getConnection(url);
 
-
-
-
     }
 
 

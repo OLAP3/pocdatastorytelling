@@ -7,6 +7,8 @@ import fr.univtours.info.model.factual.Insight;
 import java.util.Collection;
 
 public interface AnalyticalQuestion {
+    public void addText(String aText);
+    public String toString(); // replace by getText()?
 
     public Goal posed(); // getGoal
     public Collection<Collector> implement();

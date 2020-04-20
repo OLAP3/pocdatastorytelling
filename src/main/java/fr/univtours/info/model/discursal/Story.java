@@ -16,4 +16,6 @@ public interface Story {
 
     public Collection<Act> includes();
     public Goal has(); //getGoal
+
+    public void store();
 }

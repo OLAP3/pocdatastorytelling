@@ -12,16 +12,16 @@ import java.util.Collection;
 public class SimpleAnalyticalQuestion implements AnalyticalQuestion {
     ArrayList<Collector> theCollectors ;
     ArrayList<Observation> theObservations ;
-    String query;
+    String theText;
 
-    public SimpleAnalyticalQuestion(String sqlQuery){
+    public SimpleAnalyticalQuestion(){
         this.theCollectors = new ArrayList<Collector>();
         this.theObservations = new ArrayList<Observation>();
-        this.query=sqlQuery;
+
     }
 
     public Collection<Insight> answer() {
-        Collector c = new SimpleCollector(query);
+        Collector c = new SimpleCollector(theText);
         try {
             c.run();
         }
@@ -54,7 +54,14 @@ public class SimpleAnalyticalQuestion implements AnalyticalQuestion {
         return theCollectors;
     }
 
+
+
+    @Override
+    public void addText(String aText) {
+        theText=aText;
+    }
+
     public String toString(){
-        return query;
+        return theText;
     }
 }

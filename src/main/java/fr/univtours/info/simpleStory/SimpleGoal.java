@@ -13,9 +13,19 @@ import java.util.Iterator;
 
 public class SimpleGoal implements Goal {
     ArrayList<Exploration> theExplorations;
+    String theText;
 
     public SimpleGoal(){
         theExplorations=new ArrayList<Exploration>();
+    }
+
+    @Override
+    public void addText(String aText) {
+        theText=aText;
+    }
+
+    public String toString(){
+        return theText;
     }
 
     @Override

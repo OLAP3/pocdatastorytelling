@@ -16,16 +16,25 @@ grid-column-gap: 50px;
 
 .box1 {
 grid-column-start: 1;
-grid-column-end: 4;
+grid-column-end: 2;
 grid-row-start: 1;
 grid-row-end: 3;
 }
+
 
 .box2 {
 grid-column-start: 1;
 grid-row-start: 3;
 grid-row-end: 5;
 }
+
+.box10{
+grid-column-start: 2;
+grid-column-end: 4;
+grid-row-start: 1;
+grid-row-end: 3;
+}
+
 </style>
 
 
@@ -45,15 +54,16 @@ grid-row-end: 5;
 <div class="wrapper">
     <div class="box1">This is the answer to your analytical question
         <div id="result">
-            <textarea id="textresult" name="textresult" rows="20" cols="300">
+            <textarea id="textresult" name="textresult" rows="20" cols="180">
 
             </textarea><br>
         </div>
     </div>
+
     <div class="box2">
         <div id="toreplace">
         <label for="query">Analytical question</label><br>
-        <textarea id="query" name="query" rows="20" cols="80"></textarea><br>
+        <textarea id="query" name="query" rows="20" cols="180"></textarea><br>
         <!--
            <input type="text"  id="query" name="query" ><br>
            <label for="message">Message:</label><br>
@@ -88,14 +98,14 @@ grid-row-end: 5;
 
 
     <div class="box7">
-
-        <button onclick="renderListnener()">Render and download PDF</button>
-        <div id="demodiv"></div>
+        <label for="goal">Goal</label><br>
+        <textarea id="goal" name="goal" rows="10" cols="80"></textarea><br>
+        <button onclick="goalformHandler()">Insert goal text</button>
 
     </div>
 
     <div class="box8">
-        <label for="act">Protagonist</label><br>
+        <label for="protagonist">Protagonist</label><br>
         <textarea id="protagonist" name="protagonist" rows="10" cols="80"></textarea><br>
         <button onclick="protagonistformHandler()">Insert new protagonist</button>
     </div>
@@ -104,9 +114,14 @@ grid-row-end: 5;
         <label for="story">Story</label><br>
         <textarea id="story" name="story" rows="10" cols="80"></textarea><br>
     </div>
+
+    <div class="box10">
+       Some nice D3js
+    </div>
 </div>
 
-
+<button onclick="renderListnener()">Render and download PDF</button>
+<div id="demodiv"></div>
 
 
 
