@@ -14,25 +14,13 @@ grid-auto-rows: 200px;
 grid-column-gap: 50px;
 }
 
-.box1 {
+.result {
 grid-column-start: 1;
 grid-column-end: 2;
-grid-row-start: 1;
-grid-row-end: 3;
-}
-
-
-.box2 {
-grid-column-start: 1;
 grid-row-start: 3;
 grid-row-end: 5;
 }
 
-.box10{
-grid-column-start: 2;
-grid-column-end: 4;
-grid-row-start: 1;
-grid-row-end: 3;
 }
 
 </style>
@@ -42,81 +30,111 @@ grid-row-end: 3;
 
 <body>
 
-<P>
-    This is a demo of simple data story creation.
-    Enter SQL queries over the SSB schema below and
-    validate observations, creating episodes, acts
-    and message of your story. Finally, render your
-    story and download it as a PDF file.
 
-</P>
 
 <div class="wrapper">
-    <div class="box1">This is the answer to your analytical question
-        <div id="result">
-            <textarea id="textresult" name="textresult" rows="20" cols="180">
 
-            </textarea><br>
-        </div>
+
+
+    <div class="introduction">
+        This is a demo of a simple data story creation.
+        Your story begins by creating a goal.
+        Then you can create acts and episodes by
+        writing text and enriching them with
+        answers to analytical questions.
+        In this demo, questions are answered by
+        SQL queries over the SSB schema.
+        Validating the answers results in an observation
+        for which you need to define your story protagonists
+        and messages.
+        Finally, render your
+        story and download it as a PDF file.
+
     </div>
 
-    <div class="box2">
-        <div id="toreplace">
-        <label for="query">Analytical question</label><br>
-        <textarea id="query" name="query" rows="20" cols="180"></textarea><br>
-        <!--
-           <input type="text"  id="query" name="query" ><br>
-           <label for="message">Message:</label><br>
-           <input type="text" id="message" name="message">
-           -->
-        <button onclick="SQLformHandler()">Run SQL collector</button>
-    </div></div>
-
-    <div class="box3">
-        <label for="observation">Observation</label><br>
-        <textarea id="observation" name="observation" rows="10" cols="80"></textarea><br>
-        <button onclick="observationformHandler()">Insert new observation</button>
-    </div>
-
-
-    <div class="box4">
-        <label for="episode">Episode</label><br>
-        <textarea id="episode" name="episode" rows="10" cols="80"></textarea><br>
-        <button onclick="episodeformHandler()">Insert new episode</button>
-    </div>
-
-    <div class="box5">
-        <label for="message">Messages</label><br>
-        <textarea id="message" name="message" rows="10" cols="80"></textarea><br>
-    </div>
-
-    <div class="box6">
-        <label for="act">Act</label><br>
-        <textarea id="act" name="act" rows="10" cols="80"></textarea><br>
-        <button onclick="actformHandler()">Insert new act</button>
-    </div>
-
-
-    <div class="box7">
+    <div class="goal">
         <label for="goal">Goal</label><br>
         <textarea id="goal" name="goal" rows="10" cols="80"></textarea><br>
         <button onclick="goalformHandler()">Insert goal text</button>
 
     </div>
 
-    <div class="box8">
+
+    <div class="story">
+        <label for="story">Story</label><br>
+        <textarea id="story" name="story" rows="10" cols="80"></textarea><br>
+    </div>
+
+    <div class="question">
+        <div id="toreplace">
+            <label for="query">Analytical question</label><br>
+            <textarea id="query" name="query" rows="10" cols="180"></textarea><br>
+            <!--
+               <input type="text"  id="query" name="query" ><br>
+               <label for="message">Message:</label><br>
+               <input type="text" id="message" name="message">
+               -->
+            <button onclick="SQLformHandler()">Run SQL collector</button>
+        </div></div>
+
+
+    <div class="message">
+        <label for="message">Messages</label><br>
+        <textarea id="message" name="message" rows="10" cols="80"></textarea><br>
+    </div>
+
+    <div class="act">
+        <label for="act">Act</label><br>
+        <textarea id="act" name="act" rows="10" cols="80"></textarea><br>
+        <button onclick="actformHandler()">Insert new act</button>
+    </div>
+
+
+
+
+    <div class="result">This is the answer to your analytical question
+        <div id="result">
+            <textarea id="textresult" name="textresult" rows="20" cols="180">
+
+            </textarea><br>
+            <button onclick="resultformHandler()">Validate this answer</button>
+        </div>
+    </div>
+
+
+
+    <div class="observation">
+        <label for="observation">Observation</label><br>
+        <textarea id="observation" name="observation" rows="10" cols="80"></textarea><br>
+        <button onclick="observationformHandler()">Insert new observation</button>
+    </div>
+
+
+    <div class="episode">
+        <label for="episode">Episode</label><br>
+        <textarea id="episode" name="episode" rows="10" cols="80"></textarea><br>
+        <button onclick="episodeformHandler()">Insert new episode</button>
+    </div>
+
+
+
+
+
+    <div class="protagonist">
         <label for="protagonist">Protagonist</label><br>
         <textarea id="protagonist" name="protagonist" rows="10" cols="80"></textarea><br>
         <button onclick="protagonistformHandler()">Insert new protagonist</button>
     </div>
 
-    <div class="box9">
-        <label for="story">Story</label><br>
-        <textarea id="story" name="story" rows="10" cols="80"></textarea><br>
-    </div>
 
-    <div class="box10">
-       Some nice D3js
+
+    <div class="recap">
+        <label for="protagonist">Story recap</label><br>
+
+        <div id="recap">
+
+        </div>
+
     </div>
 </div>
 

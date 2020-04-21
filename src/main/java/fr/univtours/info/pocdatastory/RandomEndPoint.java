@@ -1,7 +1,10 @@
 package fr.univtours.info.pocdatastory;
 
 import fr.univtours.info.model.factual.Insight;
+import fr.univtours.info.model.intentional.*;
 import fr.univtours.info.simpleStory.SimpleCollector;
+import fr.univtours.info.simpleStory.SimpleGoal;
+import fr.univtours.info.simpleStory.StoryCreator;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,6 +14,8 @@ import java.util.List;
 
 @Controller
 public class RandomEndPoint {
+
+    StoryCreator creator=null;
 
     @PostMapping("api/random")
     @ResponseBody
@@ -23,6 +28,7 @@ public class RandomEndPoint {
     @PostMapping(value="api/query", consumes = "application/json")
     @ResponseBody
     public String query(@RequestBody SqlCollector query) {
+        /*
         SimpleCollector col=new SimpleCollector(query.getQuery());
         try {
             col.run();
@@ -32,14 +38,44 @@ public class RandomEndPoint {
         Iterator<Insight> it= col.fetches().iterator();
         String res=it.next().toString();
 
-        if(res.length()>10000){
-            return("Query result too long, cannot be rendered");
-        }
-        else{
-            return res;
+         */
 
+        String toReturn="No goal created! Please create a goal first.";
+        if(creator!=null){
+            String res=creator.newQuestion(query.getQuery());
+
+            if(res.length()>10000){
+                toReturn="Query result too long, cannot be rendered";
+            }
+            else{
+                toReturn= res;
+
+            }
         }
+        return toReturn;
+
     }
+
+
+    @PostMapping(value="api/goal")
+    @ResponseBody
+    public String goal(@RequestBody String theGoal) {
+        creator= new StoryCreator();
+        creator.getGoal().addText(theGoal);
+        return theGoal.toString();
+
+    }
+
+
+
+    @PostMapping(value="api/result")
+    @ResponseBody
+    public String result(@RequestBody String theResult) {
+
+        return theResult;
+
+    }
+
 
     @PostMapping(value="api/form", consumes = "application/json")
     @ResponseBody

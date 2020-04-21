@@ -11,18 +11,51 @@ import fr.univtours.info.model.presentational.VisualStory;
 import fr.univtours.info.model.discursal.Story;
 
 import java.util.Collection;
+import java.util.Iterator;
 
 public class StoryCreator {
 
+    Story theStory;
+    Goal theGoal;
+
+    public StoryCreator(){
+        theGoal = new SimpleGoal();
+        theStory = new SimpleStory();
+        theStory.has(theGoal);
+        theGoal.has(theStory);
+        Exploration theExploration = new SimpleExploration(); // only one exploration
+        theGoal.solves(theExploration);
+    }
+
+    public Goal getGoal(){
+        return theGoal;
+    }
+
+    public String newQuestion(String query){
+        AnalyticalQuestion anAnalyticalQuestion = new SimpleAnalyticalQuestion();
+        anAnalyticalQuestion.addText(query);
+        Collection<Insight> col = anAnalyticalQuestion.answer();
+        theGoal.poses(anAnalyticalQuestion);
+
+        Iterator<Insight> it= col.iterator();
+        String res="";
+
+        while(it.hasNext()){
+            res=res+it.next().toString();
+        }
+
+        return res;
+    }
 
 
     public static void main(String args[]) throws Exception{
 
         Story theStory=new SimpleStory();
         Goal theGoal = new SimpleGoal();
-        String goalText="a straight story";
-        theGoal.addText(goalText);
+        //String goalText="a straight story";
+        //theGoal.addText(goalText);
         theStory.has(theGoal);
+
         Act currentAct =null;
         Message currentMessage=null;
 

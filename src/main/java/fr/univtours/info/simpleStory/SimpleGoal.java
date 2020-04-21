@@ -1,5 +1,6 @@
 package fr.univtours.info.simpleStory;
 
+import fr.univtours.info.model.discursal.Story;
 import fr.univtours.info.model.factual.Collector;
 import fr.univtours.info.model.factual.Exploration;
 import fr.univtours.info.model.intentional.AnalyticalQuestion;
@@ -14,6 +15,7 @@ import java.util.Iterator;
 public class SimpleGoal implements Goal {
     ArrayList<Exploration> theExplorations;
     String theText;
+    Story theStory;
 
     public SimpleGoal(){
         theExplorations=new ArrayList<Exploration>();
@@ -26,6 +28,16 @@ public class SimpleGoal implements Goal {
 
     public String toString(){
         return theText;
+    }
+
+    @Override
+    public Story has() {
+        return theStory;
+    }
+
+    @Override
+    public void has(Story theStory) {
+        this.theStory=theStory;
     }
 
     @Override

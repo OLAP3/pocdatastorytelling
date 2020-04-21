@@ -12,9 +12,9 @@ public interface Story {
     public String toString();
 
     public void includes(Act anAct); //addAct
-    public void has(Goal aGoal); //setGoal
-
     public Collection<Act> includes();
+
+    public void has(Goal aGoal); //setGoal
     public Goal has(); //getGoal
 
     public void store();

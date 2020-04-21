@@ -34,6 +34,48 @@ function SQLformHandler() {
 }
 
 
+function goalformHandler() {
+    let goal = document.getElementById("goal").value;
+
+    let msg = goal;
+
+    let changeDiv = function (result) {
+        let recap=document.getElementById("recap");
+        //let textRecap=recap.innerText;
+        //recap.innerText= result;
+        let recaptext = document.getElementById("recap").innerText;
+        recap.innerText= recaptext + "\n" + result;
+    };
+
+   let pb = function (result) {
+        console.log("debug: ");
+        console.log(result);
+    };
+
+    elsaRequest(msg, "goal", changeDiv, pb,false);
+}
+
+
+function resultformHandler() {
+    let result = document.getElementById("textresult");
+    let selection = (result.value).substring(result.selectionStart,result.selectionEnd);
+
+    let msg = selection;
+
+    let changeDiv = function (result) {
+        let obs=document.getElementById("observation");
+        obs.innerText= result;
+    };
+
+   let pb = function (result) {
+        console.log("debug: ");
+        console.log(result);
+    };
+
+    elsaRequest(msg, "result", changeDiv, pb,false);
+}
+
+
 function formHandler() {
     let first_name = document.getElementById("query").value;
     let last_name = document.getElementById("message").value;
@@ -54,6 +96,9 @@ function formHandler() {
 
     elsaRequest(msg, "form", changeDiv, pb,true);
 }
+
+
+
 
 function elsaRequest(body, endpoint, callback, errorCallback, is_json=false) {
     // construct server url for API request
