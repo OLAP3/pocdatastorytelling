@@ -15,6 +15,8 @@ public class SimpleInsight implements Insight {
 
     }
 
+
+
     public String toString(){
         String resultString="";
         ResultSetIterator rsit=new ResultSetIterator(resultSet);

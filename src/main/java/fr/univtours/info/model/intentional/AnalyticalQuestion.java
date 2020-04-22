@@ -10,10 +10,12 @@ public interface AnalyticalQuestion {
     public void addText(String aText);
     public String toString(); // replace by getText()?
 
-    public Goal posed(); // getGoal
-    public Collection<Collector> implement();
+    public Goal poses(); // getGoal
+    public void poses(Goal theGoal);
 
-    public Collection<Insight> answer(); //triggers collector creation
+    public Collection<Collector> implement();
+    public void implement(Collector aCollector);
+
 
     public void generates(Observation anObservation);
     public Collection<Observation> generates();

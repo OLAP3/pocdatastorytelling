@@ -13,10 +13,42 @@ function renderListnener() {
     elsaRequest("gimme tha numberrr !", "random", fgood, null);
 }
 
+
+
+
+function questionFormHandler() {
+    let question = document.getElementById("question").value;
+
+    let msg = question;
+
+
+    let changeDiv = function (result) {
+            let recap=document.getElementById("recap");
+            //let textRecap=recap.innerText;
+            //recap.innerText= result;
+            let recaptext = document.getElementById("recap").innerText;
+            recap.innerText= recaptext + "\n Analytical Question: " + result;
+        };
+
+   let pb = function (result) {
+        console.log("debug: ");
+        console.log(result);
+    };
+
+    elsaRequest(msg, "question", changeDiv, pb,false);
+}
+
+
+function openSQLform() {
+  document.getElementById("myForm").style.display = "block";
+}
+
 function SQLformHandler() {
     let query = document.getElementById("query").value;
 
     let msg = {"query" : query};
+
+    document.getElementById("myForm").style.display = "none";
 
     let changeDiv = function (result) {
         let div = document.getElementById("result");
@@ -41,10 +73,8 @@ function goalformHandler() {
 
     let changeDiv = function (result) {
         let recap=document.getElementById("recap");
-        //let textRecap=recap.innerText;
-        //recap.innerText= result;
         let recaptext = document.getElementById("recap").innerText;
-        recap.innerText= recaptext + "\n" + result;
+        recap.innerText= recaptext + "\n Goal: " + result;
     };
 
    let pb = function (result) {
@@ -76,6 +106,110 @@ function resultformHandler() {
 }
 
 
+
+function observationformHandler() {
+    let result = document.getElementById("observation");
+    let selection = result.value;
+    let msg = selection;
+
+    let changeDiv = function (result) {
+            let recap=document.getElementById("recap");
+            let recaptext = document.getElementById("recap").innerText;
+            recap.innerText= recaptext + "\n Observation: " + result;
+        };
+
+   let pb = function (result) {
+        console.log("debug: ");
+        console.log(result);
+    };
+
+    elsaRequest(msg, "observation", changeDiv, pb,false);
+}
+
+
+
+function messageformHandler() {
+    let result = document.getElementById("message");
+    let selection = result.value;
+    let msg = selection;
+
+    let changeDiv = function (result) {
+            let recap=document.getElementById("recap");
+            let recaptext = document.getElementById("recap").innerText;
+            recap.innerText= recaptext + "\n Message: " + result;
+        };
+
+   let pb = function (result) {
+        console.log("debug: ");
+        console.log(result);
+    };
+
+    elsaRequest(msg, "message", changeDiv, pb,false);
+}
+
+
+function protagonistformHandler() {
+    let result = document.getElementById("protagonist");
+    let selection = result.value;
+    let msg = selection;
+
+    let changeDiv = function (result) {
+            let recap=document.getElementById("recap");
+            let recaptext = document.getElementById("recap").innerText;
+            recap.innerText= recaptext + "\n Protagonist: " + result;
+        };
+
+   let pb = function (result) {
+        console.log("debug: ");
+        console.log(result);
+    };
+
+    elsaRequest(msg, "protagonist", changeDiv, pb,false);
+}
+
+
+
+
+function actformHandler() {
+    let result = document.getElementById("act");
+    let selection = result.value;
+    let msg = selection;
+
+    let changeDiv = function (result) {
+            let recap=document.getElementById("recap");
+            let recaptext = document.getElementById("recap").innerText;
+            recap.innerText= recaptext + "\n Act: " + result;
+        };
+
+   let pb = function (result) {
+        console.log("debug: ");
+        console.log(result);
+    };
+
+    elsaRequest(msg, "act", changeDiv, pb,false);
+}
+
+
+
+function episodeformHandler() {
+    let result = document.getElementById("episode");
+    let selection = result.value;
+    let msg = selection;
+
+    let changeDiv = function (result) {
+            let recap=document.getElementById("recap");
+            let recaptext = document.getElementById("recap").innerText;
+            recap.innerText= recaptext + "\n Episode: " + result;
+        };
+
+   let pb = function (result) {
+        console.log("debug: ");
+        console.log(result);
+    };
+
+    elsaRequest(msg, "episode", changeDiv, pb,false);
+}
+
 function formHandler() {
     let first_name = document.getElementById("query").value;
     let last_name = document.getElementById("message").value;
@@ -96,6 +230,11 @@ function formHandler() {
 
     elsaRequest(msg, "form", changeDiv, pb,true);
 }
+
+
+
+
+
 
 
 

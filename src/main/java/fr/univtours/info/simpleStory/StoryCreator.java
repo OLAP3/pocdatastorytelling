@@ -2,6 +2,7 @@ package fr.univtours.info.simpleStory;
 
 import fr.univtours.info.model.discursal.Act;
 import fr.univtours.info.model.discursal.Episode;
+import fr.univtours.info.model.factual.Collector;
 import fr.univtours.info.model.factual.Exploration;
 import fr.univtours.info.model.factual.Insight;
 import fr.univtours.info.model.intentional.*;
@@ -17,13 +18,21 @@ public class StoryCreator {
 
     Story theStory;
     Goal theGoal;
+    Exploration theExploration;
+
+    AnalyticalQuestion currentQuestion;
+    Collector currentCollector; // needed?
+    Observation currentObservation;
+    Episode currentEpisode;
+    Message currentMessage;
+    Act currentAct;
 
     public StoryCreator(){
         theGoal = new SimpleGoal();
         theStory = new SimpleStory();
         theStory.has(theGoal);
         theGoal.has(theStory);
-        Exploration theExploration = new SimpleExploration(); // only one exploration
+        theExploration = new SimpleExploration(); // only one exploration
         theGoal.solves(theExploration);
     }
 
@@ -31,22 +40,90 @@ public class StoryCreator {
         return theGoal;
     }
 
-    public String newQuestion(String query){
-        AnalyticalQuestion anAnalyticalQuestion = new SimpleAnalyticalQuestion();
-        anAnalyticalQuestion.addText(query);
-        Collection<Insight> col = anAnalyticalQuestion.answer();
-        theGoal.poses(anAnalyticalQuestion);
+    public AnalyticalQuestion getCurrentQuestion() {
+        return currentQuestion;
+    }
 
+    public String newQuestion(String question){
+        AnalyticalQuestion anAnalyticalQuestion = new SimpleAnalyticalQuestion();
+        theGoal.poses(anAnalyticalQuestion);
+        anAnalyticalQuestion.poses(theGoal);
+        anAnalyticalQuestion.addText(question);
+
+        currentQuestion=anAnalyticalQuestion;
+
+        return question;
+    }
+
+    public String newCollector(String query){
+
+        Collector c = new SimpleCollector(query);
+        currentQuestion.implement(c);
+        theExploration.tries(c);
+        currentCollector=c;
+
+        try {
+            c.run();
+        }
+
+        catch(Exception e){
+            e.printStackTrace();
+        }
+
+        Collection<Insight> col =c.fetches();
         Iterator<Insight> it= col.iterator();
         String res="";
 
         while(it.hasNext()){
-            res=res+it.next().toString();
+            Insight i=it.next();
+            currentObservation.produces(i);
+            res=res+i.toString();
         }
 
         return res;
     }
 
+
+    public String newObservation(String theObservation){
+        Observation o = new SimpleObservation();
+        o.addText(theObservation);
+        currentObservation=o;
+        currentQuestion.generates(currentObservation);
+        currentObservation.generates(currentQuestion);
+
+        return theObservation;
+    }
+
+
+    public String newProtagonist(String theProtagonist){
+        Protagonist p = new SimpleProtagonist();
+        currentEpisode.playsIn(p);
+        currentObservation.bringsOut(p);
+        p.addText(theProtagonist);
+        return theProtagonist;
+    }
+
+    public String newAct(String theAct){
+        currentAct=new SimpleAct();
+        theStory.includes(currentAct);
+        return(theAct);
+    }
+
+
+    public String newMessage(String theMessage){
+        currentMessage=new SimpleMessage();
+        currentMessage.bringsOut(currentObservation);
+        currentAct.narrates(currentMessage);
+        return(theMessage);
+    }
+
+
+
+    public String newEpisode(String theEpisode){
+        currentEpisode=new SimpleEpisode();
+        currentAct.includes(currentEpisode);
+        return(theEpisode);
+    }
 
     public static void main(String args[]) throws Exception{
 
@@ -77,7 +154,7 @@ public class StoryCreator {
                     " order by d_year, p_brand;\n"; //fake
             AnalyticalQuestion anAnalyticalQuestion = new SimpleAnalyticalQuestion();
             anAnalyticalQuestion.addText(query);
-            Collection<Insight> col = anAnalyticalQuestion.answer();
+            Collection<Insight> col = ((SimpleAnalyticalQuestion) anAnalyticalQuestion).answer();
             theGoal.poses(anAnalyticalQuestion);
 
             // show insights and ask if worthy

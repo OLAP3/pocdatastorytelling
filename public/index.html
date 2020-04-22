@@ -7,6 +7,78 @@
 
 
 <style>
+body {font-family: Arial, Helvetica, sans-serif;}
+* {box-sizing: border-box;}
+
+/* Button used to open the contact form - fixed at the bottom of the page */
+.open-button {
+  background-color: #555;
+  color: white;
+  padding: 16px 20px;
+  border: none;
+  cursor: pointer;
+  opacity: 0.8;
+  position: fixed;
+  bottom: 23px;
+  right: 28px;
+  width: 280px;
+}
+
+/* The popup form - hidden by default */
+.form-popup {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: 3px solid #f1f1f1;
+  z-index: 9;
+}
+
+/* Add styles to the form container */
+.form-container {
+  max-width: 300px;
+  padding: 10px;
+  background-color: white;
+}
+
+/* Full-width input fields */
+.form-container input[type=text], .form-container input[type=password] {
+  width: 100%;
+  padding: 15px;
+  margin: 5px 0 22px 0;
+  border: none;
+  background: #f1f1f1;
+}
+
+/* When the inputs get focus, do something */
+.form-container input[type=text]:focus, .form-container input[type=password]:focus {
+  background-color: #ddd;
+  outline: none;
+}
+
+/* Set a style for the submit/login button */
+.form-container .btn {
+  background-color: #4CAF50;
+  color: white;
+  padding: 16px 20px;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  margin-bottom:10px;
+  opacity: 0.8;
+}
+
+/* Add a red background color to the cancel button */
+.form-container .cancel {
+  background-color: red;
+}
+
+/* Add some hover effects to buttons */
+.form-container .btn:hover, .open-button:hover {
+  opacity: 1;
+}
+
 .wrapper {
 display: grid;
 grid-template-columns: repeat(3, 1fr);
@@ -67,20 +139,30 @@ grid-row-end: 5;
 
     <div class="question">
         <div id="toreplace">
-            <label for="query">Analytical question</label><br>
-            <textarea id="query" name="query" rows="10" cols="180"></textarea><br>
-            <!--
-               <input type="text"  id="query" name="query" ><br>
-               <label for="message">Message:</label><br>
-               <input type="text" id="message" name="message">
-               -->
-            <button onclick="SQLformHandler()">Run SQL collector</button>
-        </div></div>
+            <label for="question">Analytical question</label><br>
+            <textarea id="question" name="question" rows="10" cols="180"></textarea><br>
+
+            <button onclick="questionFormHandler()">Insert new analytical question</button>
+            <button onclick="openSQLform()">Run SQL collector</button>
+        </div>
+
+        <div class="form-popup" id="myForm">
+            <form action="" class="form-container">
+                <h1>SQL Collector</h1>
+
+                <label for="query"><b>SQL</b></label>
+                <textarea id="query" name="query" rows="10" cols="50"></textarea><br>
+
+                <button type="button" class="btn cancel" onclick="SQLformHandler()">Evaluate this query</button>
+            </form>
+        </div>
+    </div>
 
 
     <div class="message">
         <label for="message">Messages</label><br>
         <textarea id="message" name="message" rows="10" cols="80"></textarea><br>
+        <button onclick="messageFormHandler()">Insert new message</button>
     </div>
 
     <div class="act">
@@ -92,12 +174,12 @@ grid-row-end: 5;
 
 
 
-    <div class="result">This is the answer to your analytical question
+    <div class="result">This is the collector response
         <div id="result">
             <textarea id="textresult" name="textresult" rows="20" cols="180">
 
             </textarea><br>
-            <button onclick="resultformHandler()">Validate this answer</button>
+            <button onclick="resultformHandler()">Validate this answer as an insight</button>
         </div>
     </div>
 
@@ -140,6 +222,7 @@ grid-row-end: 5;
 
 <button onclick="renderListnener()">Render and download PDF</button>
 <div id="demodiv"></div>
+
 
 
 

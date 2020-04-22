@@ -13,6 +13,7 @@ public class SimpleAnalyticalQuestion implements AnalyticalQuestion {
     ArrayList<Collector> theCollectors ;
     ArrayList<Observation> theObservations ;
     String theText;
+    Goal theGoal;
 
     public SimpleAnalyticalQuestion(){
         this.theCollectors = new ArrayList<Collector>();
@@ -20,6 +21,7 @@ public class SimpleAnalyticalQuestion implements AnalyticalQuestion {
 
     }
 
+    // drop me
     public Collection<Insight> answer() {
         Collector c = new SimpleCollector(theText);
         try {
@@ -43,17 +45,24 @@ public class SimpleAnalyticalQuestion implements AnalyticalQuestion {
     }
 
     @Override
-    public Goal posed() {
+    public Goal poses() {
+        return theGoal;
+    }
 
-        return null;
+    @Override
+    public void poses(Goal theGoal) {
+        this.theGoal=theGoal;
     }
 
     @Override
     public Collection<Collector> implement() {
-
         return theCollectors;
     }
 
+    @Override
+    public void implement(Collector aCollector) {
+        theCollectors.add(aCollector);
+    }
 
 
     @Override

@@ -17,32 +17,45 @@ public class RandomEndPoint {
 
     StoryCreator creator=null;
 
-    @PostMapping("api/random")
-    @ResponseBody
-    public String sayHello(@RequestParam(name="msg", required=false) String msg) {
-        //System.out.println(msg);
 
-        return msg;
+    @PostMapping(value="api/goal")
+    @ResponseBody
+    public String goal(@RequestBody String theGoal) {
+        creator= new StoryCreator();
+        creator.getGoal().addText(theGoal);
+        return theGoal.toString();
+
     }
+
+
+    @PostMapping(value="api/question")
+    @ResponseBody
+    public String quedstion(@RequestBody String question) {
+
+
+        String toReturn="No goal created! Please create a goal first.";
+        if(creator!=null){
+            String res=creator.newQuestion(question);
+
+            toReturn= res;
+
+
+        }
+        return toReturn;
+
+    }
+
 
     @PostMapping(value="api/query", consumes = "application/json")
     @ResponseBody
     public String query(@RequestBody SqlCollector query) {
-        /*
-        SimpleCollector col=new SimpleCollector(query.getQuery());
-        try {
-            col.run();
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-        Iterator<Insight> it= col.fetches().iterator();
-        String res=it.next().toString();
 
-         */
+        String toReturn="No analytical question created! Please create an analytical question first.";
 
-        String toReturn="No goal created! Please create a goal first.";
-        if(creator!=null){
-            String res=creator.newQuestion(query.getQuery());
+
+        if(creator.getCurrentQuestion()!=null){
+
+            String res=creator.newCollector(query.getQuery());
 
             if(res.length()>10000){
                 toReturn="Query result too long, cannot be rendered";
@@ -57,16 +70,6 @@ public class RandomEndPoint {
     }
 
 
-    @PostMapping(value="api/goal")
-    @ResponseBody
-    public String goal(@RequestBody String theGoal) {
-        creator= new StoryCreator();
-        creator.getGoal().addText(theGoal);
-        return theGoal.toString();
-
-    }
-
-
 
     @PostMapping(value="api/result")
     @ResponseBody
@@ -75,6 +78,19 @@ public class RandomEndPoint {
         return theResult;
 
     }
+
+
+
+    @PostMapping(value="api/observation")
+    @ResponseBody
+    public String observation(@RequestBody String theObservation) {
+
+        creator.newObservation(theObservation);
+
+        return theObservation;
+
+    }
+
 
 
     @PostMapping(value="api/form", consumes = "application/json")
@@ -97,6 +113,14 @@ public class RandomEndPoint {
             return res;
 
         }
+    }
+
+    @PostMapping("api/random")
+    @ResponseBody
+    public String sayHello(@RequestParam(name="msg", required=false) String msg) {
+        //System.out.println(msg);
+
+        return msg;
     }
 
 }
