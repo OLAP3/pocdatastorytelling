@@ -5,6 +5,7 @@ import fr.univtours.info.model.intentional.*;
 import fr.univtours.info.simpleStory.SimpleCollector;
 import fr.univtours.info.simpleStory.SimpleGoal;
 import fr.univtours.info.simpleStory.StoryCreator;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,6 +29,27 @@ public class RandomEndPoint {
     }
 
 
+    @PostMapping(value="api/question", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public Answer question(@RequestBody String question) {
+
+
+        String toReturn="No goal created! Please create a goal first.";
+        int code=1;
+
+        if(creator!=null){
+            code =0;
+            String res=creator.newQuestion(question);
+
+            toReturn= res;
+
+
+        }
+        return new Answer(code, toReturn);
+
+    }
+
+/*
     @PostMapping(value="api/question")
     @ResponseBody
     public String question(@RequestBody String question) {
@@ -44,7 +66,7 @@ public class RandomEndPoint {
         return toReturn;
 
     }
-
+    */
 
     @PostMapping(value="api/query", consumes = "application/json")
     @ResponseBody

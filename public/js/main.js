@@ -23,12 +23,24 @@ function questionFormHandler() {
 
 
     let changeDiv = function (result) {
+        let code=JSON.parse(result).code;
+        let message=JSON.parse(result).message;
+        console.log(code);
+        console.log(message);
+
+        if(code==0){
             let recap=document.getElementById("recap");
-            //let textRecap=recap.innerText;
-            //recap.innerText= result;
+                //let textRecap=recap.innerText;
+                //recap.innerText= result;
             let recaptext = document.getElementById("recap").innerText;
-            recap.innerText= recaptext + "\n Analytical Question: " + result;
-        };
+            recap.innerText= recaptext + "\n Analytical Question: " + message;
+        }
+        else{
+            let consoleElt=document.getElementById("console");
+            consoleElt.innerText=message;
+
+        }
+    };
 
    let pb = function (result) {
         console.log("debug: ");
