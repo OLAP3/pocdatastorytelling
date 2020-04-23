@@ -117,6 +117,7 @@ grid-row-end: 3;
 
 
     <div class="introduction">
+        <div>
         This is a demo of a simple data story creation.
         Your story begins by creating a goal.
         Then you can create acts and episodes by
@@ -128,8 +129,13 @@ grid-row-end: 3;
         for which you need to define your story protagonists
         and messages.
         Finally, render your
-        story and download it as a PDF file.
+        story and download it as a PDF file with this button.
 
+        </div>
+
+        <br>
+        <button onclick="renderListnener()">Render and download PDF</button>
+        <div id="demodiv"></div>
     </div>
 
     <div class="goal">
@@ -187,7 +193,7 @@ grid-row-end: 3;
 
 
 
-    <div class="result">This is the collector response
+    <div class="result">Collector's response
         <div id="result">
             <textarea id="textresult" name="textresult" rows="20" cols="180">
 
@@ -240,8 +246,16 @@ grid-row-end: 3;
 
 </div>
 
-<button onclick="renderListnener()">Render and download PDF</button>
-<div id="demodiv"></div>
+
+<div>
+    Console
+    <div id="console" style="text-align:center;border:1px solid red;">
+
+    </div>
+</div>
+
+
+
 
 
 
