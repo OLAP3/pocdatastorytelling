@@ -93,6 +93,14 @@ grid-row-start: 3;
 grid-row-end: 5;
 }
 
+.recap {
+grid-column-start: 3;
+grid-column-end: 4;
+grid-row-start: 1;
+grid-row-end: 3;
+}
+
+
 }
 
 </style>
@@ -132,10 +140,18 @@ grid-row-end: 5;
     </div>
 
 
-    <div class="story">
-        <label for="story">Story</label><br>
-        <textarea id="story" name="story" rows="10" cols="80"></textarea><br>
+
+
+
+    <div class="recap">
+        <label for="protagonist">Story recap</label><br>
+
+        <div id="recap">
+
+        </div>
+
     </div>
+
 
     <div class="question">
         <div id="toreplace">
@@ -159,17 +175,14 @@ grid-row-end: 5;
     </div>
 
 
-    <div class="message">
-        <label for="message">Messages</label><br>
-        <textarea id="message" name="message" rows="10" cols="80"></textarea><br>
-        <button onclick="messageFormHandler()">Insert new message</button>
+
+    <div class="observation">
+        <label for="observation">Observation</label><br>
+        <textarea id="observation" name="observation" rows="10" cols="80"></textarea><br>
+        <button onclick="observationformHandler()">Insert new observation</button>
     </div>
 
-    <div class="act">
-        <label for="act">Act</label><br>
-        <textarea id="act" name="act" rows="10" cols="80"></textarea><br>
-        <button onclick="actformHandler()">Insert new act</button>
-    </div>
+
 
 
 
@@ -185,11 +198,22 @@ grid-row-end: 5;
 
 
 
-    <div class="observation">
-        <label for="observation">Observation</label><br>
-        <textarea id="observation" name="observation" rows="10" cols="80"></textarea><br>
-        <button onclick="observationformHandler()">Insert new observation</button>
+
+
+    <div class="protagonist">
+        <label for="protagonist">Protagonist</label><br>
+        <textarea id="protagonist" name="protagonist" rows="10" cols="80"></textarea><br>
+        <button onclick="protagonistformHandler()">Insert new protagonist</button>
     </div>
+
+
+    <div class="message">
+        <label for="message">Messages</label><br>
+        <textarea id="message" name="message" rows="10" cols="80"></textarea><br>
+        <button onclick="messageFormHandler()">Insert new message</button>
+    </div>
+
+
 
 
     <div class="episode">
@@ -200,24 +224,20 @@ grid-row-end: 5;
 
 
 
-
-
-    <div class="protagonist">
-        <label for="protagonist">Protagonist</label><br>
-        <textarea id="protagonist" name="protagonist" rows="10" cols="80"></textarea><br>
-        <button onclick="protagonistformHandler()">Insert new protagonist</button>
+    <div class="act">
+        <label for="act">Act</label><br>
+        <textarea id="act" name="act" rows="10" cols="80"></textarea><br>
+        <button onclick="actformHandler()">Insert new act</button>
     </div>
 
 
-
-    <div class="recap">
-        <label for="protagonist">Story recap</label><br>
-
-        <div id="recap">
-
-        </div>
-
+    <!--
+    <div class="story">
+        <label for="story">Story</label><br>
+        <textarea id="story" name="story" rows="10" cols="80"></textarea><br>
     </div>
+-->
+
 </div>
 
 <button onclick="renderListnener()">Render and download PDF</button>

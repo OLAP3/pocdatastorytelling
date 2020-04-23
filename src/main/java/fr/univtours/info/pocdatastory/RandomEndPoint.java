@@ -30,7 +30,7 @@ public class RandomEndPoint {
 
     @PostMapping(value="api/question")
     @ResponseBody
-    public String quedstion(@RequestBody String question) {
+    public String question(@RequestBody String question) {
 
 
         String toReturn="No goal created! Please create a goal first.";
@@ -92,6 +92,85 @@ public class RandomEndPoint {
     }
 
 
+
+    @PostMapping(value="api/message")
+    @ResponseBody
+    public String message(@RequestBody String message) {
+
+
+        String toReturn="No observation or goal created! Please create a goal or an observation first.";
+
+        if(creator.getCurrentObservation()!=null || creator.getGoal()!=null){
+
+            String res=creator.newMessage(message);
+
+        }
+        return toReturn;
+
+
+    }
+
+
+    @PostMapping(value="api/act")
+    @ResponseBody
+    public String act(@RequestBody String act) {
+
+
+        String toReturn="No message created! Please create a message first.";
+
+        if(creator.getCurrentMessage()!=null){
+
+            String res=creator.newAct(act);
+
+        }
+        return toReturn;
+
+
+    }
+
+
+
+    @PostMapping(value="api/episode")
+    @ResponseBody
+    public String episode(@RequestBody String episode) {
+
+
+        String toReturn="No observation created! Please create an observation first.";
+
+        if(creator.getCurrentObservation()!=null){
+
+            String res=creator.newEpisode(episode);
+
+        }
+        return toReturn;
+
+
+    }
+
+
+
+
+    @PostMapping(value="api/protagonist")
+    @ResponseBody
+    public String protagonist(@RequestBody String protagonist) {
+
+
+        String toReturn="No observation created! Please create an observation first.";
+
+        if(creator.getCurrentObservation()!=null){
+
+            String res=creator.newEpisode(protagonist);
+
+        }
+        return toReturn;
+
+
+    }
+
+
+
+
+    // old stuff below -> trash
 
     @PostMapping(value="api/form", consumes = "application/json")
     @ResponseBody

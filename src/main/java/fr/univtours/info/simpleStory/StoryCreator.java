@@ -27,6 +27,9 @@ public class StoryCreator {
     Message currentMessage;
     Act currentAct;
 
+
+    Collection<Insight> currentAnswer;
+
     public StoryCreator(){
         theGoal = new SimpleGoal();
         theStory = new SimpleStory();
@@ -43,6 +46,15 @@ public class StoryCreator {
     public AnalyticalQuestion getCurrentQuestion() {
         return currentQuestion;
     }
+
+    public Observation getCurrentObservation() {
+        return currentObservation;
+    }
+
+    public Message getCurrentMessage(){
+        return currentMessage;
+    }
+
 
     public String newQuestion(String question){
         AnalyticalQuestion anAnalyticalQuestion = new SimpleAnalyticalQuestion();
@@ -71,12 +83,14 @@ public class StoryCreator {
         }
 
         Collection<Insight> col =c.fetches();
+        currentAnswer = col;
+
         Iterator<Insight> it= col.iterator();
         String res="";
 
         while(it.hasNext()){
             Insight i=it.next();
-            currentObservation.produces(i);
+            //currentObservation.produces(i);
             res=res+i.toString();
         }
 
@@ -90,6 +104,16 @@ public class StoryCreator {
         currentObservation=o;
         currentQuestion.generates(currentObservation);
         currentObservation.generates(currentQuestion);
+
+        Iterator<Insight> it= currentAnswer.iterator();
+        String res="";
+
+        while(it.hasNext()){
+            Insight i=it.next();
+            currentObservation.produces(i);
+            res=res+i.toString();
+        }
+
 
         return theObservation;
     }
@@ -106,13 +130,17 @@ public class StoryCreator {
     public String newAct(String theAct){
         currentAct=new SimpleAct();
         theStory.includes(currentAct);
+        currentAct.narrates(currentMessage);
         return(theAct);
     }
 
 
     public String newMessage(String theMessage){
         currentMessage=new SimpleMessage();
-        currentMessage.bringsOut(currentObservation);
+        if(currentObservation!=null)
+            currentMessage.bringsOut(currentObservation);
+        else
+            theGoal.bringOut(currentMessage);
         currentAct.narrates(currentMessage);
         return(theMessage);
     }
@@ -214,5 +242,6 @@ public class StoryCreator {
         vs.renders(); // and then renders
         vs.print(); // and then prints
     }
+
 
 }
