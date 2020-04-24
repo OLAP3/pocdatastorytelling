@@ -19,6 +19,18 @@ public class RandomEndPoint {
     StoryCreator creator=null;
 
 
+    @PostMapping(value="api/clear", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public Answer clear(@RequestBody String clear) {
+
+        StoryCreator creator=null;
+
+        return new Answer(1,"New story created");
+
+    }
+
+
+
     @PostMapping(value="api/goal", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public Answer goal(@RequestBody String theGoal) {
@@ -148,10 +160,10 @@ public class RandomEndPoint {
     @ResponseBody
     public Answer episode(@RequestBody String episode) {
 
-        String toReturn="No observation created! Please create an observation first.";
+        String toReturn="No observation and act created! Please create an observation and an act first.";
         int code =1;
 
-        if(creator.getCurrentObservation()!=null){
+        if(creator.getCurrentObservation()!=null && creator.getCurrentAct() !=null){
             code =0;
             String res=creator.newEpisode(episode);
             toReturn=res;

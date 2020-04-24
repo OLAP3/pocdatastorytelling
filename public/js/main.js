@@ -3,14 +3,14 @@
  */
 const server_domain = "localhost:8080";
 
-function renderListnener() {
-    let demodiv = document.getElementById('demodiv');
+function clearStory() {
 
-    let fgood = function (result){
-        demodiv.innerText = result;
+     let pb = function (result) {
+        console.log("debug: ");
+        console.log(result);
     };
 
-    elsaRequest("gimme tha numberrr !", "random", fgood, null);
+    elsaRequest("clear", "clear", processControllerAnswer, pb, false);
 }
 
 
@@ -25,7 +25,8 @@ function renderListnener() {
             let recaptext = document.getElementById("recap").value;
             // console.log(recap);
              // console.log(recaptext);
-            recap.innerText= recaptext + "\n " + endpoint + ": "+ message;
+            //recap.innerText= recaptext + "\n " + endpoint + ": "+ message;
+            recap.value= recaptext + "\n " + endpoint + ": "+ message;
         }
         else{
             let consoleElt=document.getElementById("console");
@@ -45,7 +46,7 @@ function renderListnener() {
         if(code==0){
             let div = document.getElementById("result");
             let textresult=document.getElementById("textresult");
-            textresult.innerText=message;
+            textresult.value=message;
 
         }
         else{
@@ -65,7 +66,7 @@ function renderListnener() {
 
         if(code==0){
             let obs=document.getElementById("observation");
-            obs.innerText= message;
+            obs.value= message;
         }
         else{
             let consoleElt=document.getElementById("console");
@@ -311,4 +312,16 @@ function elsaRequest(body, endpoint, callback, errorCallback, is_json=false) {
     body=JSON.stringify(body);
 
     xhr.send(body);
+}
+
+
+
+function renderListnener() {
+    let demodiv = document.getElementById('demodiv');
+
+    let fgood = function (result){
+        demodiv.innerText = result;
+    };
+
+    elsaRequest("gimme tha numberrr !", "random", fgood, null);
 }

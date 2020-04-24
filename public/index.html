@@ -138,8 +138,16 @@ grid-row-end: 3;
         </div>
 
         <br>
+        <button onclick="clearStory()">Start new story</button>
+
         <button onclick="renderListnener()">Render and download PDF</button>
+
+
         <div id="demodiv"></div>
+
+
+
+
     </div>
 
     <div class="goal">
@@ -185,7 +193,9 @@ grid-row-end: 3;
 
     <div class="observation">
         <label for="observation">Observation</label><br>
-        <textarea id="observation" name="observation" rows="10" cols="80"></textarea><br>
+        <textarea id="observation" name="observation" rows="10" cols="80" style="white-space:pre-wrap">
+
+        </textarea><br>
         <button onclick="observationformHandler()">Insert new observation</button>
     </div>
 
@@ -217,7 +227,7 @@ grid-row-end: 3;
     <div class="message">
         <label for="message">Messages</label><br>
         <textarea id="message" name="message" rows="10" cols="80"></textarea><br>
-        <button onclick="messageFormHandler()">Insert new message</button>
+        <button onclick="messageformHandler()">Insert new message</button>
     </div>
 
 

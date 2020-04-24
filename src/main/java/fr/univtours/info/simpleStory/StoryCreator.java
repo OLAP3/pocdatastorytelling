@@ -58,6 +58,10 @@ public class StoryCreator {
         return currentMessage;
     }
 
+    public Act getCurrentAct(){
+        return currentAct;
+    }
+
 
     public String newQuestion(String question){
         AnalyticalQuestion anAnalyticalQuestion = new SimpleAnalyticalQuestion();
@@ -133,17 +137,20 @@ public class StoryCreator {
         currentAct=new SimpleAct();
         theStory.includes(currentAct);
         currentAct.narrates(currentMessage);
+
+        currentAct.narrates(currentMessage);
         return(theAct);
     }
 
 
     public String newMessage(String theMessage){
         currentMessage=new SimpleMessage();
+        currentMessage.addText(theMessage);
         if(currentObservation!=null)
             currentMessage.bringsOut(currentObservation);
         else
             theGoal.bringOut(currentMessage);
-        currentAct.narrates(currentMessage);
+
         return(theMessage);
     }
 
