@@ -11,6 +11,7 @@ import fr.univtours.info.model.presentational.DashboardComponent;
 import fr.univtours.info.model.presentational.VisualStory;
 import fr.univtours.info.model.discursal.Story;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 
@@ -26,6 +27,7 @@ public class StoryCreator {
     Episode currentEpisode;
     Message currentMessage;
     Act currentAct;
+    //ArrayList<Protagonist> currentProtagonists;
 
 
     Collection<Insight> currentAnswer;
@@ -37,6 +39,7 @@ public class StoryCreator {
         theGoal.has(theStory);
         theExploration = new SimpleExploration(); // only one exploration
         theGoal.solves(theExploration);
+        //currentProtagonists=new ArrayList<Protagonist>();
     }
 
     public Goal getGoal(){
@@ -121,7 +124,6 @@ public class StoryCreator {
 
     public String newProtagonist(String theProtagonist){
         Protagonist p = new SimpleProtagonist();
-        currentEpisode.playsIn(p);
         currentObservation.bringsOut(p);
         p.addText(theProtagonist);
         return theProtagonist;
@@ -150,6 +152,10 @@ public class StoryCreator {
     public String newEpisode(String theEpisode){
         currentEpisode=new SimpleEpisode();
         currentAct.includes(currentEpisode);
+        for(Protagonist p : currentObservation.bringsOut()){
+            currentEpisode.playsIn(p);
+        }
+
         return(theEpisode);
     }
 

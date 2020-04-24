@@ -22,7 +22,9 @@ function renderListnener() {
 
         if(code==0){
             let recap=document.getElementById("recap");
-            let recaptext = document.getElementById("recap").innerText;
+            let recaptext = document.getElementById("recap").value;
+            // console.log(recap);
+             // console.log(recaptext);
             recap.innerText= recaptext + "\n " + endpoint + ": "+ message;
         }
         else{
@@ -63,7 +65,7 @@ function renderListnener() {
 
         if(code==0){
             let obs=document.getElementById("observation");
-            obs.innerText= result;
+            obs.innerText= message;
         }
         else{
             let consoleElt=document.getElementById("console");

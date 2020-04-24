@@ -26,7 +26,7 @@ public class RandomEndPoint {
         String toReturn="Already a goal. Only one is allowed";
         int code =1;
 
-        if(creator.getGoal()!=null){
+        if(creator==null){
             code=0;
             creator= new StoryCreator();
             creator.getGoal().addText(theGoal);
@@ -115,6 +115,7 @@ public class RandomEndPoint {
         if(creator.getCurrentObservation()!=null || creator.getGoal()!=null){
             code=0;
             String res=creator.newMessage(message);
+            toReturn=res;
 
         }
         return new Answer(code,toReturn);
@@ -133,6 +134,7 @@ public class RandomEndPoint {
         if(creator.getCurrentMessage()!=null){
             code =0;
             String res=creator.newAct(act);
+            toReturn=res;
 
         }
         return new Answer(code,toReturn);
@@ -152,6 +154,7 @@ public class RandomEndPoint {
         if(creator.getCurrentObservation()!=null){
             code =0;
             String res=creator.newEpisode(episode);
+            toReturn=res;
 
         }
         return new Answer(code,toReturn);
@@ -171,7 +174,8 @@ public class RandomEndPoint {
 
         if(creator.getCurrentObservation()!=null){
             code=0;
-            String res=creator.newEpisode(protagonist);
+            String res=creator.newProtagonist(protagonist);
+            toReturn=res;
 
         }
         return new Answer(code, toReturn);
