@@ -19,12 +19,22 @@ public class RandomEndPoint {
     StoryCreator creator=null;
 
 
-    @PostMapping(value="api/goal")
+    @PostMapping(value="api/goal", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public String goal(@RequestBody String theGoal) {
-        creator= new StoryCreator();
-        creator.getGoal().addText(theGoal);
-        return theGoal.toString();
+    public Answer goal(@RequestBody String theGoal) {
+
+        String toReturn="Already a goal. Only one is allowed";
+        int code =1;
+
+        if(creator.getGoal()!=null){
+            code=0;
+            creator= new StoryCreator();
+            creator.getGoal().addText(theGoal);
+            String res=theGoal.toString();
+            toReturn=res;
+        }
+
+        return new Answer(code,toReturn);
 
     }
 
@@ -32,7 +42,6 @@ public class RandomEndPoint {
     @PostMapping(value="api/question", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public Answer question(@RequestBody String question) {
-
 
         String toReturn="No goal created! Please create a goal first.";
         int code=1;
@@ -43,37 +52,18 @@ public class RandomEndPoint {
 
             toReturn= res;
 
-
         }
         return new Answer(code, toReturn);
-
     }
 
-/*
-    @PostMapping(value="api/question")
+
+
+    @PostMapping(value="api/query", consumes = "application/json", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public String question(@RequestBody String question) {
-
-
-        String toReturn="No goal created! Please create a goal first.";
-        if(creator!=null){
-            String res=creator.newQuestion(question);
-
-            toReturn= res;
-
-
-        }
-        return toReturn;
-
-    }
-    */
-
-    @PostMapping(value="api/query", consumes = "application/json")
-    @ResponseBody
-    public String query(@RequestBody SqlCollector query) {
+    public Answer query(@RequestBody SqlCollector query) {
 
         String toReturn="No analytical question created! Please create an analytical question first.";
-
+        int code=1;
 
         if(creator.getCurrentQuestion()!=null){
 
@@ -83,88 +73,88 @@ public class RandomEndPoint {
                 toReturn="Query result too long, cannot be rendered";
             }
             else{
+                code=0;
                 toReturn= res;
 
             }
         }
-        return toReturn;
+        return new Answer(code,toReturn);
+
+    }
+
+
+    @PostMapping(value="api/result", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public Answer result(@RequestBody String theResult) {
+
+        return new Answer(0,theResult);
 
     }
 
 
 
-    @PostMapping(value="api/result")
+    @PostMapping(value="api/observation", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public String result(@RequestBody String theResult) {
-
-        return theResult;
-
-    }
-
-
-
-    @PostMapping(value="api/observation")
-    @ResponseBody
-    public String observation(@RequestBody String theObservation) {
+    public Answer observation(@RequestBody String theObservation) {
 
         creator.newObservation(theObservation);
-
-        return theObservation;
+        return new Answer(0,theObservation);
 
     }
 
 
 
-    @PostMapping(value="api/message")
+    @PostMapping(value="api/message", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public String message(@RequestBody String message) {
+    public Answer message(@RequestBody String message) {
 
 
         String toReturn="No observation or goal created! Please create a goal or an observation first.";
+        int code=1;
 
         if(creator.getCurrentObservation()!=null || creator.getGoal()!=null){
-
+            code=0;
             String res=creator.newMessage(message);
 
         }
-        return toReturn;
+        return new Answer(code,toReturn);
 
 
     }
 
 
-    @PostMapping(value="api/act")
+    @PostMapping(value="api/act", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public String act(@RequestBody String act) {
-
+    public Answer act(@RequestBody String act) {
 
         String toReturn="No message created! Please create a message first.";
+        int code=1;
 
         if(creator.getCurrentMessage()!=null){
-
+            code =0;
             String res=creator.newAct(act);
 
         }
-        return toReturn;
+        return new Answer(code,toReturn);
 
 
     }
 
 
 
-    @PostMapping(value="api/episode")
+    @PostMapping(value="api/episode", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public String episode(@RequestBody String episode) {
-
+    public Answer episode(@RequestBody String episode) {
 
         String toReturn="No observation created! Please create an observation first.";
+        int code =1;
 
         if(creator.getCurrentObservation()!=null){
-
+            code =0;
             String res=creator.newEpisode(episode);
 
         }
-        return toReturn;
+        return new Answer(code,toReturn);
 
 
     }
@@ -172,22 +162,28 @@ public class RandomEndPoint {
 
 
 
-    @PostMapping(value="api/protagonist")
+    @PostMapping(value="api/protagonist", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public String protagonist(@RequestBody String protagonist) {
+    public Answer protagonist(@RequestBody String protagonist) {
 
-
+        int code=1;
         String toReturn="No observation created! Please create an observation first.";
 
         if(creator.getCurrentObservation()!=null){
-
+            code=0;
             String res=creator.newEpisode(protagonist);
 
         }
-        return toReturn;
+        return new Answer(code, toReturn);
 
 
     }
+
+
+
+
+
+
 
 
 
@@ -225,3 +221,21 @@ public class RandomEndPoint {
     }
 
 }
+/*
+    @PostMapping(value="api/question")
+    @ResponseBody
+    public String question(@RequestBody String question) {
+
+
+        String toReturn="No goal created! Please create a goal first.";
+        if(creator!=null){
+            String res=creator.newQuestion(question);
+
+            toReturn= res;
+
+
+        }
+        return toReturn;
+
+    }
+    */

@@ -14,15 +14,7 @@ function renderListnener() {
 }
 
 
-
-
-function questionFormHandler() {
-    let question = document.getElementById("question").value;
-
-    let msg = question;
-
-
-    let changeDiv = function (result) {
+ function processControllerAnswer (result, endpoint) {
         let code=JSON.parse(result).code;
         let message=JSON.parse(result).message;
         console.log(code);
@@ -30,24 +22,70 @@ function questionFormHandler() {
 
         if(code==0){
             let recap=document.getElementById("recap");
-                //let textRecap=recap.innerText;
-                //recap.innerText= result;
             let recaptext = document.getElementById("recap").innerText;
-            recap.innerText= recaptext + "\n Analytical Question: " + message;
+            recap.innerText= recaptext + "\n " + endpoint + ": "+ message;
         }
         else{
             let consoleElt=document.getElementById("console");
             consoleElt.innerText=message;
 
         }
-    };
+}
+
+
+
+ function processSQLAnswer (result, endpoint) {
+        let code=JSON.parse(result).code;
+        let message=JSON.parse(result).message;
+        console.log(code);
+        console.log(message);
+
+        if(code==0){
+            let div = document.getElementById("result");
+            let textresult=document.getElementById("textresult");
+            textresult.innerText=message;
+
+        }
+        else{
+            let consoleElt=document.getElementById("console");
+            consoleElt.innerText=message;
+
+        }
+}
+
+
+ function processInsightAnswer (result, endpoint) {
+        let code=JSON.parse(result).code;
+        let message=JSON.parse(result).message;
+        console.log(code);
+        console.log(message);
+
+
+        if(code==0){
+            let obs=document.getElementById("observation");
+            obs.innerText= result;
+        }
+        else{
+            let consoleElt=document.getElementById("console");
+            consoleElt.innerText=message;
+
+        }
+}
+
+
+
+
+function questionFormHandler() {
+    let question = document.getElementById("question").value;
+
+    let msg = question;
 
    let pb = function (result) {
         console.log("debug: ");
         console.log(result);
     };
 
-    elsaRequest(msg, "question", changeDiv, pb,false);
+    elsaRequest(msg, "question", processControllerAnswer, pb,false);
 }
 
 
@@ -62,19 +100,12 @@ function SQLformHandler() {
 
     document.getElementById("myForm").style.display = "none";
 
-    let changeDiv = function (result) {
-        let div = document.getElementById("result");
-
-        let textresult=document.getElementById("textresult");
-        textresult.innerText=result;
-    };
-
    let pb = function (result) {
         console.log("debug: ");
         console.log(result);
     };
 
-    elsaRequest(msg, "query", changeDiv, pb,true);
+    elsaRequest(msg, "query", processSQLAnswer, pb,true);
 }
 
 
@@ -94,7 +125,7 @@ function goalformHandler() {
         console.log(result);
     };
 
-    elsaRequest(msg, "goal", changeDiv, pb,false);
+    elsaRequest(msg, "goal", processControllerAnswer, pb,false);
 }
 
 
@@ -104,17 +135,12 @@ function resultformHandler() {
 
     let msg = selection;
 
-    let changeDiv = function (result) {
-        let obs=document.getElementById("observation");
-        obs.innerText= result;
-    };
-
    let pb = function (result) {
         console.log("debug: ");
         console.log(result);
     };
 
-    elsaRequest(msg, "result", changeDiv, pb,false);
+    elsaRequest(msg, "result", processInsightAnswer, pb,false);
 }
 
 
@@ -135,7 +161,7 @@ function observationformHandler() {
         console.log(result);
     };
 
-    elsaRequest(msg, "observation", changeDiv, pb,false);
+    elsaRequest(msg, "observation", processControllerAnswer, pb,false);
 }
 
 
@@ -156,7 +182,7 @@ function messageformHandler() {
         console.log(result);
     };
 
-    elsaRequest(msg, "message", changeDiv, pb,false);
+    elsaRequest(msg, "message", processControllerAnswer, pb,false);
 }
 
 
@@ -176,7 +202,7 @@ function protagonistformHandler() {
         console.log(result);
     };
 
-    elsaRequest(msg, "protagonist", changeDiv, pb,false);
+    elsaRequest(msg, "protagonist", processControllerAnswer, pb,false);
 }
 
 
@@ -198,7 +224,7 @@ function actformHandler() {
         console.log(result);
     };
 
-    elsaRequest(msg, "act", changeDiv, pb,false);
+    elsaRequest(msg, "act", processControllerAnswer, pb,false);
 }
 
 
@@ -219,8 +245,11 @@ function episodeformHandler() {
         console.log(result);
     };
 
-    elsaRequest(msg, "episode", changeDiv, pb,false);
+    elsaRequest(msg, "episode", processControllerAnswer, pb,false);
 }
+
+
+
 
 function formHandler() {
     let first_name = document.getElementById("query").value;
@@ -261,7 +290,7 @@ function elsaRequest(body, endpoint, callback, errorCallback, is_json=false) {
     // modify callback to be executed when request completes
     function internCallback() {
         if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
-            callback(xhr.responseText);
+            callback(xhr.responseText, endpoint);
         }
         // if request fails (eg: network error)
         else if (xhr.readyState === 4 && typeof errorCallback !== 'undefined') {
