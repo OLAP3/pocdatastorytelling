@@ -197,6 +197,26 @@ public class RandomEndPoint {
 
 
 
+    @PostMapping(value="api/render", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public Answer render(@RequestBody String msg) {
+
+        int code=1;
+        String toReturn="No story created! Please create story objects first.";
+
+        if(creator!=null){
+            code=0;
+            String res=creator.render(msg);
+            toReturn=res;
+
+        }
+        return new Answer(code, toReturn);
+
+
+    }
+
+
+
 
 
 

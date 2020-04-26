@@ -253,6 +253,18 @@ function episodeformHandler() {
 
 
 
+function renderListnener() {
+    //let demodiv = document.getElementById('demodiv');
+
+   let msg="The end."
+
+  let pb = function (result) {
+        console.log("debug: ");
+        console.log(result);
+    };
+    elsaRequest(msg, "render", processControllerAnswer, pb, false);
+}
+
 
 function formHandler() {
     let first_name = document.getElementById("query").value;
@@ -315,13 +327,3 @@ function elsaRequest(body, endpoint, callback, errorCallback, is_json=false) {
 }
 
 
-
-function renderListnener() {
-    let demodiv = document.getElementById('demodiv');
-
-    let fgood = function (result){
-        demodiv.innerText = result;
-    };
-
-    elsaRequest("gimme tha numberrr !", "random", fgood, null);
-}

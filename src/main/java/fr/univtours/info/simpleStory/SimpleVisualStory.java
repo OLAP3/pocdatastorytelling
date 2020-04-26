@@ -21,9 +21,14 @@ public class SimpleVisualStory implements VisualStory {
     Collection<Dashboard> theDashboards;
     Story theStory;
     String theRendering="";
+    PDDocument thePDF;
 
     public SimpleVisualStory(){
         theDashboards = new ArrayList<Dashboard>();
+    }
+
+    public PDDocument getThePDF(){
+        return thePDF;
     }
 
     @Override
@@ -74,6 +79,7 @@ public class SimpleVisualStory implements VisualStory {
         }
         try {
             PDDocument pdf = createPDF();
+            this.thePDF=pdf;
         }
         catch (Exception e){
             e.printStackTrace();

@@ -10,6 +10,7 @@ import fr.univtours.info.model.presentational.Dashboard;
 import fr.univtours.info.model.presentational.DashboardComponent;
 import fr.univtours.info.model.presentational.VisualStory;
 import fr.univtours.info.model.discursal.Story;
+import org.apache.pdfbox.pdmodel.PDDocument;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -28,7 +29,6 @@ public class StoryCreator {
     Message currentMessage;
     Act currentAct;
     //ArrayList<Protagonist> currentProtagonists;
-
 
     Collection<Insight> currentAnswer;
 
@@ -162,8 +162,22 @@ public class StoryCreator {
         for(Protagonist p : currentObservation.bringsOut()){
             currentEpisode.playsIn(p);
         }
+        currentEpisode.narrates(currentObservation);
 
         return(theEpisode);
+    }
+
+
+
+
+    public String render(String msg){
+        VisualStory vs=new SimpleVisualStory();
+        vs.renders(theStory);  // just attach
+        vs.renders(); // and then renders
+        PDDocument thePDF=((SimpleVisualStory) vs).getThePDF();
+
+        //vs.print(); // and then prints
+        return msg;
     }
 
     public static void main(String args[]) throws Exception{
