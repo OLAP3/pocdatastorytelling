@@ -138,7 +138,7 @@ public class StoryCreator {
         theStory.includes(currentAct);
         currentAct.narrates(currentMessage);
 
-        currentAct.narrates(currentMessage);
+        //currentAct.narrates(currentMessage);
         return(theAct);
     }
 

@@ -23,9 +23,10 @@ public class RandomEndPoint {
     @ResponseBody
     public Answer clear(@RequestBody String clear) {
 
-        StoryCreator creator=null;
+        // to do: store current story creator
+        creator=null;
 
-        return new Answer(1,"New story created");
+        return new Answer(0,"New story created");
 
     }
 

@@ -1,7 +1,8 @@
 /*
     Global parameters here
  */
-const server_domain = "localhost:8080";
+//const server_domain = "localhost:8080";
+const server_domain = window.location.host;
 
 function clearStory() {
 
@@ -10,8 +11,43 @@ function clearStory() {
         console.log(result);
     };
 
-    elsaRequest("clear", "clear", processControllerAnswer, pb, false);
+    elsaRequest("clear", "clear", processClear, pb, false);
 }
+
+function clear(toClear){
+    let recap=document.getElementById(toClear);
+    let recaptext = document.getElementById(toClear).value;
+    recap.value= "";
+}
+
+function processClear (result, endpoint) {
+        let code=JSON.parse(result).code;
+        let message=JSON.parse(result).message;
+        console.log(code);
+        console.log(message);
+
+        if(code==0){
+
+         //   let recap=document.getElementById("recap");
+         //   let recaptext = document.getElementById("recap").value;
+         //   recap.value= "";
+
+         clear("recap");
+         clear("goal");
+         clear("question");
+         clear("observation");
+         clear("textresult");
+         clear("protagonist");
+         clear("message");
+         clear("episode");
+         clear("act");
+
+         let consoleElt=document.getElementById("console");
+         consoleElt.innerText=message;
+
+        }
+}
+
 
 
  function processControllerAnswer (result, endpoint) {
@@ -26,7 +62,7 @@ function clearStory() {
             // console.log(recap);
              // console.log(recaptext);
             //recap.innerText= recaptext + "\n " + endpoint + ": "+ message;
-            recap.value= recaptext + "\n " + endpoint + ": "+ message;
+            recap.value= recaptext + "\n " + endpoint + ": "+ JSON.parse(message);
         }
         else{
             let consoleElt=document.getElementById("console");
@@ -59,7 +95,7 @@ function clearStory() {
 
  function processInsightAnswer (result, endpoint) {
         let code=JSON.parse(result).code;
-        let message=JSON.parse(result).message;
+        let message=JSON.parse(JSON.parse(result).message);
         console.log(code);
         console.log(message);
 
