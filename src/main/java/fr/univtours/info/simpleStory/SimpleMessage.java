@@ -19,8 +19,9 @@ public class SimpleMessage implements Message {
 
     @Override
     public void addText(String aText) {
+        this.theText=aText.substring(1,aText.length()-1).replace("\\n","\n");
 
-        this.theText=aText;
+       // this.theText=aText;
     }
 
     @Override

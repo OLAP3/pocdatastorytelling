@@ -105,7 +105,7 @@ public class SimpleVisualStory implements VisualStory {
             //String text=new String(theRendering);
             String text=theRendering;
 
-            contentStream.setFont(PDType1Font.TIMES_ROMAN, 10);
+
             //Setting the leading
             contentStream.setLeading(14.5f);
 
@@ -113,16 +113,30 @@ public class SimpleVisualStory implements VisualStory {
             contentStream.newLineAtOffset(25, 725);
 
             String[] toPrint = text.split("\n");
-            for (int x=0; x<toPrint.length; x++){
-                if(x==0){// for goal
-                    contentStream.setFont(PDType1Font.TIMES_BOLD, 12);
-                }
-                else{
-                    contentStream.setFont(PDType1Font.TIMES_ROMAN, 10);
-                }
 
-                contentStream.showText(toPrint[x]);
-                contentStream.newLine();
+            // prints title (goal)
+            contentStream.setFont(PDType1Font.TIMES_BOLD, 12);
+            contentStream.showText(toPrint[0]);
+            contentStream.newLine();
+            contentStream.newLine();
+
+            contentStream.setFont(PDType1Font.TIMES_ROMAN, 10);
+            for (int x=1; x<toPrint.length; x++){
+
+               if(toPrint[x].startsWith("Act")){
+                   contentStream.setFont(PDType1Font.TIMES_BOLD_ITALIC, 11);
+                   contentStream.showText(toPrint[x]);
+                   contentStream.newLine();
+                   contentStream.newLine();
+
+               }
+                else{
+                   contentStream.setFont(PDType1Font.TIMES_ROMAN, 10);
+                   contentStream.showText(toPrint[x]);
+                   contentStream.newLine();
+               }
+
+
             }
 
 

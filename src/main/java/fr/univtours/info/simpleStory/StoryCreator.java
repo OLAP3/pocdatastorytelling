@@ -33,13 +33,7 @@ public class StoryCreator {
     Collection<Insight> currentAnswer;
 
     public StoryCreator(){
-        theGoal = new SimpleGoal();
-        theStory = new SimpleStory();
-        theStory.has(theGoal);
-        theGoal.has(theStory);
-        theExploration = new SimpleExploration(); // only one exploration
-        theGoal.solves(theExploration);
-        //currentProtagonists=new ArrayList<Protagonist>();
+
     }
 
     public Goal getGoal(){
@@ -60,6 +54,19 @@ public class StoryCreator {
 
     public Act getCurrentAct(){
         return currentAct;
+    }
+
+    public String newGoal(String aGoal){
+        theGoal = new SimpleGoal();
+        theGoal.addText(aGoal);
+
+        theStory = new SimpleStory();
+        theStory.has(theGoal);
+        theGoal.has(theStory);
+        theExploration = new SimpleExploration(); // only one exploration
+        theGoal.solves(theExploration);
+        //currentProtagonists=new ArrayList<Protagonist>();
+        return aGoal;
     }
 
 

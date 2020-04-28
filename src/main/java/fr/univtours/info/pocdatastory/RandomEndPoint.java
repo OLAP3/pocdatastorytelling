@@ -1,5 +1,6 @@
 package fr.univtours.info.pocdatastory;
 
+import fr.univtours.info.model.discursal.Story;
 import fr.univtours.info.model.factual.Insight;
 import fr.univtours.info.model.intentional.*;
 import fr.univtours.info.simpleStory.SimpleCollector;
@@ -9,6 +10,7 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -16,15 +18,17 @@ import java.util.List;
 @Controller
 public class RandomEndPoint {
 
-    StoryCreator creator=null;
+    StoryCreator creator; //current creator
+    ArrayList<StoryCreator> theCreators=new ArrayList<StoryCreator>();
 
 
     @PostMapping(value="api/clear", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public Answer clear(@RequestBody String clear) {
 
-        // to do: store current story creator
-        creator=null;
+            creator=new StoryCreator();
+            theCreators.add(creator);
+
 
         return new Answer(0,"New story created");
 
@@ -41,11 +45,12 @@ public class RandomEndPoint {
         String toReturn="Already a goal. Only one is allowed";
         int code =1;
 
-        if(creator==null){
+        if(creator.getGoal()==null){
             code=0;
-            creator= new StoryCreator();
-            creator.getGoal().addText(theGoal);
-            String res= theGoal;
+            //creator= new StoryCreator();
+
+            //creator.getGoal().addText(theGoal);
+            String res= creator.newGoal(theGoal);
             toReturn=res;
         }
 
@@ -62,7 +67,7 @@ public class RandomEndPoint {
         String toReturn="No goal created! Please create a goal first.";
         int code=1;
 
-        if(creator!=null){
+        if(creator.getGoal()!=null){
             code =0;
             String res=creator.newQuestion(question);
 
