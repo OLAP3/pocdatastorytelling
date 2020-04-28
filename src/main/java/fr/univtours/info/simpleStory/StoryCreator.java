@@ -137,6 +137,7 @@ public class StoryCreator {
         currentAct=new SimpleAct();
         theStory.includes(currentAct);
         currentAct.narrates(currentMessage);
+        currentAct.addText(theAct);
 
         //currentAct.narrates(currentMessage);
         return(theAct);
@@ -163,6 +164,7 @@ public class StoryCreator {
             currentEpisode.playsIn(p);
         }
         currentEpisode.narrates(currentObservation);
+        currentEpisode.addText(theEpisode);
 
         return(theEpisode);
     }

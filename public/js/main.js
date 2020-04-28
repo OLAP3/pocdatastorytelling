@@ -92,6 +92,10 @@ function processClear (result, endpoint) {
         }
 }
 
+function processDescribeAnswer(result){
+}
+
+
 
  function processInsightAnswer (result, endpoint) {
         let code=JSON.parse(result).code;
@@ -129,15 +133,17 @@ function questionFormHandler() {
 
 
 function openSQLform() {
-  document.getElementById("myForm").style.display = "block";
+  document.getElementById("mySQLForm").style.display = "block";
 }
+
+
 
 function SQLformHandler() {
     let query = document.getElementById("query").value;
 
     let msg = {"query" : query};
 
-    document.getElementById("myForm").style.display = "none";
+    document.getElementById("mySQLForm").style.display = "none";
 
    let pb = function (result) {
         console.log("debug: ");
@@ -145,6 +151,29 @@ function SQLformHandler() {
     };
 
     elsaRequest(msg, "query", processSQLAnswer, pb,true);
+}
+
+
+function openDescribeform() {
+  document.getElementById("myDescribeForm").style.display = "block";
+}
+
+
+
+function describeformHandler() {
+    let query = document.getElementById("describeQuery").value;
+
+    let msg = {"describeQuery" : query};
+
+    document.getElementById("myDescribeForm").style.display = "none";
+
+   let pb = function (result) {
+        console.log("debug: ");
+        console.log(result);
+    };
+
+    //elsaRequest(msg, "query", processSQLAnswer, pb,true);
+    sendDescribe(msg, processDescribeAnswer,pb);
 }
 
 
@@ -292,7 +321,7 @@ function episodeformHandler() {
 function renderListnener() {
     //let demodiv = document.getElementById('demodiv');
 
-   let msg="The end."
+   let msg="Story rendered."
 
   let pb = function (result) {
         console.log("debug: ");
@@ -362,4 +391,34 @@ function elsaRequest(body, endpoint, callback, errorCallback, is_json=false) {
     xhr.send(body);
 }
 
+
+
+function sendDescribe(body, callback, errorCallback) {
+    // construct server url for API request
+    const url = "http://semantic.csr.unibo.it/describe/api/" ; // change me
+    let xhr = new XMLHttpRequest();
+
+
+
+    // modify callback to be executed when request completes
+    function internCallback() {
+        if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+            callback(xhr.responseText, endpoint);
+        }
+        // if request fails (eg: network error)
+        else if (xhr.readyState === 4 && typeof errorCallback !== 'undefined') {
+            errorCallback(xhr.responseText, xhr.status);
+        }
+    }
+    xhr.open('POST', url);
+
+
+    // function to be called on state change
+    xhr.onreadystatechange = internCallback;
+    // send request
+
+    body=JSON.stringify(body);
+
+    xhr.send(body);
+}
 

@@ -18,12 +18,17 @@ public class SimpleDashboardComponent implements DashboardComponent {
 
     @Override
     public Episode render() {
+        /*
         Observation theObservation=theEpisode.narrates();
+
         Iterator<Insight> iti= theObservation.produces().iterator();
         Insight theInsight=iti.next(); //only 1 insight
         String stringInsight=theInsight.toString();
 
         theRendering=stringInsight;
+
+         */
+        theRendering = theEpisode.toString();
         return theEpisode;
     }
 

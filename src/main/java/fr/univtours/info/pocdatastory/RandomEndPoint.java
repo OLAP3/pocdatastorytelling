@@ -36,6 +36,8 @@ public class RandomEndPoint {
     @ResponseBody
     public Answer goal(@RequestBody String theGoal) {
 
+
+
         String toReturn="Already a goal. Only one is allowed";
         int code =1;
 
@@ -43,9 +45,10 @@ public class RandomEndPoint {
             code=0;
             creator= new StoryCreator();
             creator.getGoal().addText(theGoal);
-            String res=theGoal.toString();
+            String res= theGoal;
             toReturn=res;
         }
+
 
         return new Answer(code,toReturn);
 

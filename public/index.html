@@ -175,9 +175,10 @@ grid-row-end: 3;
 
             <button onclick="questionFormHandler()">Insert new analytical question</button>
             <button onclick="openSQLform()">Run SQL collector</button>
+            <button onclick="openDescribeform()">Run Describe collector</button>
         </div>
 
-        <div class="form-popup" id="myForm">
+        <div class="form-popup" id="mySQLForm">
             <form action="" class="form-container">
                 <h1>SQL Collector</h1>
 
@@ -187,6 +188,19 @@ grid-row-end: 3;
                 <button type="button" class="btn cancel" onclick="SQLformHandler()">Evaluate this query</button>
             </form>
         </div>
+
+
+        <div class="form-popup" id="myDescribeForm">
+            <form action="" class="form-container">
+                <h1>Describe Collector</h1>
+
+                <label for="describeQuery"><b>Describe</b></label><br>
+                <textarea id="describeQuery" name="describeQuery" rows="10" cols="30"></textarea><br>
+
+                <button type="button" class="btn cancel" onclick="describeformHandler()">Evaluate this query</button>
+            </form>
+        </div>
+
     </div>
 
 

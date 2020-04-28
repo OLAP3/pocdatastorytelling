@@ -21,11 +21,12 @@ public class SimpleObservation implements Observation {
     @Override
     public void addText(String aText) {
 
-        this.theText=aText;
+        this.theText=aText.substring(1,aText.length()-1);
+        System.out.println(theText);
     }
 
     @Override
-    public String getTxt() {
+    public String toString() {
         return theText;
     }
 

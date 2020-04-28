@@ -8,7 +8,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 public class SimpleAct implements Act {
-    String text;
+    String actText;
+
     Collection<Episode> theEpisodes;
     Message theMessage;
 
@@ -18,12 +19,12 @@ public class SimpleAct implements Act {
 
     @Override
     public void addText(String theText) {
-        this.text=theText;
+        this.actText=theText;
     }
 
     @Override
     public String toString() {
-        return text;
+        return actText + "\n" + theMessage.toString();
     }
 
     @Override
@@ -35,7 +36,7 @@ public class SimpleAct implements Act {
     public void narrates(Message aMessage) {
 
         this.theMessage=aMessage;
-        this.text=theMessage.toString();
+        //this.messageText=theMessage.toString();
     }
 
     @Override

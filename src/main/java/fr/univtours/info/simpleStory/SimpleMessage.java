@@ -9,7 +9,7 @@ import java.util.Collection;
 import java.util.Set;
 
 public class SimpleMessage implements Message {
-    String theText="";
+    String theText;
     Collection<Observation> theObservations;
 
     public SimpleMessage(){
@@ -31,7 +31,8 @@ public class SimpleMessage implements Message {
     @Override
     public void bringsOut(Observation anObservation) {
         theObservations.add(anObservation);
-        theText = theText + anObservation.generates().toString();  // in this implementation, message gets the  question
+        //theText = theText + anObservation.generates().toString();
+        // in this implementation, message gets the  question
         // should be more sophisticated than just concatenate queries
     }
 
@@ -43,6 +44,6 @@ public class SimpleMessage implements Message {
     @Override
     public Collection<Observation> bringsOut() {
 
-        return null;
+        return theObservations;
     }
 }

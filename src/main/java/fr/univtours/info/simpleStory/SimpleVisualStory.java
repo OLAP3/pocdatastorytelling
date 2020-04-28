@@ -54,7 +54,7 @@ public class SimpleVisualStory implements VisualStory {
                 dbc.renders(ep);
             }
 
-
+            //d.renders(act);
         }
 
     }
@@ -66,13 +66,12 @@ public class SimpleVisualStory implements VisualStory {
 
     @Override
     public Collection<Dashboard> contains() {
-
         return theDashboards;
     }
 
     @Override
     public Story renders() {
-        theRendering=theRendering + theStory.toString();
+        theRendering= "This is the story for goal: " + theStory.has().toString() + "\n";
         for(Dashboard d : theDashboards){
             d.renders();
             theRendering=theRendering + ((SimpleDashboard) d).getRendering();
@@ -94,7 +93,7 @@ public class SimpleVisualStory implements VisualStory {
 
         System.out.println("PDF created");
 
-        for (int i=0; i<2; i++) {
+        for (int i=0; i<1; i++) {
             //Creating a blank page
             PDPage blankPage = new PDPage();
 
@@ -103,8 +102,8 @@ public class SimpleVisualStory implements VisualStory {
 
             PDPageContentStream contentStream = new PDPageContentStream(document, blankPage);
             contentStream.beginText();
-            String text=new String(theRendering);
-
+            //String text=new String(theRendering);
+            String text=theRendering;
 
             contentStream.setFont(PDType1Font.TIMES_ROMAN, 10);
             //Setting the leading
@@ -115,6 +114,13 @@ public class SimpleVisualStory implements VisualStory {
 
             String[] toPrint = text.split("\n");
             for (int x=0; x<toPrint.length; x++){
+                if(x==0){
+                    contentStream.setFont(PDType1Font.TIMES_BOLD, 12);
+                }
+                else{
+                    contentStream.setFont(PDType1Font.TIMES_ROMAN, 10);
+                }
+
                 contentStream.showText(toPrint[x]);
                 contentStream.newLine();
             }

@@ -6,7 +6,7 @@ import java.util.Collection;
 
 public interface Observation {
     public void addText(String aText);
-    public String getTxt();
+    public String toString();
 
     public void poses(AnalyticalQuestion anAnalyticalQuestion);
     public void generates(AnalyticalQuestion anAnalyticalQuestion);

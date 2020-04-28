@@ -25,7 +25,11 @@ public class SimpleEpisode implements Episode {
     @Override
     public String toString() {
 
-        return theText;
+        String episodeProtagonists = "";
+        for(Protagonist p : theProtagonists){
+            episodeProtagonists = episodeProtagonists+ p.toString() + "\n";
+        }
+        return theText + "\n" +theObservation.toString() + "\n" + episodeProtagonists;
     }
 
     @Override
