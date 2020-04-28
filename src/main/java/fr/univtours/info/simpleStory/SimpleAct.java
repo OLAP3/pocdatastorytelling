@@ -19,12 +19,13 @@ public class SimpleAct implements Act {
 
     @Override
     public void addText(String theText) {
-        this.actText=theText;
+        this.actText=theText.substring(1,theText.length()-1).replace("\\n","\n");
+        //this.actText=theText;
     }
 
     @Override
     public String toString() {
-        return actText + "\n" + theMessage.toString();
+        return "Act: " + actText + "\n" + theMessage.toString();
     }
 
     @Override

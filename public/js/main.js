@@ -50,6 +50,20 @@ function processClear (result, endpoint) {
 
 
 
+ function processRender (result, endpoint) {
+        let code=JSON.parse(result).code;
+        let message=JSON.parse(result).message;
+        console.log(code);
+        console.log(message);
+
+        let consoleElt=document.getElementById("console");
+        consoleElt.innerText=JSON.parse(message);
+
+
+}
+
+
+
  function processControllerAnswer (result, endpoint) {
         let code=JSON.parse(result).code;
         let message=JSON.parse(result).message;
@@ -327,30 +341,9 @@ function renderListnener() {
         console.log("debug: ");
         console.log(result);
     };
-    elsaRequest(msg, "render", processControllerAnswer, pb, false);
+    elsaRequest(msg, "render", processRender, pb, false);
 }
 
-
-function formHandler() {
-    let first_name = document.getElementById("query").value;
-    let last_name = document.getElementById("message").value;
-    console.log(first_name);
-    console.log(last_name);
-
-    let msg = {"fn" : first_name, "ln": last_name};
-
-    let changeDiv = function (result) {
-        let div = document.getElementById("result");
-        div.innerText = result;
-    };
-
-   let pb = function (result) {
-        console.log("debug: ");
-        console.log(result);
-    };
-
-    elsaRequest(msg, "form", changeDiv, pb,true);
-}
 
 
 
@@ -422,3 +415,26 @@ function sendDescribe(body, callback, errorCallback) {
     xhr.send(body);
 }
 
+
+// Old stuff below
+
+function formHandler() {
+    let first_name = document.getElementById("query").value;
+    let last_name = document.getElementById("message").value;
+    console.log(first_name);
+    console.log(last_name);
+
+    let msg = {"fn" : first_name, "ln": last_name};
+
+    let changeDiv = function (result) {
+        let div = document.getElementById("result");
+        div.innerText = result;
+    };
+
+   let pb = function (result) {
+        console.log("debug: ");
+        console.log(result);
+    };
+
+    elsaRequest(msg, "form", changeDiv, pb,true);
+}

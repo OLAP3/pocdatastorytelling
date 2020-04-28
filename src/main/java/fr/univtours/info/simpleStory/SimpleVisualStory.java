@@ -74,7 +74,7 @@ public class SimpleVisualStory implements VisualStory {
         theRendering= "This is the story for goal: " + theStory.has().toString() + "\n";
         for(Dashboard d : theDashboards){
             d.renders();
-            theRendering=theRendering + ((SimpleDashboard) d).getRendering();
+            theRendering=theRendering + ((SimpleDashboard) d).getRendering() + "\n";
         }
         try {
             PDDocument pdf = createPDF();
@@ -114,7 +114,7 @@ public class SimpleVisualStory implements VisualStory {
 
             String[] toPrint = text.split("\n");
             for (int x=0; x<toPrint.length; x++){
-                if(x==0){
+                if(x==0){// for goal
                     contentStream.setFont(PDType1Font.TIMES_BOLD, 12);
                 }
                 else{

@@ -67,7 +67,8 @@ public class SimpleAnalyticalQuestion implements AnalyticalQuestion {
 
     @Override
     public void addText(String aText) {
-        theText=aText;
+        this.theText=aText.substring(1,aText.length()-1).replace("\\n","\n");
+//        theText=aText;
     }
 
     public String toString(){

@@ -3,20 +3,21 @@ package fr.univtours.info.simpleStory;
 import fr.univtours.info.model.intentional.Protagonist;
 
 public class SimpleProtagonist implements Protagonist {
-    String text;
+    String theText;
     String name;
 
     @Override
     public void addText(String aText) {
+        this.theText=aText.substring(1,aText.length()-1).replace("\\n","\n");
 
-        this.text=aText;
+//        this.theText=aText;
     }
 
 
     @Override
     public String toString() {
 
-        return text;
+        return "Protagonist: " + theText;
     }
 
 

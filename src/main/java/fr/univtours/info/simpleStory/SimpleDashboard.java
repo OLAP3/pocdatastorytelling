@@ -33,7 +33,7 @@ public class SimpleDashboard implements Dashboard {
 
     @Override
     public Act renders() {
-        theRendering = theRendering + theAct.toString();
+        theRendering = theRendering + theAct.toString() + "\n";
         for(DashboardComponent dc : theComponents){
             dc.render();
             theRendering=theRendering+ ((SimpleDashboardComponent) dc).getRendering();

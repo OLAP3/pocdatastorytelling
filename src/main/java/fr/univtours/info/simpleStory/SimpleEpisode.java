@@ -18,8 +18,8 @@ public class SimpleEpisode implements Episode {
     }
 
     @Override
-    public void addText(String theText) {
-
+    public void addText(String aText) {
+        this.theText=aText.substring(1,aText.length()-1).replace("\\n","\n");
     }
 
     @Override
@@ -29,7 +29,8 @@ public class SimpleEpisode implements Episode {
         for(Protagonist p : theProtagonists){
             episodeProtagonists = episodeProtagonists+ p.toString() + "\n";
         }
-        return theText + "\n" +theObservation.toString() + "\n" + episodeProtagonists;
+        return "Episode: " + theText + "\n" +theObservation.toString() + "\n"
+                + episodeProtagonists;
     }
 
     @Override

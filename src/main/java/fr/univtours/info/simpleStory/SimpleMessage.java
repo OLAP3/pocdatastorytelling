@@ -25,7 +25,7 @@ public class SimpleMessage implements Message {
 
     @Override
     public String toString() {
-        return theText;
+        return "Message: " + theText;
     }
 
     @Override

@@ -182,6 +182,9 @@ public class StoryCreator {
         return msg;
     }
 
+
+
+
     public static void main(String args[]) throws Exception{
 
         Story theStory=new SimpleStory();
