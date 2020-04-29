@@ -40,18 +40,29 @@ public class RandomEndPoint {
     @ResponseBody
     public Answer goal(@RequestBody String theGoal) {
 
+        int code=1;
+        String toReturn="";
+
+        if(creator==null){
+            code=1;
+            toReturn="No story created. Please start a new story first.";
+
+        }else{
+            if(creator.getGoal()!=null){
+                code=1;
+                 toReturn="Already a goal. Only one is allowed.";
 
 
-        String toReturn="Already a goal. Only one is allowed";
-        int code =1;
+            }else{
+                if(creator.getGoal()==null){
+                    code=0;
+                    //creator= new StoryCreator();
 
-        if(creator.getGoal()==null){
-            code=0;
-            //creator= new StoryCreator();
-
-            //creator.getGoal().addText(theGoal);
-            String res= creator.newGoal(theGoal);
-            toReturn=res;
+                    //creator.getGoal().addText(theGoal);
+                    String res= creator.newGoal(theGoal);
+                    toReturn=res;
+                }
+            }
         }
 
 

@@ -106,65 +106,7 @@ function processClear (result, endpoint) {
         }
 }
 
-function processDescribeAnswer(model_component) {
-    /** ************************************************************************
-     * COLOR THE DATA POINTS OF EACH CHART
-     * ************************************************************************/
-    var components = new Set();
-    var input = model_component.split("=");
-    var model = att2header(input[0]);
-    var component = input[1];
-    data["components"].forEach(function(d) {
-        var curr = d["component"].split("=");
-        var mod = curr[0];
-        var com = curr[1];
-        if (mod == model) {
-            components.add(com);
-        }
-    });
-    components = Array.from(components).sort(function(a, b) { return a.localeCompare(b); });
-    var color = d3.scaleOrdinal().domain(components).range(d3.schemeCategory10);
-    chooseChart(data, model, false, model, component, color(component)); // update the charts that depends on the components (e.g., grouped column chart)
-    /* Color all the datapoints with their respective model's component */
-    d3.selectAll("[datapoint=colored]")
-        .style("opacity", 1)
-        .style("stroke", "white")
-        .style("fill", function(d) {
-            c = d3.color(color(d[model]));
-            if (d[model] != input[1]) { c.opacity = 0.5; }
-            return c + "";
-        });
-    /* Highlight all the datapoints with selected component */
-    d3.selectAll("[datapoint]").filter(function(d, i) {
-        return d[model] == input[1];
-    })
-    .style("border", "1px solid")
-    .style("stroke", "black");
 
-    model = header2att(model);
-    if (prevModel != "") {
-        $('[' + prevModel + ']').each(function(i) {
-            $(this)
-                .css('border', "1px dotted")
-                .css("background-color", "white");
-        });
-    }
-    prevModel = model;
-    $('[' + model + ']').each(function(i) {
-        var c = this.style.background = color(this.getAttribute(model));
-        if (this.getAttribute(model) === input[1]) {
-            $(this)
-                .css('border', "1px solid")
-                .css("background-color", c + "");
-        } else {
-            c = d3.color(c);
-            c.opacity = 0.5;
-            $(this)
-                .css('border', "1px dotted")
-                .css("background-color", c + "");
-        }
-    });
-}
 
 
 
@@ -230,22 +172,6 @@ function openDescribeform() {
 }
 
 
-
-function describeformHandler() {
-    let query = document.getElementById("describeQuery").value;
-
-    let msg = {"describeQuery" : query};
-
-    document.getElementById("myDescribeForm").style.display = "none";
-
-   let pb = function (result) {
-        console.log("debug: ");
-        console.log(result);
-    };
-
-    //elsaRequest(msg, "query", processSQLAnswer, pb,true);
-    sendDescribe(msg, processDescribeAnswer,pb);
-}
 
 
 
@@ -485,26 +411,143 @@ function sendDescribe(body, callback, errorCallback) {
     //xhr.send(body);
 }
 
+var data, prevModel = "", prevText = "";
+session = new Date().getTime();
 
-// Old stuff below
+function sendDescribe() {
+    document.getElementById("myDescribeForm").style.display = "none";
 
-function formHandler() {
-    let first_name = document.getElementById("query").value;
-    let last_name = document.getElementById("message").value;
-    console.log(first_name);
-    console.log(last_name);
-
-    let msg = {"fn" : first_name, "ln": last_name};
-
-    let changeDiv = function (result) {
-        let div = document.getElementById("result");
-        div.innerText = result;
-    };
-
-   let pb = function (result) {
-        console.log("debug: ");
-        console.log(result);
-    };
-
-    elsaRequest(msg, "form", changeDiv, pb,true);
+    document.getElementById("loader").style.display = "block"
+    // console.log(session)
+    $.ajax({
+        url: config["ip"],
+        type: "GET",
+        crossDomain: true,
+        data: { sessionid: session, value: $("#describe_text")[0].value + " "},
+        dataType: "json",
+        success: function(newdata) {
+            if (typeof newdata["error"] !== "undefined") {
+                alert("ERROR: " + newdata["error"]);
+                // session = new Date().getTime();
+            } else {
+                // console.log(data);
+                data = newdata;
+                $("#table_raw").html(buildHtmlTable(data["raw"], "raw"));
+                $("#table_component").html(buildHtmlTable(data["components"], "components"));
+                $("#table_pivot").html(buildHtmlPivot(data["pivot"]["table"], data["pivot"]["headers"]["measures"]));
+                var columns;
+                if (data["pivot"]["headers"]["columns"]) { columns = data["pivot"]["headers"]["columns"].join("; ") }
+                else { columns = ""; }
+                $("#table_header").html(buildKeyValueTable({
+                    Measures:   data["pivot"]["headers"]["measures"].join("; "),
+                    Rows:       data["pivot"]["headers"]["rows"].join("; "),
+                    Columns:    columns
+                }));
+                update(data["components"][0]["component"]);
+            }
+            /*
+            if (prevText != "") {
+                $("#old_text").append("<div>" + prevText + "</div>");
+            }
+            prevText = $("#describe_text")[0].value;*/
+            $("#old_text").append("<div>" + $("#describe_text")[0].value + "</div>");
+            document.getElementById("loader").style.display = "none"
+        },
+        error: function(newdata) {
+            alert("ERROR: Server not reachable. " + newdata);
+            session = new Date().getTime();
+        }
+    });
 }
+
+function update(model_component) {
+    /** ************************************************************************
+     * COLOR THE DATA POINTS OF EACH CHART
+     * ************************************************************************/
+    var components = new Set();
+    var input = model_component.split("=");
+    var model = att2header(input[0]);
+    var component = input[1];
+    data["components"].forEach(function(d) {
+        var curr = d["component"].split("=");
+        var mod = curr[0];
+        var com = curr[1];
+        if (mod == model) {
+            components.add(com);
+        }
+    });
+    components = Array.from(components).sort(function(a, b) { return a.localeCompare(b); });
+    var color = d3.scaleOrdinal().domain(components).range(d3.schemeCategory10);
+    chooseChart(data, model, false, model, component, color(component)); // update the charts that depends on the components (e.g., grouped column chart)
+    /* Color all the datapoints with their respective model's component */
+    d3.selectAll("[datapoint=colored]")
+        .style("opacity", 1)
+        .style("stroke", "white")
+        .style("fill", function(d) {
+            c = d3.color(color(d[model]));
+            if (d[model] != input[1]) { c.opacity = 0.5; }
+            return c + "";
+        });
+    /* Highlight all the datapoints with selected component */
+    d3.selectAll("[datapoint]").filter(function(d, i) {
+        return d[model] == input[1];
+    })
+    .style("border", "1px solid")
+    .style("stroke", "black");
+
+    model = header2att(model);
+    if (prevModel != "") {
+        $('[' + prevModel + ']').each(function(i) {
+            $(this)
+                .css('border', "1px dotted")
+                .css("background-color", "white");
+        });
+    }
+    prevModel = model;
+    $('[' + model + ']').each(function(i) {
+        var c = this.style.background = color(this.getAttribute(model));
+        if (this.getAttribute(model) === input[1]) {
+            $(this)
+                .css('border', "1px solid")
+                .css("background-color", c + "");
+        } else {
+            c = d3.color(c);
+            c.opacity = 0.5;
+            $(this)
+                .css('border', "1px dotted")
+                .css("background-color", c + "");
+        }
+    });
+}
+
+/** ****************************************************************************
+ * Utility functions
+ * ****************************************************************************/
+// Check if a string is a measure
+function isMeasure(s) {
+    return s.includes("(") && !s.includes("zscore") && !s.includes("surprise");
+}
+// HTML attributes cannot contain brakets, replace them
+function header2att(s) {
+    return s.replace("(", "--").replace(")", "-");
+}
+function att2header(s) {
+    return s.replace("--", "(").replace("-", ")");
+}
+// Reset the session id
+function clearSession() {
+    $("#old_text").html("");
+    $("#table_header").html("");
+    $("#table_pivot").html("");
+    $("#my_dataviz").html("");
+    $("#table_component").html("");
+    session = new Date().getTime();
+}
+function greyPalette() {
+    return ["#B2B4B3", "#585A59", "#949695", "#3A3C3B", "#767877"];
+    // return ["#B2B4B3", "#A3A5A4", "#949695", "#858786", "#767877", "#676968", "#585A59", "#494B4A"];
+}
+
+
+
+

@@ -132,20 +132,13 @@ grid-row-end: 3;
 
 
     <div class="introduction">
-        <div>
-        This is a demo of a simple data story creation.
-        Your story begins by creating a goal.
-        Then you can create acts and episodes by
-        writing text and enriching them with
-        answers to analytical questions.
-        In this demo, questions are answered by
-        SQL queries over the SSB schema.
-        Validating the answers results in an observation
-        for which you need to define your story protagonists
-        and messages.
-        Finally, render your
-        story and download it as a PDF file with this button.
 
+
+        <div>
+            Console
+            <div id="console" class="console">
+
+            </div>
         </div>
 
         <br>
@@ -206,10 +199,10 @@ grid-row-end: 3;
             <form action="" class="form-container">
                 <h1>Describe Collector</h1>
 
-                <label for="describeQuery"><b>Describe</b></label><br>
-                <textarea id="describeQuery" name="describeQuery" rows="10" cols="30"></textarea><br>
+                <label for="describe_text"><b>Describe</b></label><br>
+                <textarea id="describe_text" name="describe_text" value="with SALES describe storeCost by month" rows="10" cols="30"></textarea><br>
 
-                <button type="button" class="btn cancel" onclick="describeformHandler()">Evaluate this query</button>
+                <button type="button" class="btn cancel" onclick="sendDescribe()">Evaluate this query</button>
             </form>
         </div>
 
@@ -230,7 +223,7 @@ grid-row-end: 3;
 
 
 
-    <div class="result">Collector's response
+    <div class="result">Data collector answer
         <div id="result">
             <textarea id="textresult" name="textresult" rows="20" cols="180" style="white-space:pre-wrap">
 
@@ -284,23 +277,27 @@ grid-row-end: 3;
 </div>
 
 
-<div>
-    Console
-    <div id="console" class="console">
-
-    </div>
-</div>
 
 <br>
 
 <br/>
-<div                        style="float: left; margin: auto; max-width:30%;">
-    <div id="table_header"  style="margin: auto; overflow: auto; text-align: left;"></div>
-    <div id="table_pivot"   style="margin: auto; overflow: auto"></div>
-</div>
-<div id="my_dataviz"        style="float: left; margin: auto; max-width:55%;"></div>
-<div id="table_component"   style="float: left; margin: auto; max-width:22%;"></div>
+<div id="loader" style="display: none;"></div>
+<div                            style="width:100%; margin: auto; text-align: center;">
+    <div>
+        <div><img src="img/dfm.svg" /></div>
+        <br/>
+        <div id="old_text" value="" size="100"></div>
 
+    </div>
+    <br/>
+    <div                        style="float: left; margin: auto; max-width:30%;">
+        <div id="table_header"  style="margin: auto; overflow: auto; text-align: left;"></div>
+        <div id="table_pivot"   style="margin: auto; overflow: auto"></div>
+    </div>
+    <div id="my_dataviz"        style="float: left; margin: auto; max-width:55%;"></div>
+    <div id="table_component"   style="float: left; margin: auto; max-width:22%;"></div>
+    <!--<div id="table_raw" style="text-align: left; float: left; margin: 10px 10px 10px 10px"></div>-->
+</div>
 
 
 
