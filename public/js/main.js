@@ -106,7 +106,64 @@ function processClear (result, endpoint) {
         }
 }
 
-function processDescribeAnswer(result){
+function processDescribeAnswer(model_component) {
+    /** ************************************************************************
+     * COLOR THE DATA POINTS OF EACH CHART
+     * ************************************************************************/
+    var components = new Set();
+    var input = model_component.split("=");
+    var model = att2header(input[0]);
+    var component = input[1];
+    data["components"].forEach(function(d) {
+        var curr = d["component"].split("=");
+        var mod = curr[0];
+        var com = curr[1];
+        if (mod == model) {
+            components.add(com);
+        }
+    });
+    components = Array.from(components).sort(function(a, b) { return a.localeCompare(b); });
+    var color = d3.scaleOrdinal().domain(components).range(d3.schemeCategory10);
+    chooseChart(data, model, false, model, component, color(component)); // update the charts that depends on the components (e.g., grouped column chart)
+    /* Color all the datapoints with their respective model's component */
+    d3.selectAll("[datapoint=colored]")
+        .style("opacity", 1)
+        .style("stroke", "white")
+        .style("fill", function(d) {
+            c = d3.color(color(d[model]));
+            if (d[model] != input[1]) { c.opacity = 0.5; }
+            return c + "";
+        });
+    /* Highlight all the datapoints with selected component */
+    d3.selectAll("[datapoint]").filter(function(d, i) {
+        return d[model] == input[1];
+    })
+    .style("border", "1px solid")
+    .style("stroke", "black");
+
+    model = header2att(model);
+    if (prevModel != "") {
+        $('[' + prevModel + ']').each(function(i) {
+            $(this)
+                .css('border', "1px dotted")
+                .css("background-color", "white");
+        });
+    }
+    prevModel = model;
+    $('[' + model + ']').each(function(i) {
+        var c = this.style.background = color(this.getAttribute(model));
+        if (this.getAttribute(model) === input[1]) {
+            $(this)
+                .css('border', "1px solid")
+                .css("background-color", c + "");
+        } else {
+            c = d3.color(c);
+            c.opacity = 0.5;
+            $(this)
+                .css('border', "1px dotted")
+                .css("background-color", c + "");
+        }
+    });
 }
 
 
@@ -189,6 +246,10 @@ function describeformHandler() {
     //elsaRequest(msg, "query", processSQLAnswer, pb,true);
     sendDescribe(msg, processDescribeAnswer,pb);
 }
+
+
+
+
 
 
 function goalformHandler() {
@@ -389,11 +450,15 @@ function elsaRequest(body, endpoint, callback, errorCallback, is_json=false) {
 
 
 function sendDescribe(body, callback, errorCallback) {
+
+    //http://137.204.72.88:8083/COOL/Describe?sessionid=1588142552276&value=with%20SALES%20describe%20storeCost%20by%20month
+
+    let param="?sessionid=12345678&value=" + body;
+
     // construct server url for API request
-    const url = "http://semantic.csr.unibo.it/describe/api/" ; // change me
+    const url = "http://137.204.72.88:8083/COOL/Describe" + param;
+
     let xhr = new XMLHttpRequest();
-
-
 
     // modify callback to be executed when request completes
     function internCallback() {
@@ -405,16 +470,19 @@ function sendDescribe(body, callback, errorCallback) {
             errorCallback(xhr.responseText, xhr.status);
         }
     }
-    xhr.open('POST', url);
+    // should be a GET
+    //xhr.open('POST', url);
 
+    xhr.open('GET',url)
 
     // function to be called on state change
     xhr.onreadystatechange = internCallback;
     // send request
 
-    body=JSON.stringify(body);
+    //body=JSON.stringify(body);
 
-    xhr.send(body);
+    xhr.send();
+    //xhr.send(body);
 }
 
 

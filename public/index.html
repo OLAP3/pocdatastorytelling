@@ -4,6 +4,17 @@
     <meta charset="UTF-8">
     <title>POC Data StoryTelling</title>
     <script src="./js/main.js"></script>
+    <script src="./libs/d3.v4.js"></script>
+    <script src="./js/chart-bubble.js"></script>
+    <script src="./js/chart-bubble3D.js"></script>
+    <script src="./js/chart-heatmap.js"></script>
+    <script src="./js/chart-choose.js"></script>
+    <script src="./js/chart-multiline.js"></script>
+    <script src="./js/chart-groupedcolumn.js"></script>
+    <script src="./js/config.js"></script>
+    <script src="./js/html-table.js"></script>
+    <script src="https://unpkg.com/d3-3d/build/d3-3d.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 
 
 <style>
@@ -282,7 +293,13 @@ grid-row-end: 3;
 
 <br>
 
-
+<br/>
+<div                        style="float: left; margin: auto; max-width:30%;">
+    <div id="table_header"  style="margin: auto; overflow: auto; text-align: left;"></div>
+    <div id="table_pivot"   style="margin: auto; overflow: auto"></div>
+</div>
+<div id="my_dataviz"        style="float: left; margin: auto; max-width:55%;"></div>
+<div id="table_component"   style="float: left; margin: auto; max-width:22%;"></div>
 
 
 
