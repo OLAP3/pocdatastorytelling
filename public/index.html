@@ -108,7 +108,7 @@ grid-row-end: 5;
 grid-column-start: 3;
 grid-column-end: 4;
 grid-row-start: 1;
-grid-row-end: 3;
+grid-row-end: 4;
 }
 
 .console {
@@ -116,6 +116,13 @@ grid-row-end: 3;
   height: 100px;
   padding: 50px;
   border: 1px solid red;
+}
+
+
+.collectors {
+display: grid;
+grid-template-columns: 1fr 1fr;
+grid-column-gap: 20px;
 }
 
 </style>
@@ -151,59 +158,42 @@ grid-row-end: 3;
         <div id="demodiv"></div>
 
 
-
-
     </div>
 
-    <div class="goal">
-        <label for="goal">Goal</label><br>
-        <textarea id="goal" name="goal" rows="10" cols="80"></textarea><br>
-        <button onclick="goalformHandler()">Insert goal text</button>
 
+
+    <div class="act">
+        <label for="act">Act</label><br>
+        <textarea id="act" name="act" rows="10" cols="80"></textarea><br>
+        <button onclick="actformHandler()">Insert new act</button>
     </div>
-
 
 
 
 
     <div class="recap">
         <label for="recap">Story recap</label><br>
-        <textarea id="recap" name="recap" rows="25" cols="80" style="white-space:pre-wrap"></textarea><br>
+        <textarea id="recap" name="recap" rows="40" cols="80" style="white-space:pre-wrap"></textarea><br>
 
     </div>
 
 
     <div class="question">
+        <div class="collectors">
+        <div class="goal">
+            <label for="goal">Goal</label><br>
+            <textarea id="goal" name="goal" rows="10" cols="80"></textarea><br>
+            <button onclick="goalformHandler()">Insert goal text</button>
+
+        </div>
+
+
         <div id="toreplace">
             <label for="question">Analytical question</label><br>
-            <textarea id="question" name="question" rows="10" cols="180"></textarea><br>
+            <textarea id="question" name="question" rows="10" cols="80"></textarea><br>
 
             <button onclick="questionFormHandler()">Insert new analytical question</button>
-            <button onclick="openSQLform()">Run SQL collector</button>
-            <button onclick="openDescribeform()">Run Describe collector</button>
         </div>
-
-        <div class="form-popup" id="mySQLForm">
-            <form action="" class="form-container">
-                <h1>SQL Collector</h1>
-
-                <label for="query"><b>SQL</b></label><br>
-                <textarea id="query" name="query" rows="10" cols="30"></textarea><br>
-
-                <button type="button" class="btn cancel" onclick="SQLformHandler()">Evaluate this query</button>
-            </form>
-        </div>
-
-
-        <div class="form-popup" id="myDescribeForm">
-            <form action="" class="form-container">
-                <h1>Describe Collector</h1>
-
-                <label for="describe_text"><b>Describe</b></label><br>
-                <textarea id="describe_text" name="describe_text" value="with SALES describe storeCost by month" rows="10" cols="30"></textarea><br>
-
-                <button type="button" class="btn cancel" onclick="sendDescribe()">Evaluate this query</button>
-            </form>
         </div>
 
     </div>
@@ -223,13 +213,68 @@ grid-row-end: 3;
 
 
 
-    <div class="result">Data collector answer
-        <div id="result">
-            <textarea id="textresult" name="textresult" rows="20" cols="180" style="white-space:pre-wrap">
+    <div class="result">Collectors
 
-            </textarea><br>
-            <button onclick="resultformHandler()">Validate this answer as an insight</button>
+
+        <div class="collectors" id="collectors">
+            <div id="result">
+                <button onclick="openSQLform()">Run SQL collector</button>
+                <br>
+                <textarea id="textresult" name="textresult" rows="20" cols="80" style="white-space:pre-wrap">
+            </textarea>
+            </div>
+
+            <div >
+            <button onclick="openDescribeform()">Run Describe collector</button>
+            <div id="loader" style="display: none;"></div>
+            <div                            style="width:100%; margin: auto; text-align: center;">
+
+                <div>
+                    <div><img src="img/dfm.svg" /></div>
+                    <br/>
+                    <br>
+                    <div id="old_text" value="" size="90"></div>
+
+                </div>
+                <br/>
+                <div                        style="float: left; margin: auto; max-width:30%;">
+                    <div id="table_header"  style="margin: auto; overflow: auto; text-align: left;"></div>
+                    <div id="table_pivot"   style="margin: auto; overflow: auto"></div>
+                </div>
+                <div id="my_dataviz"        style="float: left; margin: auto; max-width:55%;"></div>
+                <div id="table_component"   style="float: left; margin: auto; max-width:22%;"></div>
+                <!--<div id="table_raw" style="text-align: left; float: left; margin: 10px 10px 10px 10px"></div>-->
+            </div>
+            </div>
+
         </div>
+
+
+
+        <div class="form-popup" id="mySQLForm">
+            <form action="" class="form-container">
+                <h1>SQL Collector</h1>
+
+                <label for="query"><b>SQL</b></label><br>
+                <textarea id="query" name="query" rows="10" cols="30"></textarea><br>
+
+                <button type="button" class="btn cancel" onclick="SQLformHandler()">Evaluate this query</button>
+            </form>
+        </div>
+
+
+        <div class="form-popup" id="myDescribeForm">
+            <form action="" class="form-container">
+                <h1>Describe Collector</h1>
+
+                <label for="describe_text"><b>Describe</b></label><br>
+                <textarea id="describe_text" name="describe_text" value="with SALES describe storeCost by month" rows="10" cols="60"></textarea><br>
+
+                <button type="button" class="btn cancel" onclick="sendDescribe()">Evaluate this query</button>
+            </form>
+        </div>
+
+        <button onclick="resultformHandler()">Validate the selection as an insight</button>
     </div>
 
 
@@ -243,11 +288,7 @@ grid-row-end: 3;
     </div>
 
 
-    <div class="message">
-        <label for="message">Messages</label><br>
-        <textarea id="message" name="message" rows="10" cols="80"></textarea><br>
-        <button onclick="messageformHandler()">Insert new message</button>
-    </div>
+
 
 
 
@@ -259,12 +300,12 @@ grid-row-end: 3;
     </div>
 
 
-
-    <div class="act">
-        <label for="act">Act</label><br>
-        <textarea id="act" name="act" rows="10" cols="80"></textarea><br>
-        <button onclick="actformHandler()">Insert new act</button>
+    <div class="message">
+        <label for="message">Message</label><br>
+        <textarea id="message" name="message" rows="10" cols="80"></textarea><br>
+        <button onclick="messageformHandler()">Insert new message</button>
     </div>
+
 
 
     <!--
@@ -276,28 +317,6 @@ grid-row-end: 3;
 
 </div>
 
-
-
-<br>
-
-<br/>
-<div id="loader" style="display: none;"></div>
-<div                            style="width:100%; margin: auto; text-align: center;">
-    <div>
-        <div><img src="img/dfm.svg" /></div>
-        <br/>
-        <div id="old_text" value="" size="100"></div>
-
-    </div>
-    <br/>
-    <div                        style="float: left; margin: auto; max-width:30%;">
-        <div id="table_header"  style="margin: auto; overflow: auto; text-align: left;"></div>
-        <div id="table_pivot"   style="margin: auto; overflow: auto"></div>
-    </div>
-    <div id="my_dataviz"        style="float: left; margin: auto; max-width:55%;"></div>
-    <div id="table_component"   style="float: left; margin: auto; max-width:22%;"></div>
-    <!--<div id="table_raw" style="text-align: left; float: left; margin: 10px 10px 10px 10px"></div>-->
-</div>
 
 
 
