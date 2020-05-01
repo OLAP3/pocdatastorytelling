@@ -12,6 +12,7 @@ import fr.univtours.info.model.presentational.VisualStory;
 import fr.univtours.info.model.discursal.Story;
 import org.apache.pdfbox.pdmodel.PDDocument;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
@@ -33,6 +34,7 @@ public class StoryCreator {
     Collection<Insight> currentAnswer;
 
     PDDocument thePDF;
+    File thePDFfile;
 
     public StoryCreator(){
 
@@ -60,6 +62,11 @@ public class StoryCreator {
 
     public PDDocument getThePDF(){
         return thePDF;
+    }
+
+    public File getThePDFfile(){
+        //return thePDFfile;
+        return new File("/Users/marcel/Desktop/test.pdf");
     }
 
     public String newGoal(String aGoal){

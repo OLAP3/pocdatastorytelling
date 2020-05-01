@@ -11,6 +11,7 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -130,6 +131,7 @@ public class RandomEndPoint {
     @ResponseBody
     public Answer observation(@RequestBody String theObservation) {
 
+        // TODO observation not permitted if no insights!
         creator.newObservation(theObservation);
         return new Answer(0,theObservation);
 
@@ -238,15 +240,6 @@ public class RandomEndPoint {
 
     }
 
-
-    @PostMapping(value="api/pdf", produces = MediaType.APPLICATION_PDF_VALUE)
-    @ResponseBody
-    public PDDocument pdf(@RequestBody String msg) {
-
-       return creator.getThePDF();
-
-
-    }
 
 
 

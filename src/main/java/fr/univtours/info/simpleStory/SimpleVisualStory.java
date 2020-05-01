@@ -180,7 +180,7 @@ public class SimpleVisualStory implements VisualStory {
 
          */
         //Saving the document
-        document.save("/Users/marcel/Desktop/test.pdf");
+        document.save("/Users/marcel/Documents/RECHERCHE/STUDENTS/Faten/pocdatastory/public/pdfs/test.pdf");
 
         //Closing the document
         document.close();

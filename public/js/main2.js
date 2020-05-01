@@ -70,12 +70,11 @@ function processClear (result, endpoint) {
             console.log(result);
         };
 
-        elsaRequest("pdf", "pdf", pdfDownload, pb,false);
+
+    saveAs("pdfs/test.pdf","test.pdf",{type: "application/pdf"});
+
 }
 
-function pdfDownload(pdf){
-    saveAs(pdf,'Story exported to PDF');
-}
 
 
 

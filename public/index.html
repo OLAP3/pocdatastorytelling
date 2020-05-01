@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>POC Data StoryTelling</title>
-    <script src="./js/main.js"></script>
+    <script src="./js/main2.js"></script>
+    <script src="./js/FileSaver.js"></script>
     <script src="./libs/d3.v4.js"></script>
     <script src="./js/chart-bubble.js"></script>
     <script src="./js/chart-bubble3D.js"></script>
@@ -15,8 +16,7 @@
     <script src="./js/html-table.js"></script>
     <script src="https://unpkg.com/d3-3d/build/d3-3d.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
-    <script src="https://cdn.rawgit.com/eligrey/FileSaver.js/e9d941381475b5df8b7d7691013401e171014e89/FileSaver.min.js"></script>
-    
+
 <style>
 body {font-family: Arial, Helvetica, sans-serif;}
 * {box-sizing: border-box;}
@@ -269,7 +269,7 @@ grid-column-gap: 20px;
                 <h1>Describe Collector</h1>
 
                 <label for="describe_text"><b>Describe</b></label><br>
-                <textarea id="describe_text" name="describe_text" value="with SALES describe storeCost by month" rows="10" cols="50"></textarea><br>
+                <textarea id="describe_text" name="describe_text" value="with SALES describe storeCost by month" rows="10" cols="40"></textarea><br>
 
                 <button type="button" class="btn cancel" onclick="sendDescribe()">Evaluate this query</button>
             </form>
