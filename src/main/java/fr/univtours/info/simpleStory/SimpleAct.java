@@ -25,7 +25,8 @@ public class SimpleAct implements Act {
 
     @Override
     public String toString() {
-        return "Act: " + actText + "\n" + theMessage.toString();
+        //return "Act: " + actText + "\n" + theMessage.toString();
+        return "Act: " + actText ;
     }
 
     @Override

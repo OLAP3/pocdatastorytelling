@@ -6,6 +6,7 @@ import fr.univtours.info.model.intentional.*;
 import fr.univtours.info.simpleStory.SimpleCollector;
 import fr.univtours.info.simpleStory.SimpleGoal;
 import fr.univtours.info.simpleStory.StoryCreator;
+import org.apache.pdfbox.pdmodel.PDDocument;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -160,10 +161,12 @@ public class RandomEndPoint {
     @ResponseBody
     public Answer act(@RequestBody String act) {
 
-        String toReturn="No message created! Please create a message first.";
+        //String toReturn="No message created! Please create a message first.";
+        String toReturn="No story created! Please create a story first.";
         int code=1;
 
-        if(creator.getCurrentMessage()!=null){
+        //if(creator.getCurrentMessage()!=null){
+        if(creator.getGoal()!=null){
             code =0;
             String res=creator.newAct(act);
             toReturn=res;
@@ -231,6 +234,16 @@ public class RandomEndPoint {
 
         }
         return new Answer(code, toReturn);
+
+
+    }
+
+
+    @PostMapping(value="api/pdf", produces = MediaType.APPLICATION_PDF_VALUE)
+    @ResponseBody
+    public PDDocument pdf(@RequestBody String msg) {
+
+       return creator.getThePDF();
 
 
     }

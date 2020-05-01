@@ -59,8 +59,19 @@ function processClear (result, endpoint) {
         let consoleElt=document.getElementById("console");
         consoleElt.innerText=JSON.parse(message);
 
+        let pb = function (result) {
+            console.log("debug: ");
+            console.log(result);
+        };
 
+        elsaRequest("pdf", "pdf", pdfDownload, pb,false);
 }
+
+function pdfDownload(pdf){
+    saveAs(pdf,'Story exported to PDF');
+}
+
+
 
 
 

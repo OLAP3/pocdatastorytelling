@@ -32,6 +32,8 @@ public class StoryCreator {
 
     Collection<Insight> currentAnswer;
 
+    PDDocument thePDF;
+
     public StoryCreator(){
 
     }
@@ -54,6 +56,10 @@ public class StoryCreator {
 
     public Act getCurrentAct(){
         return currentAct;
+    }
+
+    public PDDocument getThePDF(){
+        return thePDF;
     }
 
     public String newGoal(String aGoal){
@@ -143,10 +149,11 @@ public class StoryCreator {
     public String newAct(String theAct){
         currentAct=new SimpleAct();
         theStory.includes(currentAct);
-        currentAct.narrates(currentMessage);
-        currentAct.addText(theAct);
 
         //currentAct.narrates(currentMessage);
+
+        currentAct.addText(theAct);
+
         return(theAct);
     }
 
@@ -183,7 +190,7 @@ public class StoryCreator {
         VisualStory vs=new SimpleVisualStory();
         vs.renders(theStory);  // just attach
         vs.renders(); // and then renders
-        PDDocument thePDF=((SimpleVisualStory) vs).getThePDF();
+        thePDF=((SimpleVisualStory) vs).getThePDF();
 
         //vs.print(); // and then prints
         return msg;
