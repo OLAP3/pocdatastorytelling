@@ -102,6 +102,7 @@ grid-column-start: 1;
 grid-column-end: 2;
 grid-row-start: 3;
 grid-row-end: 5;
+padding: 30px 0px;
 }
 
 .recap {
@@ -112,11 +113,13 @@ grid-row-end: 5;
 }
 
 .console {
-  width: 100%;
-  height: 100px;
+  width: 700px;
+  height: 40%;
   padding: 50px;
   border: 1px solid red;
 }
+
+
 
 
 .collectors {
@@ -125,6 +128,82 @@ grid-template-columns: 1fr 1fr;
 grid-column-gap: 20px;
 }
 
+.label {
+  color: white;
+  padding: 2px;
+  font-family: Arial;
+}
+.success {background-color: #4CAF50;} /* Green */
+.info {background-color: #2196F3;} /* Blue */
+.warning {background-color: #ff9800;} /* Orange */
+.danger {background-color: #f44336;} /* Red */
+.other {background-color: #e7e7e7; color: black;} /* Gray */
+
+.button-blue {
+  background-color: #2196F3;
+  border: none;
+  color: white;
+  padding: 8px 10px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 12px;
+  margin: 4px 2px;
+  cursor: pointer;
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+  border-radius: 12px;
+  float: right;
+}
+
+.button-console {
+  background-color: #f44336;
+  border: none;
+  color: white;
+  padding: 8px 10px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 12px;
+  margin: 4px 2px;
+  cursor: pointer;
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+  border-radius: 12px;
+}
+
+
+.button-collector {
+  background-color: #e7e7e7;
+  border: none;
+  color: black;
+  padding: 8px 10px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 12px;
+  margin: 4px 2px;
+  cursor: pointer;
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+  border-radius: 12px;
+  float: center;
+}
+
+.blue-box {
+ width: 100%;
+ height: 70%;
+ border: solid 1px #2196F3;
+}
+
+.recap-box{
+ width: 100%;
+ height: 100%;
+border: solid 1px green;
+}
+
+.sql-result{
+ width: 300px;
+ height: 100%;
+border: solid 1px gray;
+}
 </style>
 
 
@@ -142,18 +221,20 @@ grid-column-gap: 20px;
 
 
         <div>
-            Console
+            <span class="label danger">Console</span>
+
             <div id="console" class="console">
 
             </div>
         </div>
 
         <br>
-        <button onclick="clearStory()">Start new story</button>
 
-        <button onclick="renderListnener()">Render current story and download PDF</button>
+        <button class="button-console" onclick="clearStory()">Start new story</button>
 
-        <button onclick="DBdumpListnener()">Save the stories in the database</button>
+        <button class="button-console" onclick="renderListnener()">Render current story and download PDF</button>
+
+        <button class="button-console" onclick="DBdumpListnener()">Save the stories in the database</button>
 
         <div id="demodiv"></div>
 
@@ -163,48 +244,44 @@ grid-column-gap: 20px;
 
 
     <div class="act">
-        <label for="act">Act</label><br>
-        <textarea id="act" name="act" rows="10" cols="80"></textarea><br>
-        <button onclick="actformHandler()">Insert new act</button>
+        <label for="act"><span class="label info">Act</span></label><br>
+        <textarea id="act" name="act" class="blue-box"></textarea>
+        <button class="button-blue" onclick="actformHandler()">Insert new act</button>
     </div>
 
 
 
 
     <div class="recap">
-        <label for="recap">Story recap</label><br>
-        <textarea id="recap" name="recap" rows="54" cols="80" style="white-space:pre-wrap"></textarea><br>
-
+        <label for="recap"><span class="label success">Story recap</span></label><br>
+        <textarea id="recap" name="recap" class="recap-box"></textarea>
     </div>
 
 
-    <div class="question">
+
         <div class="collectors">
         <div class="goal">
-            <label for="goal">Goal</label><br>
-            <textarea id="goal" name="goal" rows="10" cols="80"></textarea><br>
-            <button onclick="goalformHandler()">Insert goal text</button>
-
+            <label for="goal"><span class="label info">Goal</span></label><br>
+            <textarea id="goal" name="goal"  class="blue-box"></textarea>
+            <button  class="button-blue" onclick="goalformHandler()">Insert goal text</button>
         </div>
 
 
         <div id="toreplace">
-            <label for="question">Analytical question</label><br>
-            <textarea id="question" name="question" rows="10" cols="80"></textarea><br>
-
-            <button onclick="questionFormHandler()">Insert new analytical question</button>
+            <label for="question"><span class="label info">Analytical question</span></label><br>
+            <textarea id="question" name="question"  class="blue-box"></textarea>
+            <button  class="button-blue"  onclick="questionFormHandler()">Insert new analytical question</button>
         </div>
         </div>
 
-    </div>
 
 
 
 
     <div class="episode">
-        <label for="episode">Episode</label><br>
-        <textarea id="episode" name="episode" rows="10" cols="80"></textarea><br>
-        <button onclick="episodeformHandler()">Insert new episode</button>
+        <label for="episode"><span class="label info">Episode</span></label><br>
+        <textarea id="episode" name="episode"  class="blue-box"></textarea>
+        <button  class="button-blue"  onclick="episodeformHandler()">Insert new episode</button>
     </div>
 
 
@@ -213,25 +290,26 @@ grid-column-gap: 20px;
 
 
 
-    <div class="result">Collectors
+    <div class="result">
+        <span class="label info">Collectors</span>
 
 
         <div class="collectors" id="collectors">
             <div id="result">
-                <button onclick="openSQLform()">Run SQL collector</button>
+                <button class="button-collector" onclick="openSQLform()">Run SQL collector</button>
                 <br>
-                <textarea id="textresult" name="textresult" rows="20" cols="80" style="white-space:pre-wrap">
+                <textarea id="textresult" name="textresult" class="sql-result">
             </textarea>
-                <button onclick="resultformHandler()">Validate the selection as an insight</button>
+                <button  class="button-blue"  onclick="resultformHandler()">Validate the selection as an insight</button>
             </div>
 
             <div >
-            <button onclick="openDescribeform()">Run Describe collector</button>
+            <button  class="button-collector" onclick="openDescribeform()">Run Describe collector</button>
             <div id="loader" style="display: none;"></div>
             <div                            style="width:100%; margin: auto; text-align: center;">
 
                 <div>
-                    <div><img src="img/dfm.svg" /></div>
+                    <div><img src="img/dfm.svg" style="width:100%; margin: auto; text-align: center;"/></div>
                     <br/>
                     <br>
                     <div id="old_text" value="" size="90"></div>
@@ -282,20 +360,19 @@ grid-column-gap: 20px;
 
 
     <div class="protagonist">
-        <label for="protagonist">Protagonist</label><br>
-        <textarea id="protagonist" name="protagonist" rows="10" cols="80"></textarea><br>
-        <button onclick="protagonistformHandler()">Insert new protagonist</button>
+        <label for="protagonist"><span class="label info">Protagonist</span></label><br>
+        <textarea id="protagonist" name="protagonist"  class="blue-box"></textarea>
+        <button  class="button-blue"  onclick="protagonistformHandler()">Insert new protagonist</button>
     </div>
 
 
 
 
     <div class="observation">
-        <label for="observation">Observation</label><br>
-        <textarea id="observation" name="observation" rows="10" cols="80" style="white-space:pre-wrap">
-
-        </textarea><br>
-        <button onclick="observationformHandler()">Insert new observation</button>
+        <label for="observation"><span class="label info">Observation</span></label><br>
+        <textarea id="observation" name="observation"  class="blue-box" style="white-space:pre-wrap">
+        </textarea>
+        <button  class="button-blue"  onclick="observationformHandler()">Insert new observation</button>
     </div>
 
 

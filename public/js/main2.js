@@ -47,6 +47,7 @@ function processClear (result, endpoint) {
          clear("protagonist");
          clear("episode");
          clear("act");
+         clear("my_dataviz");
 
          let consoleElt=document.getElementById("console");
          consoleElt.innerText=message;
