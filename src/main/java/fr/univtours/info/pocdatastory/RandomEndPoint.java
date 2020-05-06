@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.Iterator;
 import java.util.List;
 
@@ -124,6 +125,30 @@ public class RandomEndPoint {
         return new Answer(0,theResult);
 
     }
+
+    @PostMapping(value="api/describeViz", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public Answer describeViz(@RequestBody String base64) {
+        try {
+            System.out.println(base64);
+            int index = base64.indexOf(',');
+
+            if (index != -1) base64 = base64.substring(index + 1);
+
+            byte[] bytes = Base64.getDecoder().decode(new String(base64).getBytes("UTF-8"));
+
+            //System.out.println(getServletContext().getRealPath("WEB-INF/classes/"));
+            //final FileOutputStream fos = new FileOutputStream(getServletContext().getRealPath("WEB-INF/classes/") + File.separator + "imagestorer.png");
+            //fos.write(bytes);
+            //fos.close();
+            //response.getOutputStream().print(new JSONObject().toString());
+        } catch (final Exception e) {
+            e.printStackTrace();
+        }
+        return new Answer(0,"to check");
+
+    }
+
 
 
 

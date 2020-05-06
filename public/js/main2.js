@@ -125,8 +125,6 @@ function processClear (result, endpoint) {
 
 
 
-
-
  function processInsightAnswer (result, endpoint) {
         let code=JSON.parse(result).code;
         let message=JSON.parse(JSON.parse(result).message);
@@ -143,6 +141,12 @@ function processClear (result, endpoint) {
             consoleElt.innerText=message;
 
         }
+}
+
+
+
+function processVizAnswer (result, endpoint) {
+        // update observation with viz: ....
 }
 
 
@@ -230,6 +234,30 @@ function resultformHandler() {
 }
 
 
+function describeResultFormHandler(){
+
+   html2canvas($("#my_dataviz").get(0)).then(function(canvas) {
+                    // Export the canvas to its data URI representation
+                    var base64image = canvas.toDataURL("image/png");
+                    // Open the image in a new window
+                    //window.open(base64image , "_blank");
+
+                    const theurl = "http://" + server_domain + "/api/" + "describeViz";
+
+                    //console.log(base64image);
+
+                    $.ajax({
+                        type: 'POST',
+                        url: theurl,
+                        processData: false,
+                        contentType: 'application/octet-stream',
+                        data: base64image,
+                        //data: { base64: base64image },
+                        dataType: "string"
+                    });
+   });
+
+}
 
 function observationformHandler() {
     let result = document.getElementById("observation");
@@ -364,7 +392,7 @@ function elsaRequest(body, endpoint, callback, errorCallback, is_json=false) {
     const url = "http://" + server_domain + "/api/" + endpoint;
     let xhr = new XMLHttpRequest();
 
-
+    console.log(url);
 
     // modify callback to be executed when request completes
     function internCallback() {
