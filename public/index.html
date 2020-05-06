@@ -169,7 +169,7 @@ grid-row-end: 5;
 }
 
 .console {
-  width: 650px;
+  width: 610px;
   height: 30%;
   padding: 50px;
   border: 1px solid red;
@@ -257,7 +257,7 @@ border: solid 1px green;
 
 .sql-result{
  width: 100%;
- height: 100%;
+ height: 550px;
 border: solid 1px gray;
 }
 
@@ -293,11 +293,8 @@ border: solid 1px gray;
         </div>
 
 
-
         <button class="button-console" onclick="clearStory()">Start new story</button>
-
         <button class="button-console" onclick="renderListnener()">Render current story and download PDF</button>
-
         <button class="button-console" onclick="DBdumpListnener()">Save the stories in the database</button>
 
     </div>
@@ -347,7 +344,7 @@ border: solid 1px gray;
 
     <div class="result">
         <span class="label info">Collectors</span>
-
+        <br> <br>
 
         <div class="collectors" id="collectors">
             <div id="result">
@@ -358,10 +355,14 @@ border: solid 1px gray;
             </div>
 
             <div id="describeResult">
-            <button  class="button-collector" onclick="openDescribeform()">Run Describe collector</button>
+                <button  class="button-collector" onclick="openDescribeform()">Run Describe collector</button>
+                <br>
 
                 <div id="loader" style="display: none;"></div>
-                <div id="my_dataviz" style="float: left; margin: auto; max-width:55%;"></div>
+                <div class="sql-result">
+                    <div id="my_dataviz" style="float: left; margin: auto; max-width:55%;"></div>
+                </div>
+
 
                 <button  class="button-blue"  onclick="describeResultFormHandler()">Validate the dataviz as an insight</button>
 

@@ -4,8 +4,8 @@ function chooseChart(data, model, isupdate, selectedModel, selectedComponent, hi
     var z = data["pivot"]["headers"]["measures"].length;
     var prop = {}
     prop["margin"] = {top: 30, right: 30, bottom: 100, left: 100};
-    prop["width"] = 800 - prop["margin"]["left"] - prop["margin"]["right"];
-    prop["height"] = 500 - prop["margin"]["top"] - prop["margin"]["bottom"];
+    prop["width"] = 800 - 300 - prop["margin"]["left"] - prop["margin"]["right"];
+    prop["height"] = 500 -300 - prop["margin"]["top"] - prop["margin"]["bottom"];
     
     if (n == 1 && !isupdate) {
         var dim = data["pivot"]["headers"]["dimensions"][0]["attribute"];
