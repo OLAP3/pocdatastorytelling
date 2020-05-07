@@ -11,10 +11,12 @@ import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.font.PDFont;
 import org.apache.pdfbox.pdmodel.font.PDTrueTypeFont;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
+import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.Collection;
 
 public class SimpleVisualStory implements VisualStory {
@@ -49,9 +51,16 @@ public class SimpleVisualStory implements VisualStory {
 
 
             for(Episode ep : act.includes()){
-                DashboardComponent dbc = new SimpleDashboardComponent();
-                d.contains(dbc);
-                dbc.renders(ep);
+                if(ep.getClass().toString().compareTo("SimpleGraphicEpisode")==0){
+                    DashboardComponent dbc = new DescribeDashboardComponent();
+                    d.contains(dbc);
+                    dbc.renders(ep);
+                }else{
+                    DashboardComponent dbc = new SimpleDashboardComponent();
+                    d.contains(dbc);
+                    dbc.renders(ep);
+                }
+
             }
 
             //d.renders(act);
@@ -72,7 +81,7 @@ public class SimpleVisualStory implements VisualStory {
     @Override
     public Story renders() {
         theRendering= "This is the story for goal: " + theStory.has().toString() + "\n";
-        for(Dashboard d : theDashboards){
+        for(Dashboard d : theDashboards){ // I'm here
             d.renders();
             theRendering=theRendering + ((SimpleDashboard) d).getRendering() + "\n";
         }
@@ -129,14 +138,25 @@ public class SimpleVisualStory implements VisualStory {
                    contentStream.newLine();
                    contentStream.newLine();
 
-               }
+               }else {
+                   if(toPrint[x].startsWith("data")) {
+
+                           int index = toPrint[x].indexOf(',');
+
+                           if (index != -1) toPrint[x] = toPrint[x].substring(index + 1);
+
+                           byte[] bytes = Base64.getDecoder().decode(new String(toPrint[x]).getBytes("UTF-8"));
+
+                       PDImageXObject pdImage = PDImageXObject.createFromByteArray(document,bytes,"insight");
+                       contentStream.drawImage(pdImage, 70, 250);
+                   }
                 else{
-                   contentStream.setFont(PDType1Font.TIMES_ROMAN, 10);
-                   contentStream.showText(toPrint[x]);
-                   contentStream.newLine();
+                       contentStream.setFont(PDType1Font.TIMES_ROMAN, 10);
+                       contentStream.showText(toPrint[x]);
+                       contentStream.newLine();
+                   }
+
                }
-
-
             }
 
 

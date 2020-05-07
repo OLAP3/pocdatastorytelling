@@ -7,10 +7,10 @@ import javax.xml.transform.Result;
 import java.sql.ResultSet;
 
 
-public class SimpleInsight implements Insight {
+public class SimpleSQLInsight implements Insight {
     private ResultSet resultSet;
 
-    public SimpleInsight(ResultSet aResultSet){
+    public SimpleSQLInsight(ResultSet aResultSet){
         this.resultSet=aResultSet;
 
     }

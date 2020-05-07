@@ -6,14 +6,11 @@ import fr.univtours.info.model.factual.Collector;
 import fr.univtours.info.model.factual.Exploration;
 import fr.univtours.info.model.factual.Insight;
 import fr.univtours.info.model.intentional.*;
-import fr.univtours.info.model.presentational.Dashboard;
-import fr.univtours.info.model.presentational.DashboardComponent;
 import fr.univtours.info.model.presentational.VisualStory;
 import fr.univtours.info.model.discursal.Story;
 import org.apache.pdfbox.pdmodel.PDDocument;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 
@@ -24,7 +21,7 @@ public class StoryCreator {
     Exploration theExploration;
 
     AnalyticalQuestion currentQuestion;
-    Collector currentCollector; // needed?
+    Collector currentCollector;
     Observation currentObservation;
     Episode currentEpisode;
     Message currentMessage;
@@ -32,6 +29,9 @@ public class StoryCreator {
     //ArrayList<Protagonist> currentProtagonists;
 
     Collection<Insight> currentAnswer;
+
+    byte[] currentGraphic;
+    boolean currentInsightIsGraphic=false;
 
     PDDocument thePDF;
     File thePDFfile;
@@ -94,9 +94,44 @@ public class StoryCreator {
         return question;
     }
 
-    public String newCollector(String query){
 
-        Collector c = new SimpleCollector(query);
+
+    public String newDescribeCollector(String query) {
+
+        Collector c = new SimpleDescribeCollector(query);
+        currentQuestion.implement(c);
+        theExploration.tries(c);
+        currentCollector=c;
+
+
+        Collection<Insight> col =c.fetches();
+        currentAnswer = col;
+        /*
+        Iterator<Insight> it= col.iterator();
+        String res="";
+
+        while(it.hasNext()){
+            Insight i=it.next();
+            //currentObservation.produces(i);
+            res=res+i.toString();
+        }
+
+        return res;
+        */
+         return query;
+
+    }
+
+    public void addDescribeInsight(byte[] describeResult){
+        currentCollector.fetches(new SimpleDescribeInsight(describeResult));
+        currentGraphic=describeResult;
+        currentInsightIsGraphic=true;
+    }
+
+
+    public String newSQLCollector(String query){
+
+        Collector c = new SimpleSQLCollector(query);
         currentQuestion.implement(c);
         theExploration.tries(c);
         currentCollector=c;
@@ -108,6 +143,8 @@ public class StoryCreator {
         catch(Exception e){
             e.printStackTrace();
         }
+
+        currentInsightIsGraphic=false;
 
         Collection<Insight> col =c.fetches();
         currentAnswer = col;
@@ -126,6 +163,7 @@ public class StoryCreator {
 
 
     public String newObservation(String theObservation){
+
         Observation o = new SimpleObservation();
         o.addText(theObservation);
         currentObservation=o;
@@ -179,7 +217,13 @@ public class StoryCreator {
 
 
     public String newEpisode(String theEpisode){
-        currentEpisode=new SimpleEpisode();
+        if(currentInsightIsGraphic){
+            currentEpisode=new SimpleGraphicEpisode();
+            ((SimpleGraphicEpisode) currentEpisode).setGraphic(currentGraphic);
+        }else{
+            currentEpisode=new SimpleEpisode();
+        }
+
         currentAct.includes(currentEpisode);
         for(Protagonist p : currentObservation.bringsOut()){
             currentEpisode.playsIn(p);

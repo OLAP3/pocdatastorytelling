@@ -124,6 +124,47 @@ function processClear (result, endpoint) {
 }
 
 
+function processDescribeAnswer (result, endpoint) {
+        let code=JSON.parse(result).code;
+        let message=JSON.parse(result).message;
+        console.log(code);
+        console.log(message);
+
+        if(code==0){
+            sendToDescribeServer();
+
+            html2canvas($("#my_dataviz").get(0)).then(function(canvas) {
+                    // Export the canvas to its data URI representation
+                var base64image = canvas.toDataURL("image/png");
+                    // Open the image in a new window
+                    //window.open(base64image , "_blank");
+
+                const theurl = "http://" + server_domain + "/api/" + "describeInsight";
+
+                    //console.log(base64image);
+
+                $.ajax({
+                        type: 'POST',
+                        url: theurl,
+                        processData: false,
+                        contentType: 'application/octet-stream',
+                        data: base64image,
+                        //data: { base64: base64image },
+                        dataType: "string"
+                });
+            });
+
+        }
+        else{
+            let consoleElt=document.getElementById("console");
+            consoleElt.innerText=message;
+
+        }
+}
+
+
+
+
 
  function processInsightAnswer (result, endpoint) {
         let code=JSON.parse(result).code;
@@ -149,6 +190,27 @@ function processVizAnswer (result, endpoint) {
         // update observation with viz: ....
 }
 
+
+
+
+function goalformHandler() {
+    let goal = document.getElementById("goal").value;
+
+    let msg = goal;
+
+    let changeDiv = function (result) {
+        let recap=document.getElementById("recap");
+        let recaptext = document.getElementById("recap").innerText;
+        recap.innerText= recaptext + "\n Goal: " + result;
+    };
+
+   let pb = function (result) {
+        console.log("debug: ");
+        console.log(result);
+    };
+
+    elsaRequest(msg, "goal", processControllerAnswer, pb,false);
+}
 
 
 
@@ -193,30 +255,28 @@ function openDescribeform() {
 }
 
 
+function sendDescribe(){
 
+let query = document.getElementById("describe_text").value;
 
+    let msg = query;
 
-
-
-
-function goalformHandler() {
-    let goal = document.getElementById("goal").value;
-
-    let msg = goal;
-
-    let changeDiv = function (result) {
-        let recap=document.getElementById("recap");
-        let recaptext = document.getElementById("recap").innerText;
-        recap.innerText= recaptext + "\n Goal: " + result;
-    };
+    document.getElementById("mySQLForm").style.display = "none";
 
    let pb = function (result) {
         console.log("debug: ");
         console.log(result);
     };
 
-    elsaRequest(msg, "goal", processControllerAnswer, pb,false);
+    elsaRequest(msg, "describeQuery", processDescribeAnswer, pb,false);
+
+
 }
+
+
+
+
+
 
 
 function resultformHandler() {
@@ -253,9 +313,24 @@ function describeResultFormHandler(){
                         contentType: 'application/octet-stream',
                         data: base64image,
                         //data: { base64: base64image },
-                        dataType: "string"
+                        dataType: "string",
+                        success: function(newdata) {
+                            console.log(newdata);
+                            let obs=document.getElementById("observation");
+                            obs.value=base64image;
+                            //obs.value=$("#my_dataviz").get(0);
+                        },
+                        error: function(newdata){
+                            console.log("ajax error");
+                            console.log(newdata);
+                            let obs=document.getElementById("observation");
+                            //obs.value=$("#my_dataviz").get(0).value;
+                            obs.value=base64image;
+                            //obs.value="Graphical object";
+                        }
                     });
    });
+
 
 }
 
@@ -419,7 +494,7 @@ function elsaRequest(body, endpoint, callback, errorCallback, is_json=false) {
 }
 
 
-
+/*
 function sendDescribe(body, callback, errorCallback) {
 
     //http://137.204.72.88:8083/COOL/Describe?sessionid=1588142552276&value=with%20SALES%20describe%20storeCost%20by%20month
@@ -455,11 +530,12 @@ function sendDescribe(body, callback, errorCallback) {
     xhr.send();
     //xhr.send(body);
 }
+*/
 
 var data, prevModel = "", prevText = "";
 session = new Date().getTime();
 
-function sendDescribe() {
+function sendToDescribeServer() {
     document.getElementById("myDescribeForm").style.display = "none";
 
     document.getElementById("loader").style.display = "block"

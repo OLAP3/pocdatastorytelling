@@ -10,13 +10,13 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Properties;
 
-public class SimpleCollector implements Collector {
+public class SimpleSQLCollector implements Collector {
     Connection conn;
     String sqlQuery;
     ResultSet resultset;
     Collection<Insight> theInsights;
 
-    public SimpleCollector(String sqlQuery) {
+    public SimpleSQLCollector(String sqlQuery) {
         try {
             this.connectToPostgresql();
             this.sqlQuery = sqlQuery;
@@ -60,7 +60,7 @@ public class SimpleCollector implements Collector {
         ResultSet rs = stmt.executeQuery(this.sqlQuery) ;
         this.resultset=rs;
         // now produces insights
-        Insight i = new SimpleInsight(resultset);
+        Insight i = new SimpleSQLInsight(resultset);
         this.fetches(i);
     }
 

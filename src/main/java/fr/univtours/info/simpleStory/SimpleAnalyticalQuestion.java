@@ -23,7 +23,7 @@ public class SimpleAnalyticalQuestion implements AnalyticalQuestion {
 
     // drop me
     public Collection<Insight> answer() {
-        Collector c = new SimpleCollector(theText);
+        Collector c = new SimpleSQLCollector(theText);
         try {
             c.run();
         }

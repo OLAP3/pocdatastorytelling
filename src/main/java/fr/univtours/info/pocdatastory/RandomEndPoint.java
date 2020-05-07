@@ -1,21 +1,15 @@
 package fr.univtours.info.pocdatastory;
 
-import fr.univtours.info.model.discursal.Story;
 import fr.univtours.info.model.factual.Insight;
-import fr.univtours.info.model.intentional.*;
-import fr.univtours.info.simpleStory.SimpleCollector;
-import fr.univtours.info.simpleStory.SimpleGoal;
+import fr.univtours.info.simpleStory.SimpleSQLCollector;
 import fr.univtours.info.simpleStory.StoryCreator;
-import org.apache.pdfbox.pdmodel.PDDocument;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Iterator;
-import java.util.List;
 
 
 @Controller
@@ -102,16 +96,35 @@ public class RandomEndPoint {
 
         if(creator.getCurrentQuestion()!=null){
 
-            String res=creator.newCollector(query.getQuery());
+            String res=creator.newSQLCollector(query.getQuery());
 
-            if(res.length()>10000){
-                toReturn="Query result too long, cannot be rendered";
-            }
-            else{
+
                 code=0;
                 toReturn= res;
 
-            }
+
+        }
+        return new Answer(code,toReturn);
+
+    }
+
+
+
+
+    @PostMapping(value="api/describeQuery",  produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public Answer describeQuery(@RequestBody String query) {
+
+        String toReturn="No analytical question created! Please create an analytical question first.";
+        int code=1;
+
+        if(creator.getCurrentQuestion()!=null){
+
+            String res=creator.newDescribeCollector(query);
+
+                code=0;
+                toReturn= res;
+
         }
         return new Answer(code,toReturn);
 
@@ -121,14 +134,18 @@ public class RandomEndPoint {
     @PostMapping(value="api/result", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public Answer result(@RequestBody String theResult) {
-
         return new Answer(0,theResult);
-
     }
 
-    @PostMapping(value="api/describeViz", produces = MediaType.APPLICATION_JSON_VALUE)
+
+
+    @PostMapping(value="api/describeInsight", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public Answer describeViz(@RequestBody String base64) {
+    public Answer describeInsight(@RequestBody String base64) {
+        // as for SQL result, we must have an analytical question and instantiate a collector
+        // meaning that we must encapsulate the describe in a collector
+
+        // change this, pass the base64 string and do the  decoding in the rendering
         try {
             System.out.println(base64);
             int index = base64.indexOf(',');
@@ -137,15 +154,23 @@ public class RandomEndPoint {
 
             byte[] bytes = Base64.getDecoder().decode(new String(base64).getBytes("UTF-8"));
 
-            //System.out.println(getServletContext().getRealPath("WEB-INF/classes/"));
-            //final FileOutputStream fos = new FileOutputStream(getServletContext().getRealPath("WEB-INF/classes/") + File.separator + "imagestorer.png");
-            //fos.write(bytes);
-            //fos.close();
-            //response.getOutputStream().print(new JSONObject().toString());
+            creator.addDescribeInsight(bytes);
+
+
         } catch (final Exception e) {
             e.printStackTrace();
         }
-        return new Answer(0,"to check");
+        return new Answer(0,"Describe insight added");
+
+    }
+
+
+
+    @PostMapping(value="api/describeViz", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public Answer describeViz(@RequestBody String base64) {
+
+        return new Answer(0,base64);
 
     }
 
@@ -281,7 +306,7 @@ public class RandomEndPoint {
     @ResponseBody
     public String form(@RequestBody FormObject fo) {
         //public String form(@RequestBody String fo) {
-        SimpleCollector col=new SimpleCollector(fo.getFn());
+        SimpleSQLCollector col=new SimpleSQLCollector(fo.getFn());
         try {
             col.run();
         }catch(Exception e){
