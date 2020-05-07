@@ -157,7 +157,7 @@ grid-column-gap: 50px;
 grid-column-start: 1;
 grid-column-end: 2;
 grid-row-start: 3;
-grid-row-end: 5;
+grid-row-end: 6;
 padding: 30px 0px;
 }
 
@@ -165,7 +165,7 @@ padding: 30px 0px;
 grid-column-start: 3;
 grid-column-end: 4;
 grid-row-start: 1;
-grid-row-end: 5;
+grid-row-end: 6;
 }
 
 .console {
@@ -402,20 +402,26 @@ border: solid 1px gray;
 
 
     <div class="protagonist">
-        <label for="protagonist"><span class="label info">Protagonist</span></label><br>
+        <label for="protagonist"><span class="label info">Character</span></label><br>
         <textarea id="protagonist" name="protagonist"  class="blue-box"></textarea>
-        <button  class="button-blue"  onclick="protagonistformHandler()">Insert new protagonist</button>
+        <button  class="button-blue"  onclick="protagonistformHandler()">Insert new character</button>
     </div>
 
 
+    <div class="message">
+        <label for="message"><span class="label info">Measure</span></label></label><br>
+        <textarea id="message" name="message" class="blue-box" style="white-space:pre-wrap"></textarea>
+        <button class="button-blue"  onclick="messageformHandler()">Insert new measure</button>
+    </div>
 
 
     <div class="observation">
-        <label for="observation"><span class="label info">Observation</span></label><br>
-        <textarea id="observation" name="observation"  class="blue-box" style="white-space:pre-wrap">
-        </textarea>
-        <button  class="button-blue"  onclick="observationformHandler()">Insert new observation</button>
+        <label for="observation"><span class="label info">Message</span></label><br>
+        <textarea id="observation" name="observation"  class="blue-box" style="white-space:pre-wrap"></textarea>
+        <button  class="button-blue"  onclick="observationformHandler()">Insert new message</button>
     </div>
+
+
 
 
 
@@ -423,20 +429,13 @@ border: solid 1px gray;
 
 
     <!--
-       <div class="message">
-           <label for="message">Message</label><br>
-           <textarea id="message" name="message" rows="10" cols="80"></textarea><br>
-           <button onclick="messageformHandler()">Insert new message</button>
-       </div>
 
 
-
-
-       <div class="story">
-           <label for="story">Story</label><br>
-           <textarea id="story" name="story" rows="10" cols="80"></textarea><br>
-       </div>
-   -->
+           <div class="story">
+               <label for="story">Story</label><br>
+               <textarea id="story" name="story" rows="10" cols="80"></textarea><br>
+           </div>
+       -->
 
 </div>
 
