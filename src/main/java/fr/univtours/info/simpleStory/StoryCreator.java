@@ -29,7 +29,7 @@ public class StoryCreator {
     //ArrayList<Protagonist> currentProtagonists;
 
     Collection<Insight> currentAnswer;
-
+    String currentGraphicString;
     byte[] currentGraphic;
     boolean currentInsightIsGraphic=false;
 
@@ -122,9 +122,10 @@ public class StoryCreator {
 
     }
 
-    public void addDescribeInsight(byte[] describeResult){
-        currentCollector.fetches(new SimpleDescribeInsight(describeResult));
+    public void addDescribeInsight(byte[] describeResult, String base64){
+        currentCollector.fetches(new SimpleDescribeInsight(describeResult, base64));
         currentGraphic=describeResult;
+        currentGraphicString=base64;
         currentInsightIsGraphic=true;
     }
 
@@ -217,12 +218,13 @@ public class StoryCreator {
 
 
     public String newEpisode(String theEpisode){
-        if(currentInsightIsGraphic){
-            currentEpisode=new SimpleGraphicEpisode();
-            ((SimpleGraphicEpisode) currentEpisode).setGraphic(currentGraphic);
-        }else{
+        //if(currentInsightIsGraphic){
+        //    currentEpisode=new SimpleGraphicEpisode();
+        //    ((SimpleGraphicEpisode) currentEpisode).setGraphic(currentGraphic);
+        //    ((SimpleGraphicEpisode) currentEpisode).setStringGraphic(currentGraphicString);
+        //}else{
             currentEpisode=new SimpleEpisode();
-        }
+        //}
 
         currentAct.includes(currentEpisode);
         for(Protagonist p : currentObservation.bringsOut()){

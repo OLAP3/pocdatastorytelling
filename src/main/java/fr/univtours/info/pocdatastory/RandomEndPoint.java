@@ -147,14 +147,15 @@ public class RandomEndPoint {
 
         // change this, pass the base64 string and do the  decoding in the rendering
         try {
-            System.out.println(base64);
+            //System.out.println(base64);
+            String param=base64;
             int index = base64.indexOf(',');
 
             if (index != -1) base64 = base64.substring(index + 1);
 
             byte[] bytes = Base64.getDecoder().decode(new String(base64).getBytes("UTF-8"));
 
-            creator.addDescribeInsight(bytes);
+            creator.addDescribeInsight(bytes, param);
 
 
         } catch (final Exception e) {

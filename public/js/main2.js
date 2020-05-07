@@ -133,26 +133,7 @@ function processDescribeAnswer (result, endpoint) {
         if(code==0){
             sendToDescribeServer();
 
-            html2canvas($("#my_dataviz").get(0)).then(function(canvas) {
-                    // Export the canvas to its data URI representation
-                var base64image = canvas.toDataURL("image/png");
-                    // Open the image in a new window
-                    //window.open(base64image , "_blank");
 
-                const theurl = "http://" + server_domain + "/api/" + "describeInsight";
-
-                    //console.log(base64image);
-
-                $.ajax({
-                        type: 'POST',
-                        url: theurl,
-                        processData: false,
-                        contentType: 'application/octet-stream',
-                        data: base64image,
-                        //data: { base64: base64image },
-                        dataType: "string"
-                });
-            });
 
         }
         else{
@@ -186,10 +167,29 @@ function processDescribeAnswer (result, endpoint) {
 
 
 
-function processVizAnswer (result, endpoint) {
-        // update observation with viz: ....
-}
+function notifyDescribeInsight(){ // called by sentToDescribeServer, on success
+html2canvas($("#my_dataviz").get(0)).then(function(canvas) {
+                    // Export the canvas to its data URI representation
+                var base64image = canvas.toDataURL("image/png");
+                    // Open the image in a new window
+                    //window.open(base64image , "_blank");
 
+                const theurl = "http://" + server_domain + "/api/" + "describeInsight";
+
+                console.log("processDescribeAnswer");
+                console.log(base64image);
+
+                $.ajax({
+                        type: 'POST',
+                        url: theurl,
+                        processData: false,
+                        contentType: 'application/octet-stream',
+                        data: base64image,
+                        //data: { base64: base64image },
+                        dataType: "string"
+                });
+            });
+}
 
 
 
@@ -317,7 +317,7 @@ function describeResultFormHandler(){
                         success: function(newdata) {
                             console.log(newdata);
                             let obs=document.getElementById("observation");
-                            obs.value=base64image;
+                            //obs.value=base64image;
                             //obs.value=$("#my_dataviz").get(0);
                         },
                         error: function(newdata){
@@ -325,8 +325,8 @@ function describeResultFormHandler(){
                             console.log(newdata);
                             let obs=document.getElementById("observation");
                             //obs.value=$("#my_dataviz").get(0).value;
-                            obs.value=base64image;
-                            //obs.value="Graphical object";
+                            //obs.value=base64image;
+                            obs.value="...as illustrated by the data viz...";
                         }
                     });
    });
@@ -532,6 +532,9 @@ function sendDescribe(body, callback, errorCallback) {
 }
 */
 
+
+
+
 var data, prevModel = "", prevText = "";
 session = new Date().getTime();
 
@@ -572,7 +575,8 @@ function sendToDescribeServer() {
             }
             prevText = $("#describe_text")[0].value;*/
             $("#old_text").append("<div>" + $("#describe_text")[0].value + "</div>");
-            document.getElementById("loader").style.display = "none"
+            document.getElementById("loader").style.display = "none";
+            notifyDescribeInsight();
         },
         error: function(newdata) {
             alert("ERROR: Server not reachable. " + newdata);

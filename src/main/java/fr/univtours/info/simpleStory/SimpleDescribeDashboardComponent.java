@@ -5,14 +5,15 @@ import fr.univtours.info.model.presentational.DashboardComponent;
 
 import java.awt.font.GraphicAttribute;
 
-public class DescribeDashboardComponent implements DashboardComponent {
-    SimpleGraphicEpisode theEpisode;
+public class SimpleDescribeDashboardComponent implements DashboardComponent {
+   Episode theEpisode;
     String theRendering;
     byte[] theGraphic;
+    String theStringGraphic;
 
     @Override
     public void renders(Episode anEpisode) {
-        this.theEpisode= (SimpleGraphicEpisode) anEpisode;
+        this.theEpisode=  anEpisode;
     }
 
     @Override
@@ -28,7 +29,8 @@ public class DescribeDashboardComponent implements DashboardComponent {
 
          */
         theRendering = theEpisode.toString();
-        theGraphic = theEpisode.getGraphic();
+        //theGraphic = theEpisode.getGraphic();
+        //theStringGraphic=theEpisode.getStringGraphic();
         return theEpisode;
     }
 
@@ -40,5 +42,7 @@ public class DescribeDashboardComponent implements DashboardComponent {
         return theGraphic;
     }
 
-
+    public String getTheStringGraphic() {
+        return theStringGraphic;
+    }
 }

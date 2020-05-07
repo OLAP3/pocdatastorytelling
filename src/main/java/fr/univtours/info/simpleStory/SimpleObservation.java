@@ -27,7 +27,11 @@ public class SimpleObservation implements Observation {
 
     @Override
     public String toString() {
-        return "Observation: " + theText;
+        String result ="Observation: ";
+        for(Insight i : theInsights){
+            result = result + i.toString() + "\n";
+        }
+        return result + theText;
     }
 
     @Override
