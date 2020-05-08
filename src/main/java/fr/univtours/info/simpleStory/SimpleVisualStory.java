@@ -49,15 +49,11 @@ public class SimpleVisualStory implements VisualStory {
 
 
             for(Episode ep : act.includes()){
-                if(ep.getClass().toString().compareTo("SimpleGraphicEpisode")==0){
-                    DashboardComponent dbc = new SimpleDescribeDashboardComponent();
-                    d.contains(dbc);
-                    dbc.renders(ep);
-                }else{
+
                     DashboardComponent dbc = new SimpleDashboardComponent();
                     d.contains(dbc);
                     dbc.renders(ep);
-                }
+
 
             }
 
@@ -145,7 +141,7 @@ public class SimpleVisualStory implements VisualStory {
                    contentStream.newLine();
 
                }else {
-                   if(toPrint[x].startsWith("Observation: data")) {// means image
+                   if(toPrint[x].startsWith("Message: data")) {// means image
                        contentStream.endText();
                        contentStream.close();
                        blankPage = new PDPage(); // each act starts a new page

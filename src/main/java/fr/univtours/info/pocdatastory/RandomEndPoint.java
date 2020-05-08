@@ -195,7 +195,7 @@ public class RandomEndPoint {
     public Answer message(@RequestBody String message) {
 
 
-        String toReturn="No observation created! Please an observation first."; //observation ->message
+        String toReturn="No message created! Please create a message first."; //observation ->message
         int code=1;
 
         if(creator.getCurrentMessage()!=null){
@@ -236,10 +236,11 @@ public class RandomEndPoint {
     @ResponseBody
     public Answer episode(@RequestBody String episode) {
 
-        String toReturn="No observation and act created! Please create an observation and an act first.";
+        String toReturn="Please create an act, a message, characters and measures first.";
         int code =1;
 
-        if(creator.getCurrentMessage()!=null && creator.getCurrentAct() !=null){
+        if(creator.getCurrentMessage()!=null && creator.getCurrentAct() !=null
+        && creator.getCurrentCharacter()!=null && creator.getCurrentMeasure()!=null){
             code =0;
             String res=creator.newEpisode(episode);
             toReturn=res;
@@ -258,7 +259,7 @@ public class RandomEndPoint {
     public Answer protagonist(@RequestBody String protagonist) {
 
         int code=1;
-        String toReturn="No observation created! Please create an observation first.";
+        String toReturn="No message created! Please create a message first.";
 
         if(creator.getCurrentMessage()!=null){
             code=0;

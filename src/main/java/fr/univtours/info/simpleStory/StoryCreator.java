@@ -26,6 +26,7 @@ public class StoryCreator {
     Message currentMessage;
     Episode currentEpisode;
     Measure currentMeasure;
+    Character currentCharacter;
     Act currentAct;
     //ArrayList<Protagonist> currentProtagonists;
 
@@ -53,8 +54,20 @@ public class StoryCreator {
         return currentMessage;
     }
 
-    public Measure getCurrentMeasure(){
+    public Measure getCurrentMeasure() {
         return currentMeasure;
+    }
+
+    public void setCurrentMeasure(Measure currentMeasure) {
+        this.currentMeasure = currentMeasure;
+    }
+
+    public Character getCurrentCharacter() {
+        return currentCharacter;
+    }
+
+    public void setCurrentCharacter(Character currentCharacter) {
+        this.currentCharacter = currentCharacter;
     }
 
     public Act getCurrentAct(){
@@ -187,45 +200,37 @@ public class StoryCreator {
 
 
     public String newCharacter(String theCharacter){
-        Character p = new SimpleCharacter();
-        currentMessage.bringsOut(p);
-        p.addText(theCharacter);
+        currentCharacter = new SimpleCharacter();
+        currentCharacter.addText(theCharacter);
+        currentMessage.bringsOut(currentCharacter);
         return theCharacter;
-    }
-
-    public String newAct(String theAct){
-        currentAct=new SimpleAct();
-        theStory.includes(currentAct);
-
-        //currentAct.narrates(currentMessage);
-
-        currentAct.addText(theAct);
-
-        return(theAct);
     }
 
 
     public String newMeasure(String theMeasure){
-        currentMeasure =new SimpleMeasure();
+        currentMeasure  =new SimpleMeasure();
         currentMeasure.addText(theMeasure);
         currentMessage.includes(currentMeasure);
-
         return(theMeasure);
     }
 
 
+    public String newAct(String theAct){
+        currentAct=new SimpleAct();
+        theStory.includes(currentAct);
+        currentAct.addText(theAct);
+        return(theAct);
+    }
+
 
     public String newEpisode(String theEpisode){
-        //if(currentInsightIsGraphic){
-        //    currentEpisode=new SimpleGraphicEpisode();
-        //    ((SimpleGraphicEpisode) currentEpisode).setGraphic(currentGraphic);
-        //    ((SimpleGraphicEpisode) currentEpisode).setStringGraphic(currentGraphicString);
-        //}else{
-            currentEpisode=new SimpleEpisode();
-        //}
+        currentEpisode=new SimpleEpisode();
+        currentEpisode.narrates(currentMessage);
+        currentEpisode.addText(theEpisode);
+
+        currentAct.includes(currentEpisode);
 
         // attaches current message characters
-        currentAct.includes(currentEpisode);
         for(Character p : currentMessage.bringsOut()){
             currentEpisode.playsIn(p);
         }
@@ -234,10 +239,11 @@ public class StoryCreator {
             currentEpisode.refersTo(m);
         }
 
-
-        currentEpisode.narrates(currentMessage);
-        currentEpisode.addText(theEpisode);
-
+        // validation of episode resets message, character, measure and episode
+        currentEpisode=null;
+        currentMessage=null;
+        currentCharacter=null;
+        currentMeasure=null;
         return(theEpisode);
     }
 
@@ -253,6 +259,8 @@ public class StoryCreator {
         //vs.print(); // and then prints
         return msg;
     }
+
+
 
 
 

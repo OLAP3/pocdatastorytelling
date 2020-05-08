@@ -45,6 +45,7 @@ function processClear (result, endpoint) {
          clear("observation");
          clear("textresult");
          clear("protagonist");
+         clear("message");
          clear("episode");
          clear("act");
          clear("my_dataviz");
@@ -53,6 +54,33 @@ function processClear (result, endpoint) {
          consoleElt.innerText=message;
 
         }
+}
+
+
+
+function processEpisodeClear (result, endpoint) {
+        let code=JSON.parse(result).code;
+        let message=JSON.parse(result).message;
+        console.log(code);
+        console.log(message);
+
+       if(code==0){
+            let recap=document.getElementById("recap");
+            let recaptext = document.getElementById("recap").value;
+
+            recap.value= recaptext + "\n " + endpoint + ": "+ JSON.parse(message);
+            clear("observation");
+            clear("textresult");
+            clear("protagonist");
+            clear("message");
+            clear("episode");
+            clear("my_dataviz");
+
+       }
+       else{
+            let consoleElt=document.getElementById("console");
+            consoleElt.innerText=message;
+       }
 }
 
 
@@ -434,7 +462,7 @@ function episodeformHandler() {
         console.log(result);
     };
 
-    elsaRequest(msg, "episode", processControllerAnswer, pb,false);
+    elsaRequest(msg, "episode", processEpisodeClear, pb,false);
 }
 
 
