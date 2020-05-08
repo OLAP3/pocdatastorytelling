@@ -36,7 +36,6 @@ public class SimpleAct implements Act {
 
     @Override
     public void narrates(Measure aMeasure) {
-
         this.theMeasure = aMeasure;
         //this.messageText=theMessage.toString();
     }

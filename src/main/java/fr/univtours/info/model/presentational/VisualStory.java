@@ -5,7 +5,7 @@ import java.util.Collection;
 
 public interface VisualStory {
 
-    public void print();
+    public String toString();
 
     public void renders(Story aStory);
     public void contains(Dashboard aDashboard);

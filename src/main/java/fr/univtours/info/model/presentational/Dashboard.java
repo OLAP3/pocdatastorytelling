@@ -13,4 +13,5 @@ public interface Dashboard {
     public Collection<DashboardComponent> contains(); //getComponent
     public Act renders();
 
+
 }

@@ -2,6 +2,7 @@ package fr.univtours.info.simpleStory;
 
 import fr.univtours.info.model.Structural.Act;
 import fr.univtours.info.model.Structural.Episode;
+import fr.univtours.info.model.factual.Finding;
 import fr.univtours.info.model.presentational.*;
 import fr.univtours.info.model.Structural.Story;
 
@@ -32,10 +33,20 @@ public class SimpleVisualStory implements VisualStory {
     }
 
     @Override
-    public void print() {
-
-        //System.out.println(theRendering);
+    public String toString() {
+        return theRendering;
     }
+
+    @Override
+    public void contains(Dashboard aDashboard) {
+        theDashboards.add(aDashboard);
+    }
+
+    @Override
+    public Collection<Dashboard> contains() {
+        return theDashboards;
+    }
+
 
     @Override
     public void renders(Story aStory) {
@@ -49,11 +60,24 @@ public class SimpleVisualStory implements VisualStory {
 
 
             for(Episode ep : act.includes()){
-
-                    DashboardComponent dbc = new SimpleDashboardComponent();
+                    // this is the place to choose between different components
+                boolean hasGraphic=false;
+                for(Finding i : ep.narrates().produces()){
+                    if(i.getClass().getName().equals("fr.univtours.info.simpleStory.SimpleDescribeFinding")){
+                        hasGraphic=true;
+                    }
+                }
+                if(hasGraphic){
+                    DashboardComponent dbc = new SimpleDescribeDashboardComponent();
                     d.contains(dbc);
                     dbc.renders(ep);
 
+                }
+                else {
+                    DashboardComponent dbc = new SimpleDashboardComponent();
+                    d.contains(dbc);
+                    dbc.renders(ep);
+                }
 
             }
 
@@ -62,20 +86,12 @@ public class SimpleVisualStory implements VisualStory {
 
     }
 
-    @Override
-    public void contains(Dashboard aDashboard) {
-        theDashboards.add(aDashboard);
-    }
 
-    @Override
-    public Collection<Dashboard> contains() {
-        return theDashboards;
-    }
-
+/*
     @Override
     public Story renders() {
         theRendering= "This is the story for goal: " + theStory.has().toString() + "\n";
-        for(Dashboard d : theDashboards){ // I'm here
+        for(Dashboard d : theDashboards){
             d.renders();
             theRendering=theRendering + ((SimpleDashboard) d).getRendering() + "\n";
         }
@@ -86,6 +102,54 @@ public class SimpleVisualStory implements VisualStory {
         catch (Exception e){
             e.printStackTrace();
         }
+        return theStory;
+    }
+*/
+
+
+    @Override
+    public Story renders() {
+        try {
+
+            PDDocument document = new PDDocument();
+            this.thePDF=document;
+            System.out.println("PDF created");
+
+            PDPage blankPage = new PDPage();
+            document.addPage( blankPage );
+            PDPageContentStream contentStream = new PDPageContentStream(document, blankPage);
+            contentStream.beginText();
+            contentStream.setLeading(14.5f);
+            contentStream.newLineAtOffset(25, 725);
+
+            // prints title (goal)
+            contentStream.setFont(PDType1Font.TIMES_BOLD, 16);
+            contentStream.showText("This is the story for goal: " + theStory.has().toString() );
+            contentStream.newLine();
+            contentStream.newLine();
+            contentStream.endText();
+            contentStream.close();
+
+            for(Dashboard d : theDashboards){
+                ((SimpleDashboard) d).setPDF(document);
+                d.renders();
+                //theRendering=theRendering + ((SimpleDashboard) d).getRendering() + "\n";
+            }
+
+            //contentStream.endText();
+            System.out.println("Content added");
+            //contentStream.close();
+            //Saving the document
+            document.save("/Users/marcel/Documents/RECHERCHE/STUDENTS/Faten/pocdatastory/public/pdfs/test.pdf");
+
+            //Closing the document
+            document.close();
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+
+
         return theStory;
     }
 

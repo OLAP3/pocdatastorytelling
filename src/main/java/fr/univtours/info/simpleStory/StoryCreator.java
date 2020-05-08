@@ -111,29 +111,15 @@ public class StoryCreator {
 
 
     public String newDescribeCollector(String query) {
-
         Collector c = new SimpleDescribeCollector(query);
         currentQuestion.implement(c);
         theExploration.tries(c);
         currentCollector=c;
 
-
         Collection<Finding> col =c.fetches();
         currentAnswer = col;
-        /*
-        Iterator<Insight> it= col.iterator();
-        String res="";
 
-        while(it.hasNext()){
-            Insight i=it.next();
-            //currentObservation.produces(i);
-            res=res+i.toString();
-        }
-
-        return res;
-        */
          return query;
-
     }
 
     public void addDescribeInsight(byte[] describeResult, String base64){
@@ -354,7 +340,7 @@ public class StoryCreator {
         VisualStory vs=new SimpleVisualStory();
         vs.renders(theStory);  // just attach
         vs.renders(); // and then renders
-        vs.print(); // and then prints
+        vs.toString(); // and then prints
     }
 
 
