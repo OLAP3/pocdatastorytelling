@@ -1,9 +1,9 @@
 package fr.univtours.info.simpleStory;
 
-import fr.univtours.info.model.discursal.Act;
-import fr.univtours.info.model.discursal.Episode;
+import fr.univtours.info.model.Structural.Act;
+import fr.univtours.info.model.Structural.Episode;
 import fr.univtours.info.model.presentational.*;
-import fr.univtours.info.model.discursal.Story;
+import fr.univtours.info.model.Structural.Story;
 
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;

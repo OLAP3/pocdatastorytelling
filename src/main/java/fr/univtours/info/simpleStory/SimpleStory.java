@@ -1,9 +1,8 @@
 package fr.univtours.info.simpleStory;
 
-import fr.univtours.info.model.factual.Insight;
 import fr.univtours.info.model.intentional.Goal;
-import fr.univtours.info.model.discursal.Act;
-import fr.univtours.info.model.discursal.Story;
+import fr.univtours.info.model.Structural.Act;
+import fr.univtours.info.model.Structural.Story;
 
 import java.io.File;
 import java.io.FileReader;

@@ -1,13 +1,14 @@
 package fr.univtours.info.simpleStory;
 
-import fr.univtours.info.model.discursal.Act;
-import fr.univtours.info.model.discursal.Episode;
+import fr.univtours.info.model.Structural.Act;
+import fr.univtours.info.model.Structural.Episode;
 import fr.univtours.info.model.factual.Collector;
 import fr.univtours.info.model.factual.Exploration;
-import fr.univtours.info.model.factual.Insight;
+import fr.univtours.info.model.factual.Finding;
 import fr.univtours.info.model.intentional.*;
+import fr.univtours.info.model.intentional.Character;
 import fr.univtours.info.model.presentational.VisualStory;
-import fr.univtours.info.model.discursal.Story;
+import fr.univtours.info.model.Structural.Story;
 import org.apache.pdfbox.pdmodel.PDDocument;
 
 import java.io.File;
@@ -22,13 +23,13 @@ public class StoryCreator {
 
     AnalyticalQuestion currentQuestion;
     Collector currentCollector;
-    Observation currentObservation;
-    Episode currentEpisode;
     Message currentMessage;
+    Episode currentEpisode;
+    Measure currentMeasure;
     Act currentAct;
     //ArrayList<Protagonist> currentProtagonists;
 
-    Collection<Insight> currentAnswer;
+    Collection<Finding> currentAnswer;
     String currentGraphicString;
     byte[] currentGraphic;
     boolean currentInsightIsGraphic=false;
@@ -48,12 +49,12 @@ public class StoryCreator {
         return currentQuestion;
     }
 
-    public Observation getCurrentObservation() {
-        return currentObservation;
+    public Message getCurrentMessage() {
+        return currentMessage;
     }
 
-    public Message getCurrentMessage(){
-        return currentMessage;
+    public Measure getCurrentMeasure(){
+        return currentMeasure;
     }
 
     public Act getCurrentAct(){
@@ -104,7 +105,7 @@ public class StoryCreator {
         currentCollector=c;
 
 
-        Collection<Insight> col =c.fetches();
+        Collection<Finding> col =c.fetches();
         currentAnswer = col;
         /*
         Iterator<Insight> it= col.iterator();
@@ -123,7 +124,7 @@ public class StoryCreator {
     }
 
     public void addDescribeInsight(byte[] describeResult, String base64){
-        currentCollector.fetches(new SimpleDescribeInsight(describeResult, base64));
+        currentCollector.fetches(new SimpleDescribeFinding(describeResult, base64));
         currentGraphic=describeResult;
         currentGraphicString=base64;
         currentInsightIsGraphic=true;
@@ -147,14 +148,14 @@ public class StoryCreator {
 
         currentInsightIsGraphic=false;
 
-        Collection<Insight> col =c.fetches();
+        Collection<Finding> col =c.fetches();
         currentAnswer = col;
 
-        Iterator<Insight> it= col.iterator();
+        Iterator<Finding> it= col.iterator();
         String res="";
 
         while(it.hasNext()){
-            Insight i=it.next();
+            Finding i=it.next();
             //currentObservation.produces(i);
             res=res+i.toString();
         }
@@ -163,33 +164,33 @@ public class StoryCreator {
     }
 
 
-    public String newObservation(String theObservation){
+    public String newMessage(String theMessage){
 
-        Observation o = new SimpleObservation();
-        o.addText(theObservation);
-        currentObservation=o;
-        currentQuestion.generates(currentObservation);
-        currentObservation.generates(currentQuestion);
+        Message o = new SimpleMessage();
+        o.addText(theMessage);
+        currentMessage =o;
+        currentQuestion.generates(currentMessage);
+        currentMessage.generates(currentQuestion);
 
-        Iterator<Insight> it= currentAnswer.iterator();
+        Iterator<Finding> it= currentAnswer.iterator();
         String res="";
 
         while(it.hasNext()){
-            Insight i=it.next();
-            currentObservation.produces(i);
+            Finding i=it.next();
+            currentMessage.produces(i);
             res=res+i.toString();
         }
 
 
-        return theObservation;
+        return theMessage;
     }
 
 
-    public String newProtagonist(String theProtagonist){
-        Protagonist p = new SimpleProtagonist();
-        currentObservation.bringsOut(p);
-        p.addText(theProtagonist);
-        return theProtagonist;
+    public String newCharacter(String theCharacter){
+        Character p = new SimpleCharacter();
+        currentMessage.bringsOut(p);
+        p.addText(theCharacter);
+        return theCharacter;
     }
 
     public String newAct(String theAct){
@@ -204,15 +205,12 @@ public class StoryCreator {
     }
 
 
-    public String newMessage(String theMessage){
-        currentMessage=new SimpleMessage();
-        currentMessage.addText(theMessage);
-        if(currentObservation!=null)
-            currentMessage.bringsOut(currentObservation);
-        else
-            theGoal.bringOut(currentMessage);
+    public String newMeasure(String theMeasure){
+        currentMeasure =new SimpleMeasure();
+        currentMeasure.addText(theMeasure);
+        currentMessage.includes(currentMeasure);
 
-        return(theMessage);
+        return(theMeasure);
     }
 
 
@@ -226,11 +224,18 @@ public class StoryCreator {
             currentEpisode=new SimpleEpisode();
         //}
 
+        // attaches current message characters
         currentAct.includes(currentEpisode);
-        for(Protagonist p : currentObservation.bringsOut()){
+        for(Character p : currentMessage.bringsOut()){
             currentEpisode.playsIn(p);
         }
-        currentEpisode.narrates(currentObservation);
+        // attaches current message measures
+        for(Measure m : currentMessage.includes()){
+            currentEpisode.refersTo(m);
+        }
+
+
+        currentEpisode.narrates(currentMessage);
         currentEpisode.addText(theEpisode);
 
         return(theEpisode);
@@ -254,6 +259,8 @@ public class StoryCreator {
 
     public static void main(String args[]) throws Exception{
 
+        // I was only for testing purpose, please drop me
+
         Story theStory=new SimpleStory();
         Goal theGoal = new SimpleGoal();
         //String goalText="a straight story";
@@ -261,7 +268,7 @@ public class StoryCreator {
         theStory.has(theGoal);
 
         Act currentAct =null;
-        Message currentMessage=null;
+        Measure currentMeasure =null;
 
         Exploration theExploration = new SimpleExploration(); // only one exploration
         theGoal.solves(theExploration);
@@ -281,7 +288,7 @@ public class StoryCreator {
                     " order by d_year, p_brand;\n"; //fake
             AnalyticalQuestion anAnalyticalQuestion = new SimpleAnalyticalQuestion();
             anAnalyticalQuestion.addText(query);
-            Collection<Insight> col = ((SimpleAnalyticalQuestion) anAnalyticalQuestion).answer();
+            Collection<Finding> col = ((SimpleAnalyticalQuestion) anAnalyticalQuestion).answer();
             theGoal.poses(anAnalyticalQuestion);
 
             // show insights and ask if worthy
@@ -292,38 +299,38 @@ public class StoryCreator {
                 if(newAct){
                     currentAct=new SimpleAct();
                     theStory.includes(currentAct);
-                    currentMessage = new SimpleMessage();
+                    currentMeasure = new SimpleMeasure();
 
                     // ask for text
                 }
 
-                Observation currentObservation = new SimpleObservation();
-                anAnalyticalQuestion.generates(currentObservation);
-                currentObservation.generates(anAnalyticalQuestion);
+                Message currentMessage = new SimpleMessage();
+                anAnalyticalQuestion.generates(currentMessage);
+                currentMessage.generates(anAnalyticalQuestion);
 
                 //currentMessage.bringsOut(currentObservation);
                 //currentObservation.addText(anAnalyticalQuestion.toString());
 
-                for(Insight i : col){
+                for(Finding i : col){
                     // may ask the author if insight is accepted or not
-                    currentObservation.produces(i);
+                    currentMessage.produces(i);
 
                 }
 
 
 
                 Episode currentEpisode= new SimpleEpisode();
-                currentEpisode.narrates(currentObservation);
+                currentEpisode.narrates(currentMessage);
                 currentAct.includes(currentEpisode);
-                currentMessage.bringsOut(currentObservation);
-                currentAct.narrates(currentMessage);
+               // currentMeasure.bringsOut(currentMessage);
+                currentAct.narrates(currentMeasure);
 
                 // how many protagonists
                 int nbProtagonists = 1; // fake
                 for(int i=0;i<nbProtagonists;i++){
-                    Protagonist aProtagonist = new SimpleProtagonist();
-                    currentEpisode.playsIn(aProtagonist);
-                    currentObservation.bringsOut(aProtagonist);
+                    Character aCharacter = new SimpleCharacter();
+                    currentEpisode.playsIn(aCharacter);
+                    currentMessage.bringsOut(aCharacter);
                 }
 
 

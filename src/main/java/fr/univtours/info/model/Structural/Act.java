@@ -1,4 +1,4 @@
-package fr.univtours.info.model.discursal;
+package fr.univtours.info.model.Structural;
 
 import fr.univtours.info.model.intentional.*;
 
@@ -12,7 +12,7 @@ public interface Act {
     public void includes(Episode anEpisode); //addEpisode
     public Collection<Episode> includes(); //getEpisode
 
-    public void narrates(Message aMessage);
-    public Message narrates();
+    public void narrates(Measure aMeasure);
+    public Measure narrates();
 
 }

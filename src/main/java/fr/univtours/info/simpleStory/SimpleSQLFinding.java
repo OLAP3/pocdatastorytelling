@@ -3,14 +3,13 @@ package fr.univtours.info.simpleStory;
 import fr.univtours.info.model.factual.*;
 import org.apache.commons.dbutils.ResultSetIterator;
 
-import javax.xml.transform.Result;
 import java.sql.ResultSet;
 
 
-public class SimpleSQLInsight implements Insight {
+public class SimpleSQLFinding implements Finding {
     private ResultSet resultSet;
 
-    public SimpleSQLInsight(ResultSet aResultSet){
+    public SimpleSQLFinding(ResultSet aResultSet){
         this.resultSet=aResultSet;
 
     }

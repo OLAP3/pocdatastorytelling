@@ -355,7 +355,7 @@ function observationformHandler() {
 
 
 
-function messageformHandler() {
+function messageformHandler() { // now measure
     let result = document.getElementById("message");
     let selection = result.value;
     let msg = selection;

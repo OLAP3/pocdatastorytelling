@@ -1,7 +1,7 @@
 package fr.univtours.info.simpleStory;
 
 import fr.univtours.info.model.factual.Collector;
-import fr.univtours.info.model.factual.Insight;
+import fr.univtours.info.model.factual.Finding;
 
 import java.io.File;
 import java.io.FileReader;
@@ -14,13 +14,13 @@ public class SimpleSQLCollector implements Collector {
     Connection conn;
     String sqlQuery;
     ResultSet resultset;
-    Collection<Insight> theInsights;
+    Collection<Finding> theFindings;
 
     public SimpleSQLCollector(String sqlQuery) {
         try {
             this.connectToPostgresql();
             this.sqlQuery = sqlQuery;
-            theInsights = new ArrayList<Insight>();
+            theFindings = new ArrayList<Finding>();
         }
         catch(Exception e){
             e.printStackTrace();
@@ -60,7 +60,7 @@ public class SimpleSQLCollector implements Collector {
         ResultSet rs = stmt.executeQuery(this.sqlQuery) ;
         this.resultset=rs;
         // now produces insights
-        Insight i = new SimpleSQLInsight(resultset);
+        Finding i = new SimpleSQLFinding(resultset);
         this.fetches(i);
     }
 
@@ -70,13 +70,13 @@ public class SimpleSQLCollector implements Collector {
     }
 
     @Override
-    public void fetches(Insight anInsight) {
-        theInsights.add(anInsight);
+    public void fetches(Finding anFinding) {
+        theFindings.add(anFinding);
     }
 
     @Override
-    public Collection<Insight> fetches() {
-        return theInsights ;
+    public Collection<Finding> fetches() {
+        return theFindings;
     }
 
     @Override

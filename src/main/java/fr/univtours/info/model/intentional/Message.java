@@ -1,14 +1,23 @@
 package fr.univtours.info.model.intentional;
 
+import fr.univtours.info.model.factual.*;
 
 import java.util.Collection;
 
 public interface Message {
     public void addText(String aText);
-    public String toString(); // replace by getText()?
+    public String toString();
 
-    public void bringsOut(Observation anObservation);
-    public void bringsOut(Goal aGoal);
+    public void poses(AnalyticalQuestion anAnalyticalQuestion);
+    public void generates(AnalyticalQuestion anAnalyticalQuestion);
+    public AnalyticalQuestion generates();
 
-    public Collection<Observation> bringsOut(); //getObservation
+    public void produces(Finding anFinding);
+    public Collection<Finding> produces();
+
+    public void bringsOut(Character aCharacter) ;
+    public Collection<Character>  bringsOut();
+
+    public void includes(Measure aMeasure) ;
+    public Collection<Measure>  includes();
 }

@@ -1,11 +1,7 @@
 package fr.univtours.info.simpleStory;
 
-import fr.univtours.info.model.discursal.Episode;
-import fr.univtours.info.model.intentional.Observation;
-import fr.univtours.info.model.intentional.Protagonist;
-
-import java.util.ArrayList;
-import java.util.Collection;
+import fr.univtours.info.model.intentional.Character;
+import fr.univtours.info.model.intentional.Measure;
 
 public class SimpleEpisode extends BaseEpisode {
 
@@ -21,11 +17,17 @@ public class SimpleEpisode extends BaseEpisode {
     public String toString() {
 
         String episodeProtagonists = "";
-        for(Protagonist p : theProtagonists){
+        for(Character p : theCharacters){
             episodeProtagonists = episodeProtagonists+ p.toString() + "\n";
         }
-        return "Episode: " + theText + "\n" +theObservation.toString() + "\n"
-                + episodeProtagonists;
+
+        String episodeMeasures = "";
+        for(Measure m : theMeasures){
+            episodeMeasures = episodeMeasures+ m.toString() + "\n";
+        }
+
+        return "Episode: " + theText + "\n" + theMessage.toString() + "\n"
+                + episodeProtagonists + episodeMeasures;
     }
 
 }

@@ -1,7 +1,7 @@
 package fr.univtours.info.simpleStory;
 
 import fr.univtours.info.model.factual.Collector;
-import fr.univtours.info.model.factual.Insight;
+import fr.univtours.info.model.factual.Finding;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -9,12 +9,12 @@ import java.util.Collection;
 public class SimpleDescribeCollector implements Collector {
 
     String describeQuery;
-    Collection<Insight> theInsights;
+    Collection<Finding> theFindings;
 
 
     public SimpleDescribeCollector(String query){
         this.describeQuery=query;
-        theInsights = new ArrayList<Insight>();
+        theFindings = new ArrayList<Finding>();
     }
 
 
@@ -24,13 +24,13 @@ public class SimpleDescribeCollector implements Collector {
     }
 
     @Override
-    public void fetches(Insight anInsight) {
-        theInsights.add(anInsight);
+    public void fetches(Finding anFinding) {
+        theFindings.add(anFinding);
     }
 
     @Override
-    public Collection<Insight> fetches() {
-        return theInsights;
+    public Collection<Finding> fetches() {
+        return theFindings;
     }
 
     @Override

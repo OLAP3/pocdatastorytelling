@@ -1,9 +1,7 @@
 package fr.univtours.info.simpleStory;
 
-import fr.univtours.info.model.discursal.Episode;
+import fr.univtours.info.model.Structural.Episode;
 import fr.univtours.info.model.presentational.DashboardComponent;
-
-import java.awt.font.GraphicAttribute;
 
 public class SimpleDescribeDashboardComponent implements DashboardComponent {
    Episode theEpisode;

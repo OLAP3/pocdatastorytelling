@@ -1,50 +1,88 @@
 package fr.univtours.info.simpleStory;
 
-import fr.univtours.info.model.intentional.Goal;
+import fr.univtours.info.model.factual.Finding;
+import fr.univtours.info.model.intentional.AnalyticalQuestion;
+import fr.univtours.info.model.intentional.Measure;
 import fr.univtours.info.model.intentional.Message;
-import fr.univtours.info.model.intentional.Observation;
+import fr.univtours.info.model.intentional.Character;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Set;
 
 public class SimpleMessage implements Message {
     String theText;
-    Collection<Observation> theObservations;
+    Collection<Finding> theFindings;
+    Collection<Character> theCharacters;
+    Collection<Measure> theMeasures;
+    AnalyticalQuestion theAnalyticalQuestion;
 
     public SimpleMessage(){
+        theFindings = new ArrayList<Finding>();
+        theCharacters = new ArrayList<Character>();
+        theMeasures = new ArrayList<Measure>();
 
-        theObservations = new ArrayList<Observation>();
     }
-
     @Override
     public void addText(String aText) {
+
         this.theText=aText.substring(1,aText.length()-1).replace("\\n","\n");
 
-       // this.theText=aText;
     }
 
     @Override
-    public String toString() {
-        return "Message: " + theText;
+    public String toString() { // gives message text + findings
+        String result ="Message: ";
+        for(Finding i : theFindings){
+            result = result + i.toString() + "\n";
+        }
+        return result + theText;
     }
 
     @Override
-    public void bringsOut(Observation anObservation) {
-        theObservations.add(anObservation);
-        //theText = theText + anObservation.generates().toString();
-        // in this implementation, message gets the  question
-        // should be more sophisticated than just concatenate queries
+    public void poses(AnalyticalQuestion anAnalyticalQuestion) {
+        //TODO record that this triggers a new analytical question
     }
 
     @Override
-    public void bringsOut(Goal aGoal) {
+    public void generates(AnalyticalQuestion anAnalyticalQuestion) {
+
+        theAnalyticalQuestion=anAnalyticalQuestion;
+    }
+
+    @Override
+    public AnalyticalQuestion generates() {
+        return theAnalyticalQuestion;
+    }
+
+    @Override
+    public void produces(Finding anFinding) {
+
+        theFindings.add(anFinding);
 
     }
 
     @Override
-    public Collection<Observation> bringsOut() {
+    public Collection<Finding> produces() {
+        return theFindings;
+    }
 
-        return theObservations;
+    @Override
+    public void bringsOut(Character aCharacter) {
+        theCharacters.add(aCharacter);
+    }
+
+    @Override
+    public Collection<Character> bringsOut() {
+        return theCharacters;
+    }
+
+    @Override
+    public void includes(Measure aMeasure) {
+        theMeasures.add(aMeasure);
+    }
+
+    @Override
+    public Collection<Measure> includes() {
+        return theMeasures;
     }
 }

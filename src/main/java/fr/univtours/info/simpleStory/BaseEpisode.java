@@ -1,8 +1,9 @@
 package fr.univtours.info.simpleStory;
 
-import fr.univtours.info.model.discursal.Episode;
-import fr.univtours.info.model.intentional.Observation;
-import fr.univtours.info.model.intentional.Protagonist;
+import fr.univtours.info.model.Structural.Episode;
+import fr.univtours.info.model.intentional.Measure;
+import fr.univtours.info.model.intentional.Message;
+import fr.univtours.info.model.intentional.Character;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -10,35 +11,47 @@ import java.util.Collection;
 public abstract class BaseEpisode implements Episode {
 
     String theText;
-    Observation theObservation;
-    Collection<Protagonist> theProtagonists;
+    Message theMessage;
+    Collection<Character> theCharacters;
+    Collection<Measure> theMeasures;
 
     public BaseEpisode(){
-        theProtagonists=new ArrayList<Protagonist>();
+        theCharacters =new ArrayList<Character>();
+        theMeasures =new ArrayList<Measure>();
 
     }
     @Override
-    public void narrates(Observation anObservation) {
+    public void narrates(Message anMessage) {
 
-        this.theObservation=anObservation;
+        this.theMessage = anMessage;
     }
 
     @Override
-    public Observation narrates() {
-        return theObservation;
+    public Message narrates() {
+        return theMessage;
     }
 
     @Override
-    public void playsIn(Protagonist aProtagonist) {
+    public void playsIn(Character aCharacter) {
 
-        theProtagonists.add(aProtagonist);
+        theCharacters.add(aCharacter);
     }
 
     @Override
-    public Collection<Protagonist> playsIn() {
+    public Collection<Character> playsIn() {
 
-        return theProtagonists;
+        return theCharacters;
     }
+
+    public void refersTo(Measure aMeasure){
+        theMeasures.add(aMeasure);
+    }
+
+    public Collection<Measure> refersTo(){
+        return theMeasures;
+    }
+
+
 
     @Override
     public void addText(String aText) {

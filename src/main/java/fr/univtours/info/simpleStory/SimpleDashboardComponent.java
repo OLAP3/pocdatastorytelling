@@ -1,11 +1,7 @@
 package fr.univtours.info.simpleStory;
 
-import fr.univtours.info.model.discursal.Episode;
-import fr.univtours.info.model.factual.Insight;
-import fr.univtours.info.model.intentional.Observation;
+import fr.univtours.info.model.Structural.Episode;
 import fr.univtours.info.model.presentational.DashboardComponent;
-
-import java.util.Iterator;
 
 public class SimpleDashboardComponent implements DashboardComponent {
     Episode theEpisode;

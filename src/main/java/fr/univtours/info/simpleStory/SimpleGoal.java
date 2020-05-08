@@ -1,12 +1,12 @@
 package fr.univtours.info.simpleStory;
 
-import fr.univtours.info.model.discursal.Story;
+import fr.univtours.info.model.Structural.Story;
 import fr.univtours.info.model.factual.Collector;
 import fr.univtours.info.model.factual.Exploration;
 import fr.univtours.info.model.intentional.AnalyticalQuestion;
 import fr.univtours.info.model.intentional.Goal;
-import fr.univtours.info.model.intentional.Message;
-import fr.univtours.info.model.intentional.Protagonist;
+import fr.univtours.info.model.intentional.Measure;
+import fr.univtours.info.model.intentional.Character;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -66,12 +66,12 @@ public class SimpleGoal implements Goal {
     }
 
     @Override
-    public void bringOut(Protagonist aProtagonist) {
+    public void bringOut(Character aCharacter) {
 
     }
 
     @Override
-    public void bringOut(Message aMessage) {
+    public void bringOut(Measure aMeasure) {
 
     }
 }

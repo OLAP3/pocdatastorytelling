@@ -1,4 +1,4 @@
-package fr.univtours.info.model.discursal;
+package fr.univtours.info.model.Structural;
 
 
 import fr.univtours.info.model.intentional.*;

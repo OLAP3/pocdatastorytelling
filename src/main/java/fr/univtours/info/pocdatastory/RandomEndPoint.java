@@ -1,6 +1,6 @@
 package fr.univtours.info.pocdatastory;
 
-import fr.univtours.info.model.factual.Insight;
+import fr.univtours.info.model.factual.Finding;
 import fr.univtours.info.simpleStory.SimpleSQLCollector;
 import fr.univtours.info.simpleStory.StoryCreator;
 import org.springframework.http.MediaType;
@@ -180,27 +180,27 @@ public class RandomEndPoint {
 
     @PostMapping(value="api/observation", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public Answer observation(@RequestBody String theObservation) {
+    public Answer observation(@RequestBody String theMessage) {
 
         // TODO observation not permitted if no insights!
-        creator.newObservation(theObservation);
-        return new Answer(0,theObservation);
+        creator.newMessage(theMessage);
+        return new Answer(0,theMessage);
 
     }
 
 
-
+    // now measure
     @PostMapping(value="api/message", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public Answer message(@RequestBody String message) {
 
 
-        String toReturn="No observation or goal created! Please create a goal or an observation first.";
+        String toReturn="No observation created! Please an observation first."; //observation ->message
         int code=1;
 
-        if(creator.getCurrentObservation()!=null || creator.getGoal()!=null){
+        if(creator.getCurrentMessage()!=null){
             code=0;
-            String res=creator.newMessage(message);
+            String res=creator.newMeasure(message);
             toReturn=res;
 
         }
@@ -239,7 +239,7 @@ public class RandomEndPoint {
         String toReturn="No observation and act created! Please create an observation and an act first.";
         int code =1;
 
-        if(creator.getCurrentObservation()!=null && creator.getCurrentAct() !=null){
+        if(creator.getCurrentMessage()!=null && creator.getCurrentAct() !=null){
             code =0;
             String res=creator.newEpisode(episode);
             toReturn=res;
@@ -260,9 +260,9 @@ public class RandomEndPoint {
         int code=1;
         String toReturn="No observation created! Please create an observation first.";
 
-        if(creator.getCurrentObservation()!=null){
+        if(creator.getCurrentMessage()!=null){
             code=0;
-            String res=creator.newProtagonist(protagonist);
+            String res=creator.newCharacter(protagonist);
             toReturn=res;
 
         }
@@ -313,7 +313,7 @@ public class RandomEndPoint {
         }catch(Exception e){
             e.printStackTrace();
         }
-        Iterator<Insight> it= col.fetches().iterator();
+        Iterator<Finding> it= col.fetches().iterator();
         String res=it.next().toString();
 
         if(res.length()>1000){

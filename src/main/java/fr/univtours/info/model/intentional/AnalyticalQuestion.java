@@ -2,7 +2,6 @@ package fr.univtours.info.model.intentional;
 
 
 import fr.univtours.info.model.factual.Collector;
-import fr.univtours.info.model.factual.Insight;
 
 import java.util.Collection;
 
@@ -17,6 +16,6 @@ public interface AnalyticalQuestion {
     public void implement(Collector aCollector);
 
 
-    public void generates(Observation anObservation);
-    public Collection<Observation> generates();
+    public void generates(Message anMessage);
+    public Collection<Message> generates();
 }

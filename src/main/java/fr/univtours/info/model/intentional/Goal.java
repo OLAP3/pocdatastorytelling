@@ -1,6 +1,6 @@
 package fr.univtours.info.model.intentional;
 
-import fr.univtours.info.model.discursal.Story;
+import fr.univtours.info.model.Structural.Story;
 import fr.univtours.info.model.factual.*;
 
 import java.util.Collection;
@@ -19,7 +19,7 @@ public interface Goal {
     Collection<Exploration> solves();
     Collection<AnalyticalQuestion> poses();
 
-    public void bringOut(Protagonist aProtagonist);
-    public void bringOut(Message aMessage);
+    public void bringOut(Character aCharacter);
+    public void bringOut(Measure aMeasure);
 
 }

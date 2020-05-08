@@ -1,13 +1,13 @@
 package fr.univtours.info.simpleStory;
 
-import fr.univtours.info.model.factual.Insight;
+import fr.univtours.info.model.factual.Finding;
 
 
-public class SimpleDescribeInsight implements Insight {
+public class SimpleDescribeFinding implements Finding {
     private byte[] describeResult;
     private String stringResult;
 
-    public SimpleDescribeInsight(byte[] aResultImg, String base64){
+    public SimpleDescribeFinding(byte[] aResultImg, String base64){
         this.describeResult=aResultImg;
         this.stringResult=base64;
     }

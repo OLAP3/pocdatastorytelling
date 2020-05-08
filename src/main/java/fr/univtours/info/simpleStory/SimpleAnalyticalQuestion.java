@@ -1,28 +1,28 @@
 package fr.univtours.info.simpleStory;
 
 import fr.univtours.info.model.factual.Collector;
-import fr.univtours.info.model.factual.Insight;
+import fr.univtours.info.model.factual.Finding;
 import fr.univtours.info.model.intentional.AnalyticalQuestion;
 import fr.univtours.info.model.intentional.Goal;
-import fr.univtours.info.model.intentional.Observation;
+import fr.univtours.info.model.intentional.Message;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
 public class SimpleAnalyticalQuestion implements AnalyticalQuestion {
     ArrayList<Collector> theCollectors ;
-    ArrayList<Observation> theObservations ;
+    ArrayList<Message> theMessages;
     String theText;
     Goal theGoal;
 
     public SimpleAnalyticalQuestion(){
         this.theCollectors = new ArrayList<Collector>();
-        this.theObservations = new ArrayList<Observation>();
+        this.theMessages = new ArrayList<Message>();
 
     }
 
     // drop me
-    public Collection<Insight> answer() {
+    public Collection<Finding> answer() {
         Collector c = new SimpleSQLCollector(theText);
         try {
             c.run();
@@ -35,13 +35,13 @@ public class SimpleAnalyticalQuestion implements AnalyticalQuestion {
     }
 
     @Override
-    public void generates(Observation anObservation) {
-        theObservations.add(anObservation);
+    public void generates(Message anMessage) {
+        theMessages.add(anMessage);
     }
 
     @Override
-    public Collection<Observation> generates() {
-        return theObservations;
+    public Collection<Message> generates() {
+        return theMessages;
     }
 
     @Override

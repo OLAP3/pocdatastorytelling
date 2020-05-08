@@ -1,8 +1,8 @@
 package fr.univtours.info.simpleStory;
 
-import fr.univtours.info.model.discursal.Act;
-import fr.univtours.info.model.discursal.Episode;
-import fr.univtours.info.model.intentional.Message;
+import fr.univtours.info.model.Structural.Act;
+import fr.univtours.info.model.Structural.Episode;
+import fr.univtours.info.model.intentional.Measure;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -11,7 +11,7 @@ public class SimpleAct implements Act {
     String actText;
 
     Collection<Episode> theEpisodes;
-    Message theMessage;
+    Measure theMeasure;
 
     public SimpleAct(){
         theEpisodes = new ArrayList<Episode>();
@@ -35,15 +35,15 @@ public class SimpleAct implements Act {
     }
 
     @Override
-    public void narrates(Message aMessage) {
+    public void narrates(Measure aMeasure) {
 
-        this.theMessage=aMessage;
+        this.theMeasure = aMeasure;
         //this.messageText=theMessage.toString();
     }
 
     @Override
-    public Message narrates() {
-        return theMessage;
+    public Measure narrates() {
+        return theMeasure;
     }
 
     @Override

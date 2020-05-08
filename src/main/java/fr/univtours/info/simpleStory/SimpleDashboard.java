@@ -1,6 +1,6 @@
 package fr.univtours.info.simpleStory;
 
-import fr.univtours.info.model.discursal.Act;
+import fr.univtours.info.model.Structural.Act;
 import fr.univtours.info.model.presentational.Dashboard;
 import fr.univtours.info.model.presentational.DashboardComponent;
 

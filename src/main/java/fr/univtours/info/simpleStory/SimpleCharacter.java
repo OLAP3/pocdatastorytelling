@@ -1,8 +1,8 @@
 package fr.univtours.info.simpleStory;
 
-import fr.univtours.info.model.intentional.Protagonist;
+import fr.univtours.info.model.intentional.Character;
 
-public class SimpleProtagonist implements Protagonist {
+public class SimpleCharacter implements Character {
     String theText;
     String name;
 
