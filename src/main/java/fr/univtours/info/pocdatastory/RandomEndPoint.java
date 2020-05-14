@@ -295,6 +295,25 @@ public class RandomEndPoint {
 
 
 
+    @PostMapping(value="api/recallAct", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public Answer recallAct(@RequestBody String msg) {
+
+        int code=1;
+        String toReturn="No such act?"; // not bloody possible
+
+        if(creator.recallAct(Integer.valueOf(msg))!=null){
+            code=0;
+            String res=creator.recallAct(Integer.valueOf(msg)).toString();
+            toReturn=res;
+
+        }
+        return new Answer(code, toReturn);
+
+
+    }
+
+
 
 
 

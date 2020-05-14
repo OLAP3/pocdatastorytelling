@@ -165,6 +165,15 @@ padding: 30px 0px;
 grid-column-start: 3;
 grid-column-end: 4;
 grid-row-start: 1;
+grid-row-end: 4;
+ padding: 30px 0px;
+}
+
+
+.listrecap {
+grid-column-start: 3;
+grid-column-end: 4;
+grid-row-start: 4;
 grid-row-end: 6;
 }
 
@@ -194,6 +203,22 @@ grid-column-gap: 20px;
 .warning {background-color: #ff9800;} /* Orange */
 .danger {background-color: #f44336;} /* Red */
 .other {background-color: #e7e7e7; color: black;} /* Gray */
+
+.element{
+ background-color: #4CAF50;
+  border: none;
+  color: white;
+  padding: 8px 10px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 12px;
+  margin: 4px 2px;
+  cursor: pointer;
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+  border-radius: 12px;
+  float: right;
+}
 
 .button-blue {
   background-color: #2196F3;
@@ -320,7 +345,7 @@ border: solid 1px gray;
 
         <div class="collectors">
             <div class="goal">
-                <label for="goal"><span class="label info">Goal</span></label><br>
+                <label for="goal"><span class="label info">Analysis goal</span></label><br>
                 <textarea id="goal" name="goal"  class="blue-box"></textarea>
                 <button  class="button-blue" onclick="goalformHandler()">Insert analysis goal</button>
             </div>
@@ -344,7 +369,8 @@ border: solid 1px gray;
 
 
     <div class="result">
-        <span class="label info">Collectors</span>
+       <span class="label info" >Collectors</span>
+
         <br> <br>
 
         <div class="collectors" id="collectors">
@@ -352,7 +378,7 @@ border: solid 1px gray;
                 <button class="button-collector" onclick="openSQLform()">Run SQL collector</button>
                 <br>
                 <textarea id="textresult" name="textresult" class="sql-result"></textarea>
-                <button  class="button-blue"  onclick="resultformHandler()">Validate the selection as an insight</button>
+                <button  class="button-blue"  onclick="resultformHandler()">Validate the selection as a finding</button>
             </div>
 
             <div id="describeResult">
@@ -365,7 +391,7 @@ border: solid 1px gray;
                 </div>
 
 
-                <button  class="button-blue"  onclick="describeResultFormHandler()">Validate the dataviz as an insight</button>
+                <button  class="button-blue"  onclick="describeResultFormHandler()">Validate the dataviz as a finding</button>
 
             </div>
 
@@ -409,6 +435,13 @@ border: solid 1px gray;
     </div>
 
 
+
+    <div class="listrecap">
+        <label for="listrecap"><span class="label success">List of story elements</span></label><br>
+        <div id="listrecap" name="listrecap" class="recap-box"></div>
+    </div>
+
+
     <div class="message">
         <label for="message"><span class="label info">Measure</span></label></label><br>
         <textarea id="message" name="message" class="blue-box" style="white-space:pre-wrap"></textarea>
@@ -416,13 +449,14 @@ border: solid 1px gray;
     </div>
 
 
+
+
+
     <div class="observation">
         <label for="observation"><span class="label info">Message</span></label><br>
         <textarea id="observation" name="observation"  class="blue-box" style="white-space:pre-wrap"></textarea>
         <button  class="button-blue"  onclick="observationformHandler()">Insert new message</button>
     </div>
-
-
 
 
 

@@ -78,6 +78,18 @@ public class StoryCreator {
         return thePDF;
     }
 
+    public Act recallAct(Integer nb){
+        Collection<Act> c=theStory.includes();
+        Iterator<Act> it = c.iterator();
+        int i=0;
+        Act a=null;
+        while(i<nb && it.hasNext()){
+            a=it.next();
+        }
+        return a;
+    }
+
+
     public File getThePDFfile(){
         //return thePDFfile;
         return new File("/Users/marcel/Desktop/test.pdf");

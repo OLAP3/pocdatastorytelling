@@ -105,7 +105,7 @@ function processEpisodeClear (result, endpoint) {
 }
 
 
-
+var actcount=0;
 
 
 
@@ -122,6 +122,22 @@ function processEpisodeClear (result, endpoint) {
              // console.log(recaptext);
             //recap.innerText= recaptext + "\n " + endpoint + ": "+ message;
             recap.value= recaptext + "\n " + endpoint + ": "+ JSON.parse(message);
+
+            if(endpoint=="act"){
+                actcount++;
+                console.log(actcount);
+
+                let button = document.createElement("button");
+                button.innerHTML = endpoint + " " + actcount;
+
+                let body = document.getElementById("listrecap");
+                body.appendChild(button);
+
+                button.addEventListener ("click", function() {
+                recallAct(actcount);
+                });
+            }
+
         }
         else{
             let consoleElt=document.getElementById("console");
@@ -130,6 +146,12 @@ function processEpisodeClear (result, endpoint) {
         }
 }
 
+
+function recallAct(actcount){
+    // recall act + first episode of act + first message, measure, character, clear question
+    //recall act: new post to fetch act actcount in the arraylist of acts
+    elsaRequest(actcount, "recallAct", null, null,false);
+}
 
 
  function processSQLAnswer (result, endpoint) {
