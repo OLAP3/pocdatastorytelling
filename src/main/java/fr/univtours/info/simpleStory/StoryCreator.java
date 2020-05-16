@@ -90,6 +90,7 @@ public class StoryCreator {
         }
 
         System.out.println("act: " + a.toString());
+
         currentAct = a;
         // fetch 1st episode of a
         Collection<Episode> ce = a.includes();

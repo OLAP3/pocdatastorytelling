@@ -89,7 +89,13 @@ function processEpisodeClear (result, endpoint) {
             body.appendChild(button);
 
             button.addEventListener ("click", function() {
-                 recallEpisode(currentcount);
+                let text=button.innerText;
+                console.log(text);
+                let pos=text.indexOf(" ");
+                let count=text.substr(pos+1);
+                console.log(count);
+                recallEpisode(count);
+
             });
 
             recap.value= recaptext + "\n " + endpoint + ": "+ JSON.parse(message);
@@ -157,7 +163,12 @@ function processEpisodeClear (result, endpoint) {
                 body.appendChild(button);
 
                 button.addEventListener ("click", function() {
-                recallAct(currentcount);
+                    let text=button.innerText;
+                    console.log(text);
+                    let pos=text.indexOf(" ");
+                    let count=text.substr(pos+1);
+                    console.log(count);
+                    recallAct(count);
                 });
             }
             if(endpoint=="message"){ // episode and message have the same count
@@ -170,7 +181,12 @@ function processEpisodeClear (result, endpoint) {
                 body.appendChild(button);
 
                 button.addEventListener ("click", function() {
-                recallEpisode(currentcount);
+                let text=button.innerText;
+                console.log(text);
+                let pos=text.indexOf(" ");
+                let count=text.substr(pos+1);
+                console.log(count);
+                recallEpisode(count);
                 });
             }
             // for character, measure, do we recall episode/act? maybe not
@@ -184,13 +200,15 @@ function processEpisodeClear (result, endpoint) {
 
 
 
-function recallEpisode(episodecount){
-    elsaRequest(episodecount, "recallEpisode", displayEpisode, defaulterror,false);
+function recallEpisode(count){
+    console.log(count);
+    elsaRequest(count, "recallEpisode", displayEpisode, defaulterror,false);
 }
 
 
-function recallAct(actcount){
-    elsaRequest(actcount, "recallAct", displayEpisode, defaulterror,false);
+function recallAct(count){
+    console.log(count);
+    elsaRequest(count, "recallAct", displayEpisode, defaulterror,false);
 }
 
 
@@ -206,7 +224,9 @@ function displayEpisode(result){
      let character=JSON.parse(result).character;
 
      if(code==0){
-        document.getElementById("act").value=act;
+        console.log(act);
+        actelem=document.getElementById("act");
+        actelem.value=act;
         document.getElementById("episode").value=episode;
         document.getElementById("message").value=message;
         document.getElementById("protagonist").value=character;
