@@ -60,7 +60,10 @@ public class SimpleEpisode implements Episode {
         this.theText=aText.substring(1,aText.length()-1).replace("\\n","\n");
     }
 
-
+    @Override
+    public String getText() {
+        return theText;
+    }
 
 
     @Override

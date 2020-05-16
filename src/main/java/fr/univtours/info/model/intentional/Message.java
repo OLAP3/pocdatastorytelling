@@ -6,6 +6,8 @@ import java.util.Collection;
 
 public interface Message {
     public void addText(String aText);
+    public String getText();
+
     public String toString();
 
     public void poses(AnalyticalQuestion anAnalyticalQuestion);

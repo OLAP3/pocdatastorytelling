@@ -24,6 +24,11 @@ public class SimpleMeasure implements Measure {
     }
 
     @Override
+    public String getText() {
+        return theText;
+    }
+
+    @Override
     public String toString() {
 
         return "Measure: " + name + " with value " + value + "\n" + theText;

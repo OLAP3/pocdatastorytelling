@@ -4,6 +4,18 @@
 //const server_domain = "localhost:8080";
 const server_domain = window.location.host;
 
+
+var actcount=0;
+var episodecount=0;
+var messagecount=0;
+var measurecount=0;
+var charactercount=0;
+
+function defaulterror(){
+    let consoleElt=document.getElementById("console");
+    consoleElt.innerText="Something wen wrong";
+}
+
 function clearStory() {
 
      let pb = function (result) {
@@ -68,6 +80,18 @@ function processEpisodeClear (result, endpoint) {
             let recap=document.getElementById("recap");
             let recaptext = document.getElementById("recap").value;
 
+            episodecount++;
+            currentcount=episodecount;
+            let button = document.createElement("button");
+            button.innerHTML = "episode" + " " + episodecount;
+
+            let body = document.getElementById("listrecap");
+            body.appendChild(button);
+
+            button.addEventListener ("click", function() {
+                 recallEpisode(currentcount);
+            });
+
             recap.value= recaptext + "\n " + endpoint + ": "+ JSON.parse(message);
             clear("observation");
             clear("textresult");
@@ -105,8 +129,6 @@ function processEpisodeClear (result, endpoint) {
 }
 
 
-var actcount=0;
-
 
 
  function processControllerAnswer (result, endpoint) {
@@ -125,6 +147,7 @@ var actcount=0;
 
             if(endpoint=="act"){
                 actcount++;
+                currentcount=actcount;
                 console.log(actcount);
 
                 let button = document.createElement("button");
@@ -134,10 +157,23 @@ var actcount=0;
                 body.appendChild(button);
 
                 button.addEventListener ("click", function() {
-                recallAct(actcount);
+                recallAct(currentcount);
                 });
             }
+            if(endpoint=="message"){ // episode and message have the same count
+                messagecount++;
+                currentcount=actcount;
+                let button = document.createElement("button");
+                button.innerHTML = endpoint + " " + messagecount;
 
+                let body = document.getElementById("listrecap");
+                body.appendChild(button);
+
+                button.addEventListener ("click", function() {
+                recallEpisode(currentcount);
+                });
+            }
+            // for character, measure, do we recall episode/act? maybe not
         }
         else{
             let consoleElt=document.getElementById("console");
@@ -147,10 +183,41 @@ var actcount=0;
 }
 
 
+
+function recallEpisode(episodecount){
+    elsaRequest(episodecount, "recallEpisode", displayEpisode, defaulterror,false);
+}
+
+
 function recallAct(actcount){
-    // recall act + first episode of act + first message, measure, character, clear question
-    //recall act: new post to fetch act actcount in the arraylist of acts
-    elsaRequest(actcount, "recallAct", null, null,false);
+    elsaRequest(actcount, "recallAct", displayEpisode, defaulterror,false);
+}
+
+
+function displayEpisode(result){
+
+    // result contains the info to print for act, episode, measure, character and message
+    // parse JSON, clear and update relevant areas
+     let code=JSON.parse(result).code;
+     let episode=JSON.parse(result).episode;
+     let act=JSON.parse(result).act;
+     let message=JSON.parse(result).message;
+     let measure=JSON.parse(result).measure;
+     let character=JSON.parse(result).character;
+
+     if(code==0){
+        document.getElementById("act").value=act;
+        document.getElementById("episode").value=episode;
+        document.getElementById("message").value=message;
+        document.getElementById("protagonist").value=character;
+        document.getElementById("observation").value=measure;
+     }
+     else{
+        let consoleElt=document.getElementById("console");
+        consoleElt.innerText="Something wen wrong";
+
+     }
+
 }
 
 

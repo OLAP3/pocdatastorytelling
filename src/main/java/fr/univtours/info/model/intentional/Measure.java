@@ -5,6 +5,8 @@ import java.util.Collection;
 
 public interface Measure {
     public void addText(String aText);
+    public String getText();
+
     public String toString();
 
     public void setName(String name);

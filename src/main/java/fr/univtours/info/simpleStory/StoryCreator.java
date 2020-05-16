@@ -9,6 +9,7 @@ import fr.univtours.info.model.intentional.*;
 import fr.univtours.info.model.intentional.Character;
 import fr.univtours.info.model.presentational.VisualStory;
 import fr.univtours.info.model.Structural.Story;
+import fr.univtours.info.pocdatastory.EpisodeRecall;
 import org.apache.pdfbox.pdmodel.PDDocument;
 
 import java.io.File;
@@ -78,16 +79,85 @@ public class StoryCreator {
         return thePDF;
     }
 
-    public Act recallAct(Integer nb){
-        Collection<Act> c=theStory.includes();
+    public EpisodeRecall recallAct(Integer nb) {
+        Collection<Act> c = theStory.includes();
         Iterator<Act> it = c.iterator();
-        int i=0;
-        Act a=null;
-        while(i<nb && it.hasNext()){
-            a=it.next();
+        int i = 0;
+        Act a = null;
+        while (i < nb && it.hasNext()) {
+            a = it.next();
+            i++;
         }
-        return a;
+
+        System.out.println("act: " + a.toString());
+        currentAct = a;
+        // fetch 1st episode of a
+        Collection<Episode> ce = a.includes();
+        Iterator<Episode> ie = ce.iterator();
+
+        // beware of no episodes!
+        Episode e = ie.next();
+        if (e != null) {
+            currentEpisode = e;
+            currentMessage = e.narrates();
+            Collection<Character> cc = e.playsIn();
+            Iterator<Character> ic = cc.iterator();
+            currentCharacter = ic.next();
+            Collection<Measure> cm = e.refersTo();
+            Iterator<Measure> im = cm.iterator();
+            currentMeasure = im.next();
+            // see if we must retrieve questions
+            return new EpisodeRecall(0, currentEpisode.toString(),
+                    currentAct.toString(), currentMessage.toString(),
+                    currentMeasure.toString(), currentCharacter.toString());
+        } else {
+            return new EpisodeRecall(1, "",
+                    "", "", "" ,"");
+        }
     }
+
+    public EpisodeRecall recallEpisode(Integer nb) {
+        //episode lookup
+
+        Collection<Act> c = theStory.includes();
+        Iterator<Act> it = c.iterator();
+        int i = 0;
+        Act a = null;
+        while (i < nb && it.hasNext()) {
+            a = it.next();
+            i++;
+        }
+
+        currentAct = a;
+        // fetch 1st episode of a
+        Collection<Episode> ce = a.includes();
+        Iterator<Episode> ie = ce.iterator();
+
+        // beware of no episodes!
+        Episode e = ie.next();
+        if (e != null) {
+            currentEpisode = e;
+            currentMessage = e.narrates();
+            Collection<Character> cc = e.playsIn();
+            Iterator<Character> ic = cc.iterator();
+            currentCharacter = ic.next();
+            Collection<Measure> cm = e.refersTo();
+            Iterator<Measure> im = cm.iterator();
+            currentMeasure = im.next();
+            // see if we must retrieve questions
+            return new EpisodeRecall(0, currentEpisode.toString(),
+                    currentAct.toString(), currentMessage.toString(),
+                    currentMeasure.toString(), currentCharacter.toString());
+        } else {
+            return new EpisodeRecall(1, "",
+                    "", "", "" ,"");
+        }
+    }
+
+
+
+
+
 
 
     public File getThePDFfile(){

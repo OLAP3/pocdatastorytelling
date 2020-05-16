@@ -13,6 +13,11 @@ public class SimpleCharacter implements Character {
 //        this.theText=aText;
     }
 
+    @Override
+    public String getText() {
+        return theText;
+    }
+
 
     @Override
     public String toString() {

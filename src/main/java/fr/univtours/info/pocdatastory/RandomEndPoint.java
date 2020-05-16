@@ -1,5 +1,6 @@
 package fr.univtours.info.pocdatastory;
 
+import fr.univtours.info.model.Structural.Episode;
 import fr.univtours.info.model.factual.Finding;
 import fr.univtours.info.simpleStory.SimpleSQLCollector;
 import fr.univtours.info.simpleStory.StoryCreator;
@@ -297,23 +298,31 @@ public class RandomEndPoint {
 
     @PostMapping(value="api/recallAct", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public Answer recallAct(@RequestBody String msg) {
+    public EpisodeRecall recallAct(@RequestBody String msg) {
 
-        int code=1;
-        String toReturn="No such act?"; // not bloody possible
 
-        if(creator.recallAct(Integer.valueOf(msg))!=null){
-            code=0;
-            String res=creator.recallAct(Integer.valueOf(msg)).toString();
-            toReturn=res;
+        EpisodeRecall res= creator.recallAct(Integer.valueOf(msg));
 
-        }
-        return new Answer(code, toReturn);
+       // if code =1 something went wrong
+        return res ;
 
 
     }
 
 
+    @PostMapping(value="api/recallEpisode", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public EpisodeRecall recallEpisode(@RequestBody String msg) {
+
+
+
+        EpisodeRecall res= creator.recallEpisode(Integer.valueOf(msg));
+
+        // if code =1 something went wrong
+        return res ;
+
+
+    }
 
 
 

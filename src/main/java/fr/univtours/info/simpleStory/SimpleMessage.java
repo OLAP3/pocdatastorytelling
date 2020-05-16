@@ -30,6 +30,11 @@ public class SimpleMessage implements Message {
     }
 
     @Override
+    public String getText() {
+        return theText;
+    }
+
+    @Override
     public String toString() { // gives message text + findings
         String result ="Message: ";
         for(Finding i : theFindings){

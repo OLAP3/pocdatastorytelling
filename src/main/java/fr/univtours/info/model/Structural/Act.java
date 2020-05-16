@@ -7,6 +7,8 @@ import java.util.Collection;
 public interface Act {
 
     public void addText(String theText);
+    public String getText();
+
     public String toString();
 
     public void includes(Episode anEpisode); //addEpisode
