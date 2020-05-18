@@ -6,7 +6,7 @@ import fr.univtours.info.model.intentional.*;
 import java.util.Collection;
 
 
-public interface Story {
+public interface Plot {
 
     public void addText(String theText);
     public String toString();

@@ -8,7 +8,7 @@ import fr.univtours.info.model.factual.Finding;
 import fr.univtours.info.model.intentional.*;
 import fr.univtours.info.model.intentional.Character;
 import fr.univtours.info.model.presentational.VisualStory;
-import fr.univtours.info.model.Structural.Story;
+import fr.univtours.info.model.Structural.Plot;
 import fr.univtours.info.pocdatastory.EpisodeRecall;
 import org.apache.pdfbox.pdmodel.PDDocument;
 
@@ -18,7 +18,7 @@ import java.util.Iterator;
 
 public class StoryCreator {
 
-    Story theStory;
+    Plot thePlot;
     Goal theGoal;
     Exploration theExploration;
 
@@ -80,7 +80,7 @@ public class StoryCreator {
     }
 
     public EpisodeRecall recallAct(Integer nb) {
-        Collection<Act> c = theStory.includes();
+        Collection<Act> c = thePlot.includes();
         Iterator<Act> it = c.iterator();
         int i = 0;
         Act a = null;
@@ -120,7 +120,7 @@ public class StoryCreator {
     public EpisodeRecall recallEpisode(Integer nb) {
         //episode lookup
 
-        Collection<Act> c = theStory.includes();
+        Collection<Act> c = thePlot.includes();
         Iterator<Act> it = c.iterator();
         int i = 0;
         Act a = null;
@@ -170,9 +170,9 @@ public class StoryCreator {
         theGoal = new SimpleGoal();
         theGoal.addText(aGoal);
 
-        theStory = new SimpleStory();
-        theStory.has(theGoal);
-        theGoal.has(theStory);
+        thePlot = new SimplePlot();
+        thePlot.has(theGoal);
+        theGoal.has(thePlot);
         theExploration = new SimpleExploration(); // only one exploration
         theGoal.solves(theExploration);
         //currentProtagonists=new ArrayList<Protagonist>();
@@ -286,7 +286,7 @@ public class StoryCreator {
 
     public String newAct(String theAct){
         currentAct=new SimpleAct();
-        theStory.includes(currentAct);
+        thePlot.includes(currentAct);
         currentAct.addText(theAct);
         return(theAct);
     }
@@ -321,7 +321,7 @@ public class StoryCreator {
 
     public String render(String msg){
         VisualStory vs=new SimpleVisualStory();
-        vs.renders(theStory);  // just attach
+        vs.renders(thePlot);  // just attach
         vs.renders(); // and then renders
         thePDF=((SimpleVisualStory) vs).getThePDF();
 
@@ -338,11 +338,11 @@ public class StoryCreator {
 
         // I was only for testing purpose, please drop me
 
-        Story theStory=new SimpleStory();
+        Plot thePlot =new SimplePlot();
         Goal theGoal = new SimpleGoal();
         //String goalText="a straight story";
         //theGoal.addText(goalText);
-        theStory.has(theGoal);
+        thePlot.has(theGoal);
 
         Act currentAct =null;
         Measure currentMeasure =null;
@@ -375,7 +375,7 @@ public class StoryCreator {
                 boolean newAct=true; //Fake
                 if(newAct){
                     currentAct=new SimpleAct();
-                    theStory.includes(currentAct);
+                    thePlot.includes(currentAct);
                     currentMeasure = new SimpleMeasure();
 
                     // ask for text
@@ -421,7 +421,7 @@ public class StoryCreator {
         //theStory.addText("ask the author");
 
         VisualStory vs=new SimpleVisualStory();
-        vs.renders(theStory);  // just attach
+        vs.renders(thePlot);  // just attach
         vs.renders(); // and then renders
         vs.toString(); // and then prints
     }

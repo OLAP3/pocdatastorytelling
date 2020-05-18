@@ -4,7 +4,7 @@ import fr.univtours.info.model.Structural.Act;
 import fr.univtours.info.model.Structural.Episode;
 import fr.univtours.info.model.factual.Finding;
 import fr.univtours.info.model.presentational.*;
-import fr.univtours.info.model.Structural.Story;
+import fr.univtours.info.model.Structural.Plot;
 
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
@@ -20,7 +20,7 @@ import java.util.Collection;
 
 public class SimpleVisualStory implements VisualStory {
     Collection<Dashboard> theDashboards;
-    Story theStory;
+    Plot thePlot;
     String theRendering="";
     PDDocument thePDF;
 
@@ -49,11 +49,11 @@ public class SimpleVisualStory implements VisualStory {
 
 
     @Override
-    public void renders(Story aStory) {
+    public void renders(Plot aPlot) {
         // this is where the visual story creates its component before rendering
-        theStory=aStory;
+        thePlot = aPlot;
 
-        for(Act act : theStory.includes()){
+        for(Act act : thePlot.includes()){
             Dashboard d = new SimpleDashboard();
             this.contains(d);
             d.renders(act);
@@ -108,7 +108,7 @@ public class SimpleVisualStory implements VisualStory {
 
 
     @Override
-    public Story renders() {
+    public Plot renders() {
         try {
 
             PDDocument document = new PDDocument();
@@ -124,7 +124,7 @@ public class SimpleVisualStory implements VisualStory {
 
             // prints title (goal)
             contentStream.setFont(PDType1Font.TIMES_BOLD, 16);
-            contentStream.showText("This is the story for goal: " + theStory.has().toString() );
+            contentStream.showText("This is the story for goal: " + thePlot.has().toString() );
             contentStream.newLine();
             contentStream.newLine();
             contentStream.endText();
@@ -150,7 +150,7 @@ public class SimpleVisualStory implements VisualStory {
         }
 
 
-        return theStory;
+        return thePlot;
     }
 
 

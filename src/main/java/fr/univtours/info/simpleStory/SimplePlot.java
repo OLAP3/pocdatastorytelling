@@ -2,7 +2,7 @@ package fr.univtours.info.simpleStory;
 
 import fr.univtours.info.model.intentional.Goal;
 import fr.univtours.info.model.Structural.Act;
-import fr.univtours.info.model.Structural.Story;
+import fr.univtours.info.model.Structural.Plot;
 
 import java.io.File;
 import java.io.FileReader;
@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Properties;
 
-public class SimpleStory implements Story {
+public class SimplePlot implements Plot {
 
     private String text;
     private ArrayList<Act> theActs;
@@ -20,7 +20,7 @@ public class SimpleStory implements Story {
 
     private Connection conn;
 
-    public SimpleStory(){
+    public SimplePlot(){
         theActs=new ArrayList<Act>();
     }
 

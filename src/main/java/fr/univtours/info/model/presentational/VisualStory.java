@@ -7,10 +7,10 @@ public interface VisualStory {
 
     public String toString();
 
-    public void renders(Story aStory);
+    public void renders(Plot aPlot);
     public void contains(Dashboard aDashboard);
 
     public Collection<Dashboard> contains(); //getDashboard
-    public Story renders();
+    public Plot renders();
 
 }
