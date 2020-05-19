@@ -89,7 +89,7 @@ public class StoryCreator {
             i++;
         }
 
-        System.out.println("act: " + a.toString());
+        //System.out.println("act: " + a.toString());
 
         currentAct = a;
         // fetch 1st episode of a
@@ -108,9 +108,9 @@ public class StoryCreator {
             Iterator<Measure> im = cm.iterator();
             currentMeasure = im.next();
             // see if we must retrieve questions
-            return new EpisodeRecall(0, currentEpisode.toString(),
-                    currentAct.toString(), currentMessage.toString(),
-                    currentMeasure.toString(), currentCharacter.toString());
+            return new EpisodeRecall(0, currentEpisode.getText(),
+                    currentAct.getText(), currentMessage.getText(),
+                    currentMeasure.getText(), currentCharacter.getText());
         } else {
             return new EpisodeRecall(1, "",
                     "", "", "" ,"");
@@ -146,9 +146,9 @@ public class StoryCreator {
             Iterator<Measure> im = cm.iterator();
             currentMeasure = im.next();
             // see if we must retrieve questions
-            return new EpisodeRecall(0, currentEpisode.toString(),
-                    currentAct.toString(), currentMessage.toString(),
-                    currentMeasure.toString(), currentCharacter.toString());
+            return new EpisodeRecall(0, currentEpisode.getText(),
+                    currentAct.getText(), currentMessage.getText(),
+                    currentMeasure.getText(), currentCharacter.getText());
         } else {
             return new EpisodeRecall(1, "",
                     "", "", "" ,"");

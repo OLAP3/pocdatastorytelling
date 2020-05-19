@@ -94,7 +94,7 @@ function processEpisodeClear (result, endpoint) {
                 let pos=text.indexOf(" ");
                 let count=text.substr(pos+1);
                 console.log(count);
-                recallEpisode(count);
+                recallEpisode(parseInt(count));
 
             });
 
@@ -168,7 +168,7 @@ function processEpisodeClear (result, endpoint) {
                     let pos=text.indexOf(" ");
                     let count=text.substr(pos+1);
                     console.log(count);
-                    recallAct(count);
+                    recallAct(parseInt(count));
                 });
             }
             if(endpoint=="message"){ // episode and message have the same count
@@ -186,7 +186,7 @@ function processEpisodeClear (result, endpoint) {
                 let pos=text.indexOf(" ");
                 let count=text.substr(pos+1);
                 console.log(count);
-                recallEpisode(count);
+                recallEpisode(parseInt(count));
                 });
             }
             // for character, measure, do we recall episode/act? maybe not
@@ -213,15 +213,15 @@ function recallAct(count){
 
 
 function displayEpisode(result){
-
+console.log(result);
     // result contains the info to print for act, episode, measure, character and message
     // parse JSON, clear and update relevant areas
      let code=JSON.parse(result).code;
-     let episode=JSON.parse(result).episode;
-     let act=JSON.parse(result).act;
-     let message=JSON.parse(result).message;
-     let measure=JSON.parse(result).measure;
-     let character=JSON.parse(result).character;
+     let episode=JSON.parse(result).theEpisode;
+     let act=JSON.parse(result).theAct;
+     let message=JSON.parse(result).theMessage;
+     let measure=JSON.parse(result).theMeasure;
+     let character=JSON.parse(result).theCharacter;
 
      if(code==0){
         console.log(act);

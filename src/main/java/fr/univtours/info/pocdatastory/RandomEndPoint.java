@@ -300,7 +300,7 @@ public class RandomEndPoint {
     @ResponseBody
     public EpisodeRecall recallAct(@RequestBody String msg) {
 
-
+        //System.out.println(msg);
         EpisodeRecall res= creator.recallAct(Integer.valueOf(msg));
 
        // if code =1 something went wrong
