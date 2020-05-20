@@ -25,6 +25,9 @@ public class StoryCreator {
     AnalyticalQuestion currentQuestion;
     Collector currentCollector;
     Message currentMessage;
+
+
+
     Episode currentEpisode;
     Measure currentMeasure;
     Character currentCharacter;
@@ -73,6 +76,14 @@ public class StoryCreator {
 
     public Act getCurrentAct(){
         return currentAct;
+    }
+
+    public Episode getCurrentEpisode() {
+        return currentEpisode;
+    }
+
+    public void setCurrentEpisode(Episode currentEpisode) {
+        this.currentEpisode = currentEpisode;
     }
 
     public PDDocument getThePDF(){
@@ -156,10 +167,31 @@ public class StoryCreator {
     }
 
 
+    public String modifyEpisode(String newText){
+        this.currentEpisode.addText(newText);
+        return newText;
+    }
+
+    public String modifyAct(String newText){
+        this.currentAct.addText(newText);
+        return newText;
+    }
+
+    public String modifyCharacter(String newText){
+        this.currentCharacter.addText(newText);
+        return newText;
+    }
+
+    public String modifyMeasure(String newText){
+        this.currentMeasure.addText(newText);
+        return newText;
+    }
 
 
-
-
+    public String modifyMessage(String newText){
+        this.currentMessage.addText(newText);
+        return newText;
+    }
 
     public File getThePDFfile(){
         //return thePDFfile;

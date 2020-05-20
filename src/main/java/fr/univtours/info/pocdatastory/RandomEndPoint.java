@@ -326,6 +326,119 @@ public class RandomEndPoint {
 
 
 
+    @PostMapping(value="api/modifyEpisode", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public Answer modifyEpisode(@RequestBody String msg) {
+
+
+        String toReturn="Please create an episode first.";
+        int code =1;
+
+        if(creator.getCurrentEpisode()!=null){
+            code = 0;
+            String res=creator.modifyEpisode(msg);
+            toReturn="Episode modified.";
+
+        }
+        return new Answer(code,toReturn);
+
+
+    }
+
+
+    @PostMapping(value="api/modifyAct", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public Answer modifyAct(@RequestBody String msg) {
+
+
+        String toReturn="Please create an act first.";
+        int code =1;
+
+        if(creator.getCurrentAct()!=null){
+            code = 0;
+            String res=creator.modifyAct(msg);
+            toReturn="Act modified.";
+
+        }
+        return new Answer(code,toReturn);
+
+
+    }
+
+
+    @PostMapping(value="api/modifyCharacter", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public Answer modifyCharacter(@RequestBody String msg) {
+
+
+        String toReturn="Please create a character first.";
+        int code =1;
+
+        if(creator.getCurrentCharacter()!=null){
+            code = 0;
+            String res=creator.modifyCharacter(msg);
+            toReturn="Character modified.";
+
+        }
+        return new Answer(code,toReturn);
+
+    }
+
+
+
+
+    @PostMapping(value="api/modifyMeasure", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public Answer modifyMeasure(@RequestBody String msg) {
+
+
+        String toReturn="Please create a measure first.";
+        int code =1;
+
+        if(creator.getCurrentMeasure()!=null){
+            code = 0;
+            String res=creator.modifyMeasure(msg);
+            toReturn="Measure modified.";
+
+        }
+        return new Answer(code,toReturn);
+
+    }
+
+
+
+
+
+    @PostMapping(value="api/modifyMessage", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public Answer modifyMessage(@RequestBody String msg) {
+
+
+        String toReturn="Please create a message first.";
+        int code =1;
+
+        if(creator.getCurrentMessage()!=null){
+            code = 0;
+            String res=creator.modifyMessage(msg);
+            toReturn="Message modified.";
+
+        }
+        return new Answer(code,toReturn);
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

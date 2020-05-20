@@ -22,9 +22,9 @@ public class SimpleEpisode implements Episode {
 
     }
     @Override
-    public void narrates(Message anMessage) {
+    public void narrates(Message aMessage) {
 
-        this.theMessage = anMessage;
+        this.theMessage = aMessage;
     }
 
     @Override
@@ -53,7 +53,7 @@ public class SimpleEpisode implements Episode {
     }
 
 
-
+    // better be setText
     @Override
     public void addText(String aText) {
 

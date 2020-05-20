@@ -212,6 +212,7 @@ function recallAct(count){
 }
 
 
+
 function displayEpisode(result){
 console.log(result);
     // result contains the info to print for act, episode, measure, character and message
@@ -241,7 +242,39 @@ console.log(result);
 }
 
 
- function processSQLAnswer (result, endpoint) {
+
+function processModificationAnswer(result, endpoint){
+    let code=JSON.parse(result).code;
+    let message=JSON.parse(result).message;
+    console.log(code);
+    console.log(message);
+
+    // not sure, should we distinguish code=1 from code=0?
+    let consoleElt=document.getElementById("console");
+    consoleElt.innerText=message;
+}
+
+
+
+function actModifHandler(){
+    let result = document.getElementById("act");
+    let selection = result.value;
+    let msg = selection;
+
+   let pb = function (result) {
+        console.log("debug: ");
+        console.log(result);
+    };
+
+    elsaRequest(msg, "modifyAct", processModificationAnswer, pb,false);
+
+}
+
+
+
+
+
+function processSQLAnswer (result, endpoint) {
         let code=JSON.parse(result).code;
         let message=JSON.parse(result).message;
         console.log(code);
