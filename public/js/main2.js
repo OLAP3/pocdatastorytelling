@@ -272,6 +272,67 @@ function actModifHandler(){
 
 
 
+function episodeModifHandler(){
+    let result = document.getElementById("episode");
+    let selection = result.value;
+    let msg = selection;
+
+   let pb = function (result) {
+        console.log("debug: ");
+        console.log(result);
+    };
+
+    elsaRequest(msg, "modifyEpisode", processModificationAnswer, pb,false);
+
+}
+
+
+function characterModifHandler(){
+    let result = document.getElementById("protagonist");
+    let selection = result.value;
+    let msg = selection;
+
+   let pb = function (result) {
+        console.log("debug: ");
+        console.log(result);
+    };
+
+    elsaRequest(msg, "modifyCharacter", processModificationAnswer, pb,false);
+
+}
+
+
+function measureModifHandler(){
+    let result = document.getElementById("message");
+    let selection = result.value;
+    let msg = selection;
+
+   let pb = function (result) {
+        console.log("debug: ");
+        console.log(result);
+    };
+
+    elsaRequest(msg, "modifyMeasure", processModificationAnswer, pb,false);
+
+}
+
+
+
+function messageModifHandler(){
+    let result = document.getElementById("observation");
+    let selection = result.value;
+    let msg = selection;
+
+   let pb = function (result) {
+        console.log("debug: ");
+        console.log(result);
+    };
+
+    elsaRequest(msg, "modifyMessage", processModificationAnswer, pb,false);
+
+}
+
+
 
 
 function processSQLAnswer (result, endpoint) {
