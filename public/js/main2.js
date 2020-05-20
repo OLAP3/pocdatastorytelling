@@ -242,7 +242,6 @@ console.log(result);
 }
 
 
-
 function processModificationAnswer(result, endpoint){
     let code=JSON.parse(result).code;
     let message=JSON.parse(result).message;
@@ -252,6 +251,14 @@ function processModificationAnswer(result, endpoint){
     // not sure, should we distinguish code=1 from code=0?
     let consoleElt=document.getElementById("console");
     consoleElt.innerText=message;
+
+// clean everything after!!
+     clear("observation");
+     clear("textresult");
+     clear("protagonist");
+     clear("message");
+     clear("episode");
+     clear("my_dataviz");
 }
 
 

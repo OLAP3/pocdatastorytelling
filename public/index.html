@@ -288,8 +288,8 @@ border: solid 1px gray;
 }
 
 .img{
- width: 300px;
- height: 100%;
+ width: 310px;
+ height: 80%;
 }
 </style>
 
@@ -315,13 +315,13 @@ border: solid 1px gray;
             </div>
             <div>
                 <span class="label other">Schema</span>
-                <img src="img/dfm.svg" class="img"/></div>
+                <img src="img/dfm-covid.svg" class="img"/></div>
         </div>
 
 
         <button class="button-console" onclick="clearStory()">Start new story</button>
         <button class="button-console" onclick="renderListnener()">Render current story and download PDF</button>
-        <button class="button-console" onclick="DBdumpListnener()">Save the stories in the database</button>
+        <button class="button-console" onclick="DBdumpListnener()">Save the narrative in the database</button>
 
     </div>
 
@@ -331,7 +331,7 @@ border: solid 1px gray;
         <label for="act"><span class="label info">Act</span></label><br>
         <textarea id="act" name="act" class="blue-box"></textarea>
         <button class="button-blue" onclick="actformHandler()">Insert new act</button>
-        <button class="button-blue" onclick="actModifHandler()">Modify recalled act</button>
+        <button class="button-blue" onclick="actModifHandler()">Modify existing act</button>
 
     </div>
 
@@ -339,7 +339,7 @@ border: solid 1px gray;
 
 
     <div class="recap">
-        <label for="recap"><span class="label success">Story insertions log</span></label><br>
+        <label for="recap"><span class="label success">Insertions log</span></label><br>
         <textarea id="recap" name="recap" class="recap-box"></textarea>
     </div>
 
@@ -366,7 +366,7 @@ border: solid 1px gray;
         <label for="episode"><span class="label info">Episode</span></label><br>
         <textarea id="episode" name="episode"  class="blue-box"></textarea>
         <button  class="button-blue"  onclick="episodeformHandler()">Insert new episode</button>
-        <button  class="button-blue"  onclick="episodeModifHandler()">Modify recalled episode</button>
+        <button  class="button-blue"  onclick="episodeModifHandler()">Modify existing episode</button>
     </div>
 
 
@@ -378,14 +378,14 @@ border: solid 1px gray;
 
         <div class="collectors" id="collectors">
             <div id="result">
-                <button class="button-collector" onclick="openSQLform()">Run SQL collector</button>
+                <button class="button-collector" onclick="openSQLform()">Create a SQL collector</button>
                 <br>
                 <textarea id="textresult" name="textresult" class="sql-result"></textarea>
                 <button  class="button-blue"  onclick="resultformHandler()">Validate the selection as a finding</button>
             </div>
 
             <div id="describeResult">
-                <button  class="button-collector" onclick="openDescribeform()">Run Describe collector</button>
+                <button  class="button-collector" onclick="openDescribeform()">Create a Describe collector</button>
                 <br>
 
                 <div id="loader" style="display: none;"></div>
@@ -435,13 +435,13 @@ border: solid 1px gray;
         <label for="protagonist"><span class="label info">Character</span></label><br>
         <textarea id="protagonist" name="protagonist"  class="blue-box"></textarea>
         <button  class="button-blue"  onclick="protagonistformHandler()">Insert new character</button>
-        <button  class="button-blue"  onclick="characterModifyHandler()">Modify recalled character</button>
+        <button  class="button-blue"  onclick="characterModifyHandler()">Modify existing character</button>
     </div>
 
 
 
     <div class="listrecap">
-        <label for="listrecap"><span class="label success">List of story elements</span></label><br>
+        <label for="listrecap"><span class="label success">List of discourse elements</span></label><br>
         <div id="listrecap" name="listrecap" class="recap-box"></div>
     </div>
 
@@ -450,7 +450,7 @@ border: solid 1px gray;
         <label for="message"><span class="label info">Measure</span></label></label><br>
         <textarea id="message" name="message" class="blue-box" style="white-space:pre-wrap"></textarea>
         <button class="button-blue"  onclick="messageformHandler()">Insert new measure</button>
-        <button class="button-blue"  onclick="measureModifyHandler()">Modify recalled measure</button>
+        <button class="button-blue"  onclick="measureModifyHandler()">Modify existing measure</button>
     </div>
 
 
@@ -461,7 +461,7 @@ border: solid 1px gray;
         <label for="observation"><span class="label info">Message</span></label><br>
         <textarea id="observation" name="observation"  class="blue-box" style="white-space:pre-wrap"></textarea>
         <button  class="button-blue"  onclick="observationformHandler()">Insert new message</button>
-        <button  class="button-blue"  onclick="messageModifyHandler()">Modify recalled message</button>
+        <button  class="button-blue"  onclick="messageModifyHandler()">Modify existing message</button>
     </div>
 
 
