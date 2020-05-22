@@ -3,8 +3,15 @@ package fr.univtours.info.simpleStory;
 import fr.univtours.info.model.factual.*;
 import org.apache.commons.dbutils.ResultSetIterator;
 
+import java.io.File;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartUtilities;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.category.DefaultCategoryDataset;
 
 public class SimpleSQLFinding implements Finding {
     private ResultSet resultSet;
@@ -14,7 +21,9 @@ public class SimpleSQLFinding implements Finding {
 
     }
 
-
+    public ResultSet getResultSet(){
+        return resultSet;
+    }
 
     public String toString(){
         String resultString="";
@@ -29,5 +38,10 @@ public class SimpleSQLFinding implements Finding {
         }
         return resultString;
     }
+
+
+
+
+
 
 }

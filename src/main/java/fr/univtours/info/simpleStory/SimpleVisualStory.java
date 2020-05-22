@@ -74,7 +74,8 @@ public class SimpleVisualStory implements VisualStory {
 
                 }
                 else {
-                    DashboardComponent dbc = new SimpleDashboardComponent();
+                    //DashboardComponent dbc = new SimpleDashboardComponent();
+                    DashboardComponent dbc = new SimpleSQLvizDashboardComponent();
                     d.contains(dbc);
                     dbc.renders(ep);
                 }

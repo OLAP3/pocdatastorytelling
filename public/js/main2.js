@@ -146,10 +146,10 @@ function processEpisodeClear (result, endpoint) {
         if(code==0){
             let recap=document.getElementById("recap");
             let recaptext = document.getElementById("recap").value;
-            // console.log(recap);
-             // console.log(recaptext);
+
             //recap.innerText= recaptext + "\n " + endpoint + ": "+ message;
-            recap.value= recaptext + "\n " + endpoint + ": "+ JSON.parse(message);
+            //recap.value= recaptext + "\n " + endpoint + ": "+ JSON.parse(message);
+            recap.value= recaptext + "\n" +  JSON.parse(message);
 
             if(endpoint=="act"){
                 actcount++;

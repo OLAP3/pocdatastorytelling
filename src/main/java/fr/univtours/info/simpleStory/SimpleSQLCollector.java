@@ -56,7 +56,9 @@ public class SimpleSQLCollector implements Collector {
 
 
     void sendQuery() throws Exception{
-        Statement stmt = conn.createStatement();
+        Statement stmt = conn.createStatement(
+                ResultSet.TYPE_SCROLL_INSENSITIVE,
+                ResultSet.CONCUR_UPDATABLE);
         ResultSet rs = stmt.executeQuery(this.sqlQuery) ;
         this.resultset=rs;
         // now produces insights
