@@ -75,7 +75,7 @@ public class SimpleSQLvizDashboardComponent implements DashboardComponent {
 
                     PDImageXObject pdImage = PDImageXObject.createFromFile(filename,document);
 
-                    contentStream.drawImage(pdImage, 50, 50, 400, 600);
+                    contentStream.drawImage(pdImage, 50, 50, 600, 400);
                     contentStream.close();
                     blankPage = new PDPage(); // each act starts a new page
                     document.addPage(blankPage);
@@ -192,20 +192,29 @@ public class SimpleSQLvizDashboardComponent implements DashboardComponent {
         resultSet.last();    // moves cursor to the last row
         int size = resultSet.getRow();
         resultSet.beforeFirst();
-        double cases[] = new double[size];
+        double measure[] = new double[size];
         double longitude[] = new double[size];
         double latitude[] = new double[size];
         int i=0;
         ResultSetIterator rsit = new ResultSetIterator(resultSet);
         while (rsit.hasNext()) {
             Object[] tab = rsit.next();
-            cases[i]=Double.parseDouble(tab[0].toString())/100000; // /100000 for scaling
+            measure[i]=Double.parseDouble(tab[0].toString());
+            if(measure[i]<100) measure[i] = 1;
+            if(measure[i]>=100 && measure[i]<1000) measure[i] = 2;
+            if(measure[i]>=1000 && measure[i]<10000) measure[i] = 3;
+            if(measure[i]>=10000 && measure[i]<100000) measure[i] = 4;
+            if(measure[i]>=100000 && measure[i]<1000000) measure[i] = 5;
+
             longitude[i]=Double.parseDouble(tab[2].toString());
             latitude[i]=Double.parseDouble(tab[3].toString());
             i++;
         }
-
-        double ad3[ ][ ] = { longitude , latitude, cases };
+        // fake origin point for testing
+        measure[0]=3;
+        longitude[0]=0;
+        latitude[0]=0;
+        double ad3[ ][ ] = {  latitude, longitude, measure };
         defaultxyzdataset.addSeries( metaData.getColumnName(1) , ad3 );
 
         JFreeChart bubblechart = ChartFactory.createBubbleChart(
@@ -227,10 +236,16 @@ public class SimpleSQLvizDashboardComponent implements DashboardComponent {
         //numberaxis1.setLowerMargin( 0.8 );
         //numberaxis1.setUpperMargin( 0.9 );
 
-        Image icon = ImageIO.read(new File("public/img/map.gif"));
-        bubblechart.setBackgroundImage(icon);
+//        Image icon = ImageIO.read(new File("public/img/map.gif"));
+        Image icon = ImageIO.read(new File("public/img/map-grid.png"));
+        //bubblechart.setBackgroundImage(icon);
 
-        //axis.setVisible(false);
+        NumberAxis domainAxis = ( NumberAxis )xyplot.getDomainAxis( );
+        domainAxis.setRange(-96,90);
+        domainAxis.setVisible(false);
+        NumberAxis rangeAxis = ( NumberAxis )xyplot.getRangeAxis( );
+        rangeAxis.setRange(-200,206);
+        rangeAxis.setVisible(false);
 
         //xyplot.setBackgroundImage(icon);
         bubblechart.removeLegend();
@@ -239,10 +254,10 @@ public class SimpleSQLvizDashboardComponent implements DashboardComponent {
         xyplot.setBackgroundPaint( trans );
         xyplot.setOutlineVisible(false);
 
-        //plot.setRangeGridlinesVisible(false);
-        //plot.setDomainGridlinesVisible(false);
+        xyplot.setRangeGridlinesVisible(false);
+        xyplot.setDomainGridlinesVisible(false);
 
-        int width = 800;    /* Width of the image */
+        int width = 900;    /* Width of the image */
         int height = 500;   /* Height of the image */
         filename = "public/img/BarChart-" + nbCharts + ".png";
         File BarChart = new File(filename);
