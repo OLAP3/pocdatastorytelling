@@ -52,6 +52,7 @@ function processClear (result, endpoint) {
          //   recap.value= "";
 
          clear("recap");
+         clear("listrecap");
          clear("goal");
          clear("question");
          clear("observation");
@@ -60,7 +61,15 @@ function processClear (result, endpoint) {
          clear("message");
          clear("episode");
          clear("act");
-         clear("my_dataviz");
+         //clear("my_dataviz");
+         clearSession();
+
+
+         actcount=0;
+         episodecount=0;
+         messagecount=0;
+        measurecount=0;
+        charactercount=0;
 
          let consoleElt=document.getElementById("console");
          consoleElt.innerText=message;
@@ -105,7 +114,7 @@ function processEpisodeClear (result, endpoint) {
             clear("message");
             clear("episode");
             clear("my_dataviz");
-
+            clearSession();
        }
        else{
             let consoleElt=document.getElementById("console");
@@ -235,7 +244,7 @@ console.log(result);
      }
      else{
         let consoleElt=document.getElementById("console");
-        consoleElt.innerText="Something wen wrong";
+        consoleElt.innerText="Something went wrong";
 
      }
 
@@ -345,13 +354,31 @@ function messageModifHandler(){
 function processSQLAnswer (result, endpoint) {
         let code=JSON.parse(result).code;
         let message=JSON.parse(result).message;
+        let filename=JSON.parse(result).filename;
+        console.log(result);
         console.log(code);
+        console.log(filename);
         console.log(message);
+
 
         if(code==0){
             let div = document.getElementById("result");
             let textresult=document.getElementById("textresult");
             textresult.value=message;
+
+
+            var img = document.createElement("img");
+            //img.src = "img/BarChart-0.png";
+
+            filename=filename.substr(7);//remove public/ !!!
+            console.log(filename);
+            img.src = filename;
+
+            img.style.width='170%';
+            img.style.padding='20px';
+            var src = document.getElementById("my_dataviz");
+            src.appendChild(img);
+
 
         }
         else{

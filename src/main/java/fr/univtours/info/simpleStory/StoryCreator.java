@@ -39,11 +39,17 @@ public class StoryCreator {
     byte[] currentGraphic;
     boolean currentInsightIsGraphic=false;
 
+    String currentFilename=null;
+
     PDDocument thePDF;
     File thePDFfile;
 
     public StoryCreator(){
 
+    }
+
+    public String getCurrentFilename(){
+        return currentFilename;
     }
 
     public Goal getGoal(){
@@ -272,10 +278,14 @@ public class StoryCreator {
             Finding i=it.next();
             //currentObservation.produces(i);
             res=res+i.toString();
+            currentFilename=((SimpleSQLFinding) i).getFilename();
         }
 
+        //System.out.println("in story creator: " + res);
         return res;
     }
+
+
 
 
     public String newMessage(String theMessage){

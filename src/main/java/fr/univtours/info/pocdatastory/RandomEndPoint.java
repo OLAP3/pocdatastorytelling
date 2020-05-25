@@ -90,22 +90,22 @@ public class RandomEndPoint {
 
     @PostMapping(value="api/query", consumes = "application/json", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public Answer query(@RequestBody SqlCollector query) {
+    public AnswerViz query(@RequestBody SqlCollector query) {
 
         String toReturn="No analytical question created! Please create an analytical question first.";
         int code=1;
+        String filename=null;
 
         if(creator.getCurrentQuestion()!=null){
 
+
             String res=creator.newSQLCollector(query.getQuery());
-
-
-                code=0;
-                toReturn= res;
-
+            code=0;
+            toReturn= res;
+            filename= creator.getCurrentFilename();
 
         }
-        return new Answer(code,toReturn);
+        return new AnswerViz(code,toReturn, filename);
 
     }
 
@@ -135,6 +135,7 @@ public class RandomEndPoint {
     @PostMapping(value="api/result", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public Answer result(@RequestBody String theResult) {
+
         return new Answer(0,theResult);
     }
 

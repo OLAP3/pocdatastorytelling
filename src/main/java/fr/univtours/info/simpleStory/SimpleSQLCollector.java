@@ -16,6 +16,7 @@ public class SimpleSQLCollector implements Collector {
     ResultSet resultset;
     Collection<Finding> theFindings;
 
+
     public SimpleSQLCollector(String sqlQuery) {
         try {
             this.connectToPostgresql();
@@ -65,6 +66,8 @@ public class SimpleSQLCollector implements Collector {
         Finding i = new SimpleSQLFinding(resultset);
         this.fetches(i);
     }
+
+
 
     @Override
     public boolean hasInsight() {
