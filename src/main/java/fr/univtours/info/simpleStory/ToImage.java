@@ -179,7 +179,7 @@ public class ToImage {
 
         int width = 900;    /* Width of the image */
         int height = 500;   /* Height of the image */
-        filename = "public/img/BarChart-" + nbCharts + ".png";
+        filename = "public/img/bubble-worldmap-" + nbCharts + ".png";
         File BarChart = new File(filename);
 
         ChartUtilities.saveChartAsPNG(BarChart, bubblechart, width, height);
