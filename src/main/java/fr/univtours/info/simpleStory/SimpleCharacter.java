@@ -21,8 +21,8 @@ public class SimpleCharacter implements Character {
 
     @Override
     public String toString() {
+        return "Character: " + theText;
 
-        return "Protagonist: " + theText;
     }
 
 

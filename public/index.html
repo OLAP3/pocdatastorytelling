@@ -380,14 +380,15 @@ border: solid 1px gray;
         <div class="collectors" id="collectors">
             <div id="result">
                 <button class="button-collector" onclick="openSQLform()">Create a SQL collector</button>
+                <button  class="button-collector" onclick="openDescribeform()">Create a Describe collector</button>
                 <br>
                 <textarea id="textresult" name="textresult" class="sql-result"></textarea>
-                <button  class="button-blue"  onclick="resultformHandler()">Validate the selection as a finding</button>
+                <button  class="button-blue"  onclick="describeResultFormHandler()">Validate the Describe finding</button>
+                <button  class="button-blue"  onclick="resultformHandler()">Validate the SQL finding</button>
             </div>
 
             <div id="describeResult">
-                <button  class="button-collector" onclick="openDescribeform()">Create a Describe collector</button>
-                <br>
+                <br><br>
 
                 <div id="loader" style="display: none;"></div>
                 <div class="sql-result">
@@ -395,7 +396,7 @@ border: solid 1px gray;
                 </div>
 
 
-                <button  class="button-blue"  onclick="describeResultFormHandler()">Validate the dataviz as a finding</button>
+
 
             </div>
 

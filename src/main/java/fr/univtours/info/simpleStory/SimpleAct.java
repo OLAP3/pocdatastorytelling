@@ -32,6 +32,7 @@ public class SimpleAct implements Act {
     public String toString() {
         //return "Act: " + actText + "\n" + theMessage.toString();
         return "Act: " + actText ;
+
     }
 
     @Override
