@@ -138,8 +138,10 @@ function processEpisodeClear (result, endpoint) {
             console.log(result);
         };
 
-
-    saveAs("pdfs/test.pdf","test.pdf",{type: "application/pdf"});
+        //var file=new File("/Users/marcel/Documents/RECHERCHE/STUDENTS/Faten/pocdatastory/public/pdfs/data-narrative.pdf");
+        //saveAs(file);
+        //saveAs("pdfs/data-narrative.pdf","data-narrative.pdf",{type: "application/pdf"});
+        window.open("pdfs/data-narrative.pdf");
 
 }
 
@@ -546,8 +548,8 @@ let query = document.getElementById("describe_text").value;
 
 function resultformHandler() {
     let result = document.getElementById("textresult");
-    let selection = (result.value).substring(result.selectionStart,result.selectionEnd);
-
+    //let selection = (result.value).substring(result.selectionStart,result.selectionEnd);
+    let selection=result.value;
     let msg = selection;
 
    let pb = function (result) {

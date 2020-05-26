@@ -7,7 +7,7 @@ import fr.univtours.info.model.factual.Exploration;
 import fr.univtours.info.model.factual.Finding;
 import fr.univtours.info.model.intentional.*;
 import fr.univtours.info.model.intentional.Character;
-import fr.univtours.info.model.presentational.VisualStory;
+import fr.univtours.info.model.presentational.VisualNarrative;
 import fr.univtours.info.model.Structural.Plot;
 import fr.univtours.info.pocdatastory.EpisodeRecall;
 import org.apache.pdfbox.pdmodel.PDDocument;
@@ -362,10 +362,10 @@ public class StoryCreator {
 
 
     public String render(String msg){
-        VisualStory vs=new SimpleVisualStory();
+        VisualNarrative vs=new SimpleVisualNarrative();
         vs.renders(thePlot);  // just attach
         vs.renders(); // and then renders
-        thePDF=((SimpleVisualStory) vs).getThePDF();
+        thePDF=((SimpleVisualNarrative) vs).getThePDF();
 
         //vs.print(); // and then prints
         return msg;
@@ -462,7 +462,7 @@ public class StoryCreator {
         // ask to complement the story, acts, episodes with texts
         //theStory.addText("ask the author");
 
-        VisualStory vs=new SimpleVisualStory();
+        VisualNarrative vs=new SimpleVisualNarrative();
         vs.renders(thePlot);  // just attach
         vs.renders(); // and then renders
         vs.toString(); // and then prints

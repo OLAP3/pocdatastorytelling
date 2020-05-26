@@ -3,7 +3,6 @@ package fr.univtours.info.simpleStory;
 import fr.univtours.info.model.Structural.Act;
 import fr.univtours.info.model.presentational.Dashboard;
 import fr.univtours.info.model.presentational.DashboardComponent;
-import fr.univtours.info.model.presentational.VisualStory;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
