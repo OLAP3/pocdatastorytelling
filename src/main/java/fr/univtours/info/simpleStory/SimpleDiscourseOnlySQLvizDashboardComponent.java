@@ -2,34 +2,15 @@ package fr.univtours.info.simpleStory;
 
 import fr.univtours.info.model.Structural.Episode;
 import fr.univtours.info.model.factual.Finding;
-import fr.univtours.info.model.presentational.DashboardComponent;
-import org.apache.commons.dbutils.ResultSetIterator;
-import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
-import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartUtilities;
-import org.jfree.chart.JFreeChart;
-import org.jfree.chart.axis.NumberAxis;
-import org.jfree.chart.plot.Plot;
-import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.chart.plot.XYPlot;
-import org.jfree.chart.renderer.xy.XYItemRenderer;
-import org.jfree.data.category.DefaultCategoryDataset;
-import org.jfree.data.general.DefaultPieDataset;
-import org.jfree.data.xy.DefaultXYZDataset;
 
-import javax.imageio.ImageIO;
-import java.awt.*;
-import java.io.File;
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.util.Base64;
 import java.util.Collection;
 
-public class SimpleSQLvizDashboardComponent extends PDFdashboardComponent {
+public class SimpleDiscourseOnlySQLvizDashboardComponent extends PDFdashboardComponent {
 
     //private static int nbCharts=0;
     private String filename=null;
@@ -47,7 +28,7 @@ public class SimpleSQLvizDashboardComponent extends PDFdashboardComponent {
             try {
 
 
-                String text=theEpisode.toString();
+                String text=theEpisode.getText();
                 String[] toPrint = text.split("\n");
                 contentStream.setFont(PDType1Font.TIMES_ROMAN, 10);
                 for (int x=0; x<toPrint.length; x++) {

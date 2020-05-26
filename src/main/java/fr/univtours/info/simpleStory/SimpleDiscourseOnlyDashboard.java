@@ -1,21 +1,15 @@
 package fr.univtours.info.simpleStory;
 
 import fr.univtours.info.model.Structural.Act;
-import fr.univtours.info.model.presentational.Dashboard;
 import fr.univtours.info.model.presentational.DashboardComponent;
-import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
 
-import java.util.ArrayList;
-import java.util.Collection;
-
-public class SimpleDashboard extends PDFdashboard {
+public class SimpleDiscourseOnlyDashboard extends PDFdashboard {
 
 
-    public SimpleDashboard(){
-
+    public SimpleDiscourseOnlyDashboard(){
         super();
     }
 
@@ -34,7 +28,7 @@ public class SimpleDashboard extends PDFdashboard {
             //Setting the position for the line
             contentStream.newLineAtOffset(25, 725);
             contentStream.setFont(PDType1Font.TIMES_BOLD_ITALIC, 12);
-            contentStream.showText(theAct.toString() );
+            contentStream.showText(theAct.getText() );
             contentStream.newLine();
             contentStream.newLine();
 
@@ -49,17 +43,17 @@ public class SimpleDashboard extends PDFdashboard {
                     ((SimpleDashboardComponent) dc).setContentStream(contentStream);
                     dc.render();
                 }*/
-                if(dc.getClass().getName().equals("fr.univtours.info.simpleStory.SimpleSQLvizDashboardComponent")){
-                    ((SimpleSQLvizDashboardComponent) dc).setPDF(document);
-                    ((SimpleSQLvizDashboardComponent) dc).setContentStream(contentStream);
+                if(dc.getClass().getName().equals("fr.univtours.info.simpleStory.SimpleDiscourseOnlySQLvizDashboardComponent")){
+                    ((SimpleDiscourseOnlySQLvizDashboardComponent) dc).setPDF(document);
+                    ((SimpleDiscourseOnlySQLvizDashboardComponent) dc).setContentStream(contentStream);
                     dc.render();
 
                 }
                 else {// describe component
                     //contentStream.endText();
                     //contentStream.close();
-                    ((SimpleDescribeDashboardComponent) dc).setPDF(document);
-                    ((SimpleDescribeDashboardComponent) dc).setContentStream(contentStream);
+                    ((SimpleDiscourseOnlyDescribeDashboardComponent) dc).setPDF(document);
+                    ((SimpleDiscourseOnlyDescribeDashboardComponent) dc).setContentStream(contentStream);
 
                     dc.render();
                     /*

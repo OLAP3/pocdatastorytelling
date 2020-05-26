@@ -10,18 +10,18 @@ import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 
 import java.util.Base64;
 
-public class SimpleDescribeDashboardComponent extends PDFdashboardComponent {
+public class SimpleDiscourseOnlyDescribeDashboardComponent extends PDFdashboardComponent {
+
 
     byte[] theGraphic;
     String theStringGraphic;
 
 
-
-
     @Override
     public Episode render() {
         try {
-            String text=theEpisode.toString();
+            //String text=theEpisode.toString();
+            String text=theEpisode.getText() + "\n" + theEpisode.narrates().toString() ;
             String[] toPrint = text.split("\n");
 
             for (int x=0; x<toPrint.length; x++) {
@@ -73,7 +73,6 @@ public class SimpleDescribeDashboardComponent extends PDFdashboardComponent {
     }
 
 
-
     public byte[] getGraphic(){
         return theGraphic;
     }
@@ -81,6 +80,5 @@ public class SimpleDescribeDashboardComponent extends PDFdashboardComponent {
     public String getTheStringGraphic() {
         return theStringGraphic;
     }
-
 
 }

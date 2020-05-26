@@ -296,6 +296,26 @@ public class RandomEndPoint {
 
 
 
+    @PostMapping(value="api/renderDO", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public Answer renderDO(@RequestBody String msg) {
+
+        int code=1;
+        String toReturn="No story created! Please create story objects first.";
+
+        if(creator!=null){
+            code=0;
+            String res=creator.renderDO(msg);
+            toReturn=res;
+
+        }
+        return new Answer(code, toReturn);
+
+
+    }
+
+
+
 
     @PostMapping(value="api/recallAct", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody

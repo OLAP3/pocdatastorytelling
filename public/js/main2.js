@@ -107,7 +107,8 @@ function processEpisodeClear (result, endpoint) {
 
             });
 
-            recap.value= recaptext + "\n " + endpoint + ": "+ JSON.parse(message);
+//            recap.value= recaptext + "\n " + endpoint + ": "+ JSON.parse(message);
+            recap.value= recaptext + "\n " + JSON.parse(message);
             clear("observation");
             clear("textresult");
             clear("protagonist");
@@ -707,7 +708,6 @@ function episodeformHandler() {
 
 
 function renderListnener() {
-    //let demodiv = document.getElementById('demodiv');
 
    let msg="Story rendered."
 
@@ -716,6 +716,21 @@ function renderListnener() {
         console.log(result);
     };
     elsaRequest(msg, "render", processRender, pb, false);
+}
+
+
+
+
+
+function renderDOListnener() {
+
+   let msg="Story rendered."
+
+  let pb = function (result) {
+        console.log("debug: ");
+        console.log(result);
+    };
+    elsaRequest(msg, "renderDO", processRender, pb, false);
 }
 
 

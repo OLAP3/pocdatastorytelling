@@ -372,6 +372,16 @@ public class StoryCreator {
     }
 
 
+    // Discourse only visual
+    public String renderDO(String msg){
+        SimpleDiscourseOnlyVisualNarrative vs=new SimpleDiscourseOnlyVisualNarrative();
+        vs.renders(thePlot);  // just attach
+        vs.renders(); // and then renders
+        thePDF=((SimpleDiscourseOnlyVisualNarrative) vs).getThePDF();
+
+        //vs.print(); // and then prints
+        return msg;
+    }
 
 
 

@@ -2,27 +2,18 @@ package fr.univtours.info.simpleStory;
 
 import fr.univtours.info.model.Structural.Act;
 import fr.univtours.info.model.Structural.Episode;
-import fr.univtours.info.model.factual.Finding;
-import fr.univtours.info.model.presentational.*;
 import fr.univtours.info.model.Structural.Plot;
-
+import fr.univtours.info.model.factual.Finding;
+import fr.univtours.info.model.presentational.Dashboard;
+import fr.univtours.info.model.presentational.DashboardComponent;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
-import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 
+public class SimpleDiscourseOnlyVisualNarrative extends PDFnarrative {
 
-import java.io.IOException;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Base64;
-import java.util.Collection;
-
-public class SimpleVisualNarrative extends PDFnarrative {
-
-    public SimpleVisualNarrative(){
+    public SimpleDiscourseOnlyVisualNarrative(){
         super();
     }
 
@@ -32,7 +23,7 @@ public class SimpleVisualNarrative extends PDFnarrative {
         thePlot = aPlot;
 
         for(Act act : thePlot.includes()){
-            Dashboard d = new SimpleDashboard();
+            Dashboard d = new SimpleDiscourseOnlyDashboard();
             this.contains(d);
             d.renders(act);
 
@@ -41,19 +32,19 @@ public class SimpleVisualNarrative extends PDFnarrative {
                     // this is the place to choose between different components
                 boolean hasGraphic=false;
                 for(Finding i : ep.narrates().produces()){
-                    if(i.getClass().getName().equals("fr.univtours.info.simpleStory.SimpleDescribeFinding")){
+                    if(i.getClass().getName().equals("fr.univtours.info.simpleStory.SimpleDiscourseOnlyDescribeFinding")){
                         hasGraphic=true;
                     }
                 }
                 if(hasGraphic){
-                    DashboardComponent dbc = new SimpleDescribeDashboardComponent();
+                    DashboardComponent dbc = new SimpleDiscourseOnlyDescribeDashboardComponent();
                     d.contains(dbc);
                     dbc.renders(ep);
 
                 }
                 else {
                     //DashboardComponent dbc = new SimpleDashboardComponent();
-                    DashboardComponent dbc = new SimpleSQLvizDashboardComponent();
+                    DashboardComponent dbc = new SimpleDiscourseOnlySQLvizDashboardComponent();
                     d.contains(dbc);
                     dbc.renders(ep);
                 }
@@ -85,16 +76,16 @@ public class SimpleVisualNarrative extends PDFnarrative {
 
             // prints title (goal)
             contentStream.setFont(PDType1Font.TIMES_BOLD, 16);
-            contentStream.showText("This is the story for goal: " + thePlot.has().toString() );
+            contentStream.showText(thePlot.has().toString() );
             contentStream.newLine();
             contentStream.newLine();
             contentStream.endText();
             contentStream.close();
 
             for(Dashboard d : theDashboards){
-                ((SimpleDashboard) d).setPDF(document);
+                ((SimpleDiscourseOnlyDashboard) d).setPDF(document);
                 d.renders();
-                //theRendering=theRendering + ((SimpleDashboard) d).getRendering() + "\n";
+
             }
 
             //contentStream.endText();
