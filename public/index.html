@@ -17,284 +17,7 @@
     <script src="./js/html-table.js"></script>
     <script src="https://unpkg.com/d3-3d/build/d3-3d.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
-
-<style>
-th, td { border: 1px dotted; }
-    th { font-weight : bold }
-    .line {
-        fill: none;
-        stroke-width: 2px;
-    }
-    .dot {
-        stroke: #fff;
-    }
-    .legend rect {
-        fill:white;
-        stroke:black;
-        opacity:0.8;
-    }
-
-    /* Center the loader */
-    #loader {
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        z-index: 1;
-        margin: -75px 0 0 -75px;
-        border: 8px solid #f3f3f3;
-        border-radius: 50%;
-        border-top: 8px solid #bbbbbb;
-        width: 80px;
-        height: 80px;
-        -webkit-animation: spin 2s linear infinite;
-        animation: spin 2s linear infinite;
-    }
-    @-webkit-keyframes spin {
-        0% { -webkit-transform: rotate(0deg); }
-        100% { -webkit-transform: rotate(360deg); }
-    }
-    @keyframes spin {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
-    }
-    /* Add animation to "page content" */
-    .animate-bottom {
-        position: relative;
-        -webkit-animation-name: animatebottom;
-        -webkit-animation-duration: 1s;
-        animation-name: animatebottom;
-        animation-duration: 1s
-    }
-    @-webkit-keyframes animatebottom {
-        from { bottom:-100px; opacity:0 }
-        to { bottom:0px; opacity:1 }
-    }
-    @keyframes animatebottom {
-        from{ bottom:-100px; opacity:0 }
-        to{ bottom:0; opacity:1 }
-    }
-
-body {font-family: Arial, Helvetica, sans-serif;}
-* {box-sizing: border-box;}
-
-/* Button used to open the contact form - fixed at the bottom of the page */
-.open-button {
-  background-color: #555;
-  color: white;
-  padding: 16px 20px;
-  border: none;
-  cursor: pointer;
-  opacity: 0.8;
-  position: fixed;
-  bottom: 23px;
-  right: 28px;
-  width: 280px;
-}
-
-/* The popup form - hidden by default */
-.form-popup {
-  display: none;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  border: 3px solid #f1f1f1;
-  z-index: 9;
-}
-
-/* Add styles to the form container */
-.form-container {
-  max-width: 300px;
-  padding: 10px;
-  background-color: white;
-}
-
-/* Full-width input fields */
-.form-container input[type=text], .form-container input[type=password] {
-  width: 100%;
-  padding: 15px;
-  margin: 5px 0 22px 0;
-  border: none;
-  background: #f1f1f1;
-}
-
-/* When the inputs get focus, do something */
-.form-container input[type=text]:focus, .form-container input[type=password]:focus {
-  background-color: #ddd;
-  outline: none;
-}
-
-/* Set a style for the submit/login button */
-.form-container .btn {
-  background-color: #4CAF50;
-  color: white;
-  padding: 16px 20px;
-  border: none;
-  cursor: pointer;
-  width: 100%;
-  margin-bottom:10px;
-  opacity: 0.8;
-}
-
-/* Add a red background color to the cancel button */
-.form-container .cancel {
-  background-color: red;
-}
-
-/* Add some hover effects to buttons */
-.form-container .btn:hover, .open-button:hover {
-  opacity: 1;
-}
-
-.wrapper {
-display: grid;
-grid-template-columns: repeat(3, 1fr);
-grid-auto-rows: 200px;
-grid-column-gap: 50px;
-}
-
-.result {
-grid-column-start: 1;
-grid-column-end: 2;
-grid-row-start: 3;
-grid-row-end: 6;
-padding: 30px 0px;
-}
-
-.recap {
-grid-column-start: 3;
-grid-column-end: 4;
-grid-row-start: 1;
-grid-row-end: 4;
- padding: 30px 0px;
-}
-
-
-.listrecap {
-grid-column-start: 3;
-grid-column-end: 4;
-grid-row-start: 4;
-grid-row-end: 6;
-}
-
-.console {
-  width: 610px;
-  height: 30%;
-  padding: 50px;
-  border: 1px solid red;
-}
-
-
-
-
-.collectors {
-display: grid;
-grid-template-columns: 1fr 1fr;
-grid-column-gap: 20px;
-}
-
-.label {
-  color: white;
-  padding: 2px;
-  font-family: Arial;
-}
-.success {background-color: #4CAF50;} /* Green */
-.info {background-color: #2196F3;} /* Blue */
-.warning {background-color: #ff9800;} /* Orange */
-.danger {background-color: #f44336;} /* Red */
-.other {background-color: #e7e7e7; color: black;} /* Gray */
-
-.element{
- background-color: #4CAF50;
-  border: none;
-  color: white;
-  padding: 8px 10px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 12px;
-  margin: 4px 2px;
-  cursor: pointer;
-  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
-  border-radius: 12px;
-  float: right;
-}
-
-.button-blue {
-  background-color: #2196F3;
-  border: none;
-  color: white;
-  padding: 8px 10px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 12px;
-  margin: 4px 2px;
-  cursor: pointer;
-  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
-  border-radius: 12px;
-  float: right;
-}
-
-.button-console {
-  background-color: #f44336;
-  border: none;
-  color: white;
-  padding: 8px 10px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 12px;
-  margin: 4px 2px;
-  cursor: pointer;
-  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
-  border-radius: 12px;
-}
-
-
-.button-collector {
-  background-color: #e7e7e7;
-  border: none;
-  color: black;
-  padding: 8px 10px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 12px;
-  margin: 4px 2px;
-  cursor: pointer;
-  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
-  border-radius: 12px;
-  float: center;
-}
-
-.blue-box {
- width: 100%;
- height: 70%;
- border: solid 1px #2196F3;
- border-radius: 8px;
-}
-
-.recap-box{
- width: 100%;
- height: 100%;
-border: solid 1px green;
-}
-
-.sql-result{
- width: 100%;
- height: 550px;
-border: solid 1px gray;
-}
-
-.img{
- padding: 8px 10px;
- width: 310px;
- height: 70%;
-}
-</style>
-
-
+    <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
@@ -310,7 +33,7 @@ border: solid 1px gray;
 
         <div class="collectors">
             <div>
-                <span class="label danger">Console</span>
+                <span class="label other">Console</span>
 
                 <div id="console" class="console"> </div>
             </div>
@@ -321,8 +44,8 @@ border: solid 1px gray;
 
 
         <button class="button-console" onclick="clearStory()">Start new story</button>
-        <button class="button-console" onclick="renderListnener()">PDF of narrative</button>
-        <button class="button-console" onclick="renderDOListnener()">PDF of narrative discourse</button>
+        <button class="button-presentation" onclick="renderListnener()">PDF of narrative</button>
+        <button class="button-presentation" onclick="renderDOListnener()">PDF of narrative discourse</button>
         <button class="button-console" onclick="DBdumpListnener()">Save the narrative</button>
 
     </div>
@@ -330,10 +53,10 @@ border: solid 1px gray;
 
 
     <div class="act">
-        <label for="act"><span class="label info">Act</span></label><br>
-        <textarea id="act" name="act" class="blue-box"></textarea>
-        <button class="button-blue" onclick="actformHandler()">Insert new act</button>
-        <button class="button-blue" onclick="actModifHandler()">Modify existing act</button>
+        <label for="act"><span class="label structural">Act</span></label><br>
+        <textarea id="act" name="act" class="structural-box"></textarea>
+        <button class="button-structural" onclick="actformHandler()">Add act</button>
+        <button class="button-structural" onclick="actModifHandler()">Modify existing act</button>
 
     </div>
 
@@ -341,7 +64,7 @@ border: solid 1px gray;
 
 
     <div class="recap">
-        <label for="recap"><span class="label success">Insertions log</span></label><br>
+        <label for="recap"><span class="label other">Insertions log</span></label><br>
         <textarea id="recap" name="recap" class="recap-box"></textarea>
     </div>
 
@@ -349,32 +72,32 @@ border: solid 1px gray;
 
         <div class="collectors">
             <div class="goal">
-                <label for="goal"><span class="label info">Analysis goal</span></label><br>
-                <textarea id="goal" name="goal"  class="blue-box"></textarea>
-                <button  class="button-blue" onclick="goalformHandler()">Insert analysis goal</button>
+                <label for="goal"><span class="label intentional">Analysis goal</span></label><br>
+                <textarea id="goal" name="goal"  class="intentional-box"></textarea>
+                <button  class="button-intentional" onclick="goalformHandler()">Define the analysis goal</button>
             </div>
 
 
             <div id="toreplace">
-                <label for="question"><span class="label info">Analytical question</span></label><br>
-                <textarea id="question" name="question"  class="blue-box"></textarea>
-                <button  class="button-blue"  onclick="questionFormHandler()">Insert new analytical question</button>
+                <label for="question"><span class="label intentional">Analytical question</span></label><br>
+                <textarea id="question" name="question"  class="intentional-box"></textarea>
+                <button  class="button-intentional"  onclick="questionFormHandler()">Add new analytical question</button>
             </div>
         </div>
 
 
 
     <div class="episode">
-        <label for="episode"><span class="label info">Episode</span></label><br>
-        <textarea id="episode" name="episode"  class="blue-box"></textarea>
-        <button  class="button-blue"  onclick="episodeformHandler()">Insert new episode</button>
-        <button  class="button-blue"  onclick="episodeModifHandler()">Modify existing episode</button>
+        <label for="episode"><span class="label structural">Episode</span></label><br>
+        <textarea id="episode" name="episode"  class="structural-box"></textarea>
+        <button  class="button-structural"  onclick="episodeformHandler()">Add  episode</button>
+        <button  class="button-structural"  onclick="episodeModifHandler()">Modify existing episode</button>
     </div>
 
 
 
     <div class="result">
-       <span class="label info" >Collectors</span>
+       <span class="label factual" >Collectors</span>
 
         <br> <br>
 
@@ -384,8 +107,8 @@ border: solid 1px gray;
                 <button  class="button-collector" onclick="openDescribeform()">Create a Describe collector</button>
                 <br>
                 <textarea id="textresult" name="textresult" class="sql-result"></textarea>
-                <button  class="button-blue"  onclick="describeResultFormHandler()">Validate the Describe finding</button>
-                <button  class="button-blue"  onclick="resultformHandler()">Validate the SQL finding</button>
+                <button  class="button-collector-validate"  onclick="describeResultFormHandler()">Validate the Describe finding</button>
+                <button  class="button-collector-validate"  onclick="resultformHandler()">Validate the SQL finding</button>
             </div>
 
             <div id="describeResult">
@@ -435,25 +158,25 @@ border: solid 1px gray;
 
 
     <div class="protagonist">
-        <label for="protagonist"><span class="label info">Character</span></label><br>
-        <textarea id="protagonist" name="protagonist"  class="blue-box"></textarea>
-        <button  class="button-blue"  onclick="protagonistformHandler()">Insert new character</button>
-        <button  class="button-blue"  onclick="characterModifyHandler()">Modify existing character</button>
+        <label for="protagonist"><span class="label intentional">Character</span></label><br>
+        <textarea id="protagonist" name="protagonist"  class="intentional-box"></textarea>
+        <button  class="button-intentional"  onclick="protagonistformHandler()">Add character</button>
+        <button  class="button-intentional"  onclick="characterModifyHandler()">Modify existing character</button>
     </div>
 
 
 
     <div class="listrecap">
-        <label for="listrecap"><span class="label success">List of discourse elements</span></label><br>
+        <label for="listrecap"><span class="label other">List of discourse elements</span></label><br>
         <div id="listrecap" name="listrecap" class="recap-box"></div>
     </div>
 
 
     <div class="message">
-        <label for="message"><span class="label info">Measure</span></label></label><br>
-        <textarea id="message" name="message" class="blue-box" style="white-space:pre-wrap"></textarea>
-        <button class="button-blue"  onclick="messageformHandler()">Insert new measure</button>
-        <button class="button-blue"  onclick="measureModifyHandler()">Modify existing measure</button>
+        <label for="message"><span class="label intentional">Measure</span></label></label><br>
+        <textarea id="message" name="message" class="intentional-box" style="white-space:pre-wrap"></textarea>
+        <button class="button-intentional"  onclick="messageformHandler()">Add  measure</button>
+        <button class="button-intentional"  onclick="measureModifyHandler()">Modify existing measure</button>
     </div>
 
 
@@ -461,10 +184,10 @@ border: solid 1px gray;
 
 
     <div class="observation">
-        <label for="observation"><span class="label info">Message</span></label><br>
-        <textarea id="observation" name="observation"  class="blue-box" style="white-space:pre-wrap"></textarea>
-        <button  class="button-blue"  onclick="observationformHandler()">Insert new message</button>
-        <button  class="button-blue"  onclick="messageModifyHandler()">Modify existing message</button>
+        <label for="observation"><span class="label intentional">Message</span></label><br>
+        <textarea id="observation" name="observation"  class="intentional-box" style="white-space:pre-wrap"></textarea>
+        <button  class="button-intentional"  onclick="observationformHandler()">Add  message</button>
+        <button  class="button-intentional"  onclick="messageModifyHandler()">Modify existing message</button>
     </div>
 
 
