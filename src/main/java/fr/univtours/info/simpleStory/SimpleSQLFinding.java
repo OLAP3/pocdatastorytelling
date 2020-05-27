@@ -16,12 +16,14 @@ import org.jfree.data.category.DefaultCategoryDataset;
 public class SimpleSQLFinding implements Finding {
     private ResultSet resultSet;
     private String filename=null;
+    private ResultSetMetaData rsmd;
 
     public SimpleSQLFinding(ResultSet aResultSet){
         this.resultSet=aResultSet;
         ToImage ti=new ToImage(resultSet);
         try {
             filename = ti.toImage();
+            rsmd = resultSet.getMetaData();
             resultSet.beforeFirst();
         }
         catch (Exception e){
@@ -41,6 +43,15 @@ public class SimpleSQLFinding implements Finding {
     public String toString(){
         String resultString="";
 
+        try {
+            for (int i = 1; i <= rsmd.getColumnCount(); i++) {
+                resultString=resultString+rsmd.getColumnName(i) + " ";
+            }
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        resultString = resultString + "\n";
         ResultSetIterator rsit=new ResultSetIterator(resultSet);
         while(rsit.hasNext()){
             Object[] tab=rsit.next();

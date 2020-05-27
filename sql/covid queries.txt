@@ -43,6 +43,12 @@ ACT 1 EPISODE 1 - number of cases reported
 select sum(cases) as cases, sum(deaths) as deaths
 from covid;
 
+select sum(cases) as cases, 'Cases' as measure
+from covid
+union
+select sum(deaths) as deaths, 'Deaths' as measure
+from covid;
+
 
 ACT 1 EPISODE 2 - number of cases reported
 

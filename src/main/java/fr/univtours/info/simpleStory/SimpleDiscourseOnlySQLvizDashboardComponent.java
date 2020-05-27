@@ -50,7 +50,7 @@ public class SimpleDiscourseOnlySQLvizDashboardComponent extends PDFdashboardCom
 
                     PDImageXObject pdImage = PDImageXObject.createFromFile(filename,document);
 
-                    contentStream.drawImage(pdImage, 50, 50, 600, 400);
+                    contentStream.drawImage(pdImage, 50, 300, 500, 300);
                     contentStream.close();
                     blankPage = new PDPage(); // each act starts a new page
                     document.addPage(blankPage);

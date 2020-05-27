@@ -46,16 +46,20 @@ public class ToImage {
             toBarChartImage();
         }
         if (metaData.getColumnCount() == 2) {
+            //System.out.println(metaData.getColumnType(1));
+            //System.out.println(metaData.getColumnType(2));
             toPieChartImage();
         }
-        if (metaData.getColumnCount() == 4) { // and maybe also column names include longitude and latitude
+        if (metaData.getColumnCount() == 4
+        && metaData.getColumnName(3).compareTo("longitude")==0
+        && metaData.getColumnName(3).compareTo("latitude")==0) { // and maybe also column names include longitude and latitude
             toWorldMapImage();
         }
 
         return filename;
     }
 
-
+    // 3 columns: measure, dim1, dim2
     public void toBarChartImage() throws Exception{
 
         rangeAxisLabel = metaData.getColumnName(1);
@@ -214,6 +218,10 @@ public class ToImage {
                 dataset,
                 //PlotOrientation.VERTICAL,
                 true, true, false);
+
+
+        Plot plot = barChart.getPlot();
+        plot.setBackgroundPaint(Color.WHITE);
 
         int width = 640;    /* Width of the image */
         int height = 480;   /* Height of the image */
