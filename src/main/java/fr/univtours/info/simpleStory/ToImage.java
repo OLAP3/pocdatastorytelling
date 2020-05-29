@@ -52,7 +52,7 @@ public class ToImage {
         }
         if (metaData.getColumnCount() == 4
         && metaData.getColumnName(3).compareTo("longitude")==0
-        && metaData.getColumnName(3).compareTo("latitude")==0) { // and maybe also column names include longitude and latitude
+        && metaData.getColumnName(4).compareTo("latitude")==0) { // and maybe also column names include longitude and latitude
             toWorldMapImage();
         }
 

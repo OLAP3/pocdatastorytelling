@@ -32,7 +32,7 @@ public class SimpleDiscourseOnlyVisualNarrative extends PDFnarrative {
                     // this is the place to choose between different components
                 boolean hasGraphic=false;
                 for(Finding i : ep.narrates().produces()){
-                    if(i.getClass().getName().equals("fr.univtours.info.simpleStory.SimpleDiscourseOnlyDescribeFinding")){
+                    if(i.getClass().getName().equals("fr.univtours.info.simpleStory.SimpleDescribeFinding")){
                         hasGraphic=true;
                     }
                 }

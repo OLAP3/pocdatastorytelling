@@ -10,12 +10,12 @@ create table covid(dateRep date, day integer, month integer, year integer, cases
 set datestyle="DMY";
 
 
-copy covid from '/Users/marcel/Documents/ENSEIGNEMENTS/BD/DATASETS/COVID-19-geographic-disbtribution-worldwide-2020-05-14.csv'  (format CSV,header,delimiter ';');
+copy covid from '/Users/marcel/Documents/ENSEIGNEMENTS/BD/DATASETS/COVID-19-geographic-disbtribution-worldwide-2020-05-29.csv'  (format CSV,header,delimiter ';');
 
 
 drop table covid19;
 
-create table covid19(dateRep date, day integer, month integer, year integer, cases integer, deaths integer, countriesAndTerritories varchar, geoId varchar, countryterritoryCode varchar, popData2018 integer, continentExp varchar, cases100k double precision, cases1m double precision, deaths100k double precision, deaths1m double precision);
+create table covid19backup(dateRep date, day integer, month integer, year integer, cases integer, deaths integer, countriesAndTerritories varchar, geoId varchar, countryterritoryCode varchar, popData2018 integer, continentExp varchar, cases100k double precision, cases1m double precision, deaths100k double precision, deaths1m double precision);
 
 insert into covid19
 (select c.*, 
@@ -43,10 +43,10 @@ ACT 1 EPISODE 1 - number of cases reported
 select sum(cases) as cases, sum(deaths) as deaths
 from covid;
 
-select sum(cases) as cases, 'Cases' as measure
+select sum(cases) as number, 'Cases' as measure
 from covid
 union
-select sum(deaths) as deaths, 'Deaths' as measure
+select sum(deaths) as number, 'Deaths' as measure
 from covid;
 
 
@@ -209,7 +209,7 @@ order by daterep;
 
 ACT 3 EPISODE 1
 
-select sum(cases) as cases, countriesandterritories, longitude,latitude 
+select sum(cases) as cases, countriesandterritories, longitude, latitude 
 from covid, countries 
 where countryterritorycode=alpha3 
 group by countriesandterritories,longitude,latitude
@@ -220,7 +220,7 @@ order by sum(cases) desc;
 ACT 3 EPISODE 2
 
 
-select sum(cases)/(popdata2018/100000::float) as cases, countriesandterritories, longitude,latitude 
+select sum(cases)/(popdata2018/100000::float) as cases, countriesandterritories, longitude, latitude 
 from covid, countries 
 where countryterritorycode=alpha3 
 group by countriesandterritories, popdata2018,longitude,latitude
