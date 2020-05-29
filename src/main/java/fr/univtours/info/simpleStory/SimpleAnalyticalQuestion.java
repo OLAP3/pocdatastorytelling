@@ -72,6 +72,6 @@ public class SimpleAnalyticalQuestion implements AnalyticalQuestion {
     }
 
     public String toString(){
-        return theText;
+        return "Analytical question: " +theText;
     }
 }

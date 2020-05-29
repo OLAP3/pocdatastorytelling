@@ -1,6 +1,7 @@
 package fr.univtours.info.simpleStory;
 
 import fr.univtours.info.model.Structural.Episode;
+import fr.univtours.info.model.intentional.AnalyticalQuestion;
 import fr.univtours.info.model.intentional.Character;
 import fr.univtours.info.model.intentional.Measure;
 import fr.univtours.info.model.intentional.Message;
@@ -53,6 +54,8 @@ public class SimpleEpisode implements Episode {
     }
 
 
+
+
     // better be setText
     @Override
     public void addText(String aText) {
@@ -79,7 +82,9 @@ public class SimpleEpisode implements Episode {
             episodeMeasures = episodeMeasures+ m.toString() + "\n";
         }
 
-        return "Episode: " + theText + "\n" + theMessage.toString() + "\n"
+        return "Episode: " + theText + "\n" +
+                theMessage.generates().toString() + "\n" +
+                theMessage.toString() + "\n"
                 + episodeProtagonists + episodeMeasures;
     }
 

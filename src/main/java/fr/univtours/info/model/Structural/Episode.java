@@ -16,9 +16,10 @@ public interface Episode {
     public void narrates(Message anMessage); //addMessage
     public Message narrates(); // get Message
 
-    public void playsIn(Character aCharacter); //addProtagonist
-    public Collection<Character> playsIn(); //getProtagonist
+    public void playsIn(Character aCharacter);
+    public Collection<Character> playsIn();
 
     public void refersTo(Measure aMeasure);
     public Collection<Measure> refersTo();
+
 }

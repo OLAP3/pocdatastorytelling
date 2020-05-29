@@ -7,7 +7,7 @@ import java.util.Collection;
 
 public interface AnalyticalQuestion {
     public void addText(String aText);
-    public String toString(); // replace by getText()?
+    public String toString();
 
     public Goal poses(); // getGoal
     public void poses(Goal theGoal);
