@@ -20,6 +20,5 @@ public interface Goal {
     Collection<AnalyticalQuestion> poses();
 
     public void bringOut(Character aCharacter);
-    public void bringOut(Measure aMeasure);
 
 }

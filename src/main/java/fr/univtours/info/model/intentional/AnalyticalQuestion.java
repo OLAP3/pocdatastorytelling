@@ -12,6 +12,8 @@ public interface AnalyticalQuestion {
     public Goal poses(); // getGoal
     public void poses(Goal theGoal);
 
+    public void poses(Message aMessage);
+
     public Collection<Collector> implement();
     public void implement(Collector aCollector);
 

@@ -12,12 +12,14 @@ import java.util.Collection;
 public class SimpleAnalyticalQuestion implements AnalyticalQuestion {
     ArrayList<Collector> theCollectors ;
     ArrayList<Message> theMessages;
+    ArrayList<Message> questionPosingMessages;
     String theText;
     Goal theGoal;
 
     public SimpleAnalyticalQuestion(){
         this.theCollectors = new ArrayList<Collector>();
         this.theMessages = new ArrayList<Message>();
+        this.questionPosingMessages = new ArrayList<Message>();
 
     }
 
@@ -52,6 +54,11 @@ public class SimpleAnalyticalQuestion implements AnalyticalQuestion {
     @Override
     public void poses(Goal theGoal) {
         this.theGoal=theGoal;
+    }
+
+    @Override
+    public void poses(Message aMessage) {
+        questionPosingMessages.add(aMessage);
     }
 
     @Override

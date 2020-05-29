@@ -14,11 +14,15 @@ import java.util.Iterator;
 
 public class SimpleGoal implements Goal {
     ArrayList<Exploration> theExplorations;
+    ArrayList<AnalyticalQuestion> theQuestions;
+    ArrayList<Character> theBroughtOutCharacters;
     String theText;
     Plot thePlot;
 
     public SimpleGoal(){
+        theBroughtOutCharacters=new ArrayList<Character>();
         theExplorations=new ArrayList<Exploration>();
+        theQuestions=new ArrayList<AnalyticalQuestion>();
     }
 
     @Override
@@ -43,7 +47,7 @@ public class SimpleGoal implements Goal {
 
     @Override
     public void solves(Exploration anExploration) {
-
+        theExplorations.add(anExploration);
     }
 
     @Override
@@ -62,16 +66,13 @@ public class SimpleGoal implements Goal {
 
     @Override
     public Collection<AnalyticalQuestion> poses() {
-        return null;
+        return theQuestions;
     }
 
     @Override
     public void bringOut(Character aCharacter) {
-
+        theBroughtOutCharacters.add(aCharacter);
     }
 
-    @Override
-    public void bringOut(Measure aMeasure) {
 
-    }
 }
