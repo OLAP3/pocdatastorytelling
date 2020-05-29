@@ -56,7 +56,10 @@ public class SimpleSQLFinding implements Finding {
         while(rsit.hasNext()){
             Object[] tab=rsit.next();
             for(int i=0;i<tab.length;i++) {
-                resultString = resultString + tab[i].toString();
+                if(tab[i]!=null)
+                    resultString = resultString + tab[i].toString();
+                else
+                    resultString = resultString + " ";
                 resultString = resultString + " ";
             }
             resultString = resultString + "\n";

@@ -42,7 +42,7 @@ public class SimpleDescribeDashboardComponent extends PDFdashboardComponent {
                     //System.out.println(bytes);
                     PDImageXObject pdImage = PDImageXObject.createFromByteArray(document, bytes, "insight");
 
-                    contentStream.drawImage(pdImage, 50, 300, 500, 300);
+                    contentStream.drawImage(pdImage, 50, 400, 400, 500);
                     contentStream.close();
                     blankPage = new PDPage(); // each act starts a new page
                     document.addPage(blankPage);

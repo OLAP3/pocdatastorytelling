@@ -123,15 +123,20 @@ public class ToImage {
         ResultSetIterator rsit = new ResultSetIterator(resultSet);
         while (rsit.hasNext()) {
             Object[] tab = rsit.next();
-            measure[i]=Double.parseDouble(tab[0].toString());
-            if(measure[i]<100) measure[i] = 1;
-            if(measure[i]>=100 && measure[i]<1000) measure[i] = 2;
-            if(measure[i]>=1000 && measure[i]<10000) measure[i] = 3;
-            if(measure[i]>=10000 && measure[i]<100000) measure[i] = 4;
-            if(measure[i]>=100000 ) measure[i] = 5;
+            //System.out.println(tab[0]);
+            if(tab[0]!=null &&
+                    tab[2]!=null &&
+                    tab[3]!=null){
+                measure[i]=Double.parseDouble(tab[0].toString());
+                if(measure[i]<100) measure[i] = 1;
+                if(measure[i]>=100 && measure[i]<1000) measure[i] = 2;
+                if(measure[i]>=1000 && measure[i]<10000) measure[i] = 3;
+                if(measure[i]>=10000 && measure[i]<100000) measure[i] = 4;
+                if(measure[i]>=100000 ) measure[i] = 5;
+                longitude[i]=Double.parseDouble(tab[2].toString());
+                latitude[i]=Double.parseDouble(tab[3].toString());
+            }
 
-            longitude[i]=Double.parseDouble(tab[2].toString());
-            latitude[i]=Double.parseDouble(tab[3].toString());
             i++;
         }
         // fake origin point for testing
