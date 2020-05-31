@@ -11,6 +11,12 @@ public abstract class PDFdashboardComponent implements DashboardComponent {
     PDDocument document;
     PDPageContentStream contentStream;
 
+    public void setNarrative(PDFnarrative narrative) {
+        this.narrative = narrative;
+    }
+
+    PDFnarrative narrative;
+
     @Override
     public void renders(Episode anEpisode) {
         this.theEpisode=  anEpisode;

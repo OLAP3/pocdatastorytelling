@@ -27,6 +27,47 @@ public class SimpleDiscourseOnlySQLvizDashboardComponent extends PDFdashboardCom
 
             try {
 
+                String text=theEpisode.getText();
+                String[] toPrint = text.split("\n");
+                //contentStream.setFont(PDType1Font.TIMES_ROMAN, 10);
+                for (int x=0; x<toPrint.length; x++) {
+                    narrative.addString(toPrint[x],10,PDType1Font.TIMES_ROMAN,narrative.getWidth());
+                    //contentStream.showText(toPrint[x]);
+                    //contentStream.newLine();
+                }
+
+                ToImage ti=new ToImage(resultSet);
+                filename=ti.toImage();
+
+                if(filename!=null){
+                    narrative.addImage(filename);
+                }
+                //contentStream.endText();
+                //contentStream.close();
+
+            }
+            catch (Exception e){
+                e.printStackTrace();
+            }
+
+
+        }
+
+
+        return theEpisode;
+    }
+
+
+/*
+
+    @Override
+    public Episode render() {
+        Collection<Finding> theFindings=  theEpisode.narrates().produces();
+        for(Finding f : theFindings){
+            resultSet = ((SimpleSQLFinding) f).getResultSet();
+
+            try {
+
 
                 String text=theEpisode.getText();
                 String[] toPrint = text.split("\n");
@@ -76,7 +117,6 @@ public class SimpleDiscourseOnlySQLvizDashboardComponent extends PDFdashboardCom
         return theEpisode;
     }
 
-
-
+ */
 
 }

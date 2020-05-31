@@ -18,19 +18,15 @@ public class SimpleDiscourseOnlyDashboard extends PDFdashboard {
     public Act renders() {
         try {
             // render this
-            PDPage blankPage = new PDPage(); // each act starts a new page
-            //Adding the blank page to the document
-            document.addPage(blankPage);
-            PDPageContentStream contentStream = new PDPageContentStream(document, blankPage);
-            contentStream.beginText();
-            //Setting the leading
-            contentStream.setLeading(14.5f);
-            //Setting the position for the line
-            contentStream.newLineAtOffset(25, 725);
-            contentStream.setFont(PDType1Font.TIMES_BOLD_ITALIC, 12);
-            contentStream.showText(theAct.getText() );
-            contentStream.newLine();
-            contentStream.newLine();
+
+            //beginAct();
+
+            narrative.addPage();
+            narrative.addString(theAct.getText() ,12, PDType1Font.TIMES_BOLD_ITALIC, narrative.getWidth());
+
+            //contentStream.showText(theAct.getText() );
+//            contentStream.newLine();
+//            contentStream.newLine();
 
             // then render component
             // for all components -> render
@@ -44,6 +40,7 @@ public class SimpleDiscourseOnlyDashboard extends PDFdashboard {
                     dc.render();
                 }*/
                 if(dc.getClass().getName().equals("fr.univtours.info.simpleStory.SimpleDiscourseOnlySQLvizDashboardComponent")){
+                    ((SimpleDiscourseOnlySQLvizDashboardComponent) dc).setNarrative(narrative);
                     ((SimpleDiscourseOnlySQLvizDashboardComponent) dc).setPDF(document);
                     ((SimpleDiscourseOnlySQLvizDashboardComponent) dc).setContentStream(contentStream);
                     dc.render();
@@ -52,6 +49,7 @@ public class SimpleDiscourseOnlyDashboard extends PDFdashboard {
                 else {// describe component
                     //contentStream.endText();
                     //contentStream.close();
+                    ((SimpleDiscourseOnlyDescribeDashboardComponent) dc).setNarrative(narrative);
                     ((SimpleDiscourseOnlyDescribeDashboardComponent) dc).setPDF(document);
                     ((SimpleDiscourseOnlyDescribeDashboardComponent) dc).setContentStream(contentStream);
 
@@ -69,8 +67,7 @@ public class SimpleDiscourseOnlyDashboard extends PDFdashboard {
 
                      */
                 }
-                //theRendering=theRendering+ ((SimpleDashboardComponent) dc).getRendering();
-
+/*
                 blankPage = new PDPage(); // each act starts a new page
                 //Adding the blank page to the document
                 document.addPage(blankPage);
@@ -80,14 +77,14 @@ public class SimpleDiscourseOnlyDashboard extends PDFdashboard {
                 contentStream.setLeading(14.5f);
                 //Setting the position for the line
                 contentStream.newLineAtOffset(25, 725);
-
+*/
             }
 
-            contentStream.setFont(PDType1Font.TIMES_BOLD_ITALIC, 12);
-            contentStream.showText("End of the story.");
+            //contentStream.setFont(PDType1Font.TIMES_BOLD_ITALIC, 12);
+            //.showText("End of the story.");
 
-            contentStream.endText();
-            contentStream.close();
+            //contentStream.endText();
+            //contentStream.close();
 
         }
         catch(Exception e){

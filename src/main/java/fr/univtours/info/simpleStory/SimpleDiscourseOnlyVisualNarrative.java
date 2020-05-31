@@ -63,42 +63,29 @@ public class SimpleDiscourseOnlyVisualNarrative extends PDFnarrative {
     public Plot renders() {
         try {
 
-            PDDocument document = new PDDocument();
-            this.thePDF=document;
-            System.out.println("PDF created");
+            beginDocument();
 
-            PDPage blankPage = new PDPage();
-            document.addPage( blankPage );
-            PDPageContentStream contentStream = new PDPageContentStream(document, blankPage);
-            contentStream.beginText();
-            contentStream.setLeading(14.5f);
-            contentStream.newLineAtOffset(25, 725);
-
-            // prints title (goal)
-            contentStream.setFont(PDType1Font.TIMES_BOLD, 16);
+            // prints title goal
+            /*contentStream.setFont(PDType1Font.TIMES_BOLD, 16);
             contentStream.showText(thePlot.has().toString() );
             contentStream.newLine();
             contentStream.newLine();
             contentStream.endText();
             contentStream.close();
+            */
+            addString(thePlot.has().toString(), 16, PDType1Font.TIMES_BOLD, width);
 
+
+
+            // prints acts
             for(Dashboard d : theDashboards){
                 ((SimpleDiscourseOnlyDashboard) d).setPDF(document);
+                ((SimpleDiscourseOnlyDashboard) d).setNarrative(this);
                 d.renders();
 
             }
 
-            //contentStream.endText();
-            System.out.println("Content added");
-            //contentStream.close();
-            //Saving the document
-            //ZonedDateTime dateTime = ZonedDateTime.now();
-            //DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
-            //String ts=formatter.toString();
-            document.save("/Users/marcel/Documents/RECHERCHE/STUDENTS/Faten/pocdatastory/public/pdfs/data-narrative.pdf");
-
-            //Closing the document
-            document.close();
+            endDocument();
         }
         catch (Exception e){
             e.printStackTrace();

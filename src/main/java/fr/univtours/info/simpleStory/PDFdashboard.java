@@ -16,6 +16,24 @@ public abstract class PDFdashboard implements Dashboard {
     Collection<DashboardComponent> theComponents;
     String theRendering="";
     PDDocument document;
+    PDPageContentStream contentStream;
+    PDPage blankPage;
+    PDFnarrative narrative;
+
+    void beginAct() throws Exception{
+        blankPage = new PDPage(); // each act starts a new page
+        //Adding the blank page to the document
+        document.addPage(blankPage);
+        contentStream = new PDPageContentStream(document, blankPage);
+        contentStream.beginText();
+
+        //Setting the leading
+        //contentStream.setLeading(14.5f);
+        //Setting the position for the line
+        //contentStream.newLineAtOffset(25, 725);
+        //contentStream.setFont(PDType1Font.TIMES_BOLD_ITALIC, 12);
+    }
+
 
     public PDFdashboard(){
         theComponents=new ArrayList<DashboardComponent>();
@@ -36,8 +54,12 @@ public abstract class PDFdashboard implements Dashboard {
         return theComponents;
     }
 
-      public void setPDF(PDDocument pdf) {
+    public void setPDF(PDDocument pdf) {
         document=pdf;
+    }
+
+    public void setNarrative(PDFnarrative narrative) {
+        this.narrative=narrative;
     }
 
     public String getRendering(){

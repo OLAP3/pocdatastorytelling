@@ -24,19 +24,13 @@ public class SimpleDashboard extends PDFdashboard {
     public Act renders() {
         try {
             // render this
-            PDPage blankPage = new PDPage(); // each act starts a new page
-            //Adding the blank page to the document
-            document.addPage(blankPage);
-            PDPageContentStream contentStream = new PDPageContentStream(document, blankPage);
-            contentStream.beginText();
-            //Setting the leading
-            contentStream.setLeading(14.5f);
-            //Setting the position for the line
-            contentStream.newLineAtOffset(25, 725);
-            contentStream.setFont(PDType1Font.TIMES_BOLD_ITALIC, 12);
-            contentStream.showText(theAct.toString() );
-            contentStream.newLine();
-            contentStream.newLine();
+
+            //beginAct();
+            //contentStream.showText(theAct.toString() );
+
+            narrative.addPage();
+            narrative.addString(theAct.toString() ,12, PDType1Font.TIMES_BOLD_ITALIC, narrative.getWidth());
+
 
             // then render component
             // for all components -> render
@@ -49,51 +43,27 @@ public class SimpleDashboard extends PDFdashboard {
                     ((SimpleDashboardComponent) dc).setContentStream(contentStream);
                     dc.render();
                 }*/
+
                 if(dc.getClass().getName().equals("fr.univtours.info.simpleStory.SimpleSQLvizDashboardComponent")){
+                    ((SimpleSQLvizDashboardComponent) dc).setNarrative(narrative);
                     ((SimpleSQLvizDashboardComponent) dc).setPDF(document);
                     ((SimpleSQLvizDashboardComponent) dc).setContentStream(contentStream);
                     dc.render();
 
                 }
                 else {// describe component
-                    //contentStream.endText();
-                    //contentStream.close();
+
+                    ((SimpleDescribeDashboardComponent) dc).setNarrative(narrative);
                     ((SimpleDescribeDashboardComponent) dc).setPDF(document);
                     ((SimpleDescribeDashboardComponent) dc).setContentStream(contentStream);
 
                     dc.render();
-                    /*
-                    blankPage = new PDPage(); // each act starts a new page
-                    //Adding the blank page to the document
-                    document.addPage(blankPage);
-                    contentStream = new PDPageContentStream(document, blankPage);
-                    contentStream.beginText();
-                    //Setting the leading
-                    contentStream.setLeading(14.5f);
-                    //Setting the position for the line
-                    contentStream.newLineAtOffset(25, 725);
 
-                     */
                 }
-                //theRendering=theRendering+ ((SimpleDashboardComponent) dc).getRendering();
-
-                blankPage = new PDPage(); // each act starts a new page
-                //Adding the blank page to the document
-                document.addPage(blankPage);
-                contentStream = new PDPageContentStream(document, blankPage);
-                contentStream.beginText();
-                //Setting the leading
-                contentStream.setLeading(14.5f);
-                //Setting the position for the line
-                contentStream.newLineAtOffset(25, 725);
 
             }
 
-            contentStream.setFont(PDType1Font.TIMES_BOLD_ITALIC, 12);
-            contentStream.showText("End of the story.");
-
-            contentStream.endText();
-            contentStream.close();
+            //contentStream.endText();
 
         }
         catch(Exception e){

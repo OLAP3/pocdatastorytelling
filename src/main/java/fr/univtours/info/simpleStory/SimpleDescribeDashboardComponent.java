@@ -26,45 +26,22 @@ public class SimpleDescribeDashboardComponent extends PDFdashboardComponent {
 
             for (int x=0; x<toPrint.length; x++) {
                 if(toPrint[x].startsWith("Message: data")) {
-                    contentStream.endText();
-                    contentStream.close();
-                    PDPage blankPage = new PDPage(); // each act starts a new page
-                    //Adding the blank page to the document
-                    document.addPage(blankPage);
-                    contentStream = new PDPageContentStream(document, blankPage);
 
-
-                    int index = toPrint[x].indexOf(',');
-
-                    if (index != -1) toPrint[x] = toPrint[x].substring(index + 1);
-
-                    byte[] bytes = Base64.getDecoder().decode(new String(toPrint[x]).getBytes("UTF-8"));
-                    //System.out.println(bytes);
-                    PDImageXObject pdImage = PDImageXObject.createFromByteArray(document, bytes, "insight");
-
-                    contentStream.drawImage(pdImage, 50, 400, 400, 500);
-                    contentStream.close();
-                    blankPage = new PDPage(); // each act starts a new page
-                    document.addPage(blankPage);
-                    contentStream = new PDPageContentStream(document, blankPage);
-                    contentStream.beginText();
-                    //Setting the leading
-                    contentStream.setLeading(14.5f);
-                    //Setting the position for the line
-                    contentStream.newLineAtOffset(25, 725);
+                    narrative.addDescribeImage(toPrint[x]);
                 }
                 else{// Episode: text AND THEN message
+                    narrative.addString(toPrint[x],10,PDType1Font.TIMES_ROMAN,narrative.getWidth());
 
-                    contentStream.setFont(PDType1Font.TIMES_ROMAN, 10);
-                    contentStream.showText(toPrint[x]);
-                    contentStream.newLine();
+                    //contentStream.setFont(PDType1Font.TIMES_ROMAN, 10);
+                    //contentStream.showText(toPrint[x]);
+                    //contentStream.newLine();
                 }
 
 
 
             }
-            contentStream.endText();
-            contentStream.close();
+            //contentStream.endText();
+            //contentStream.close();
         }
         catch(Exception e){
             e.printStackTrace();

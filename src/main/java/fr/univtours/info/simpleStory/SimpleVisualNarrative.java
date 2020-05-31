@@ -9,6 +9,7 @@ import fr.univtours.info.model.Structural.Plot;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
+import org.apache.pdfbox.pdmodel.common.PDRectangle;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 
@@ -19,6 +20,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Collection;
+import java.util.List;
 
 public class SimpleVisualNarrative extends PDFnarrative {
 
@@ -71,43 +73,27 @@ public class SimpleVisualNarrative extends PDFnarrative {
     @Override
     public Plot renders() {
         try {
-
-            PDDocument document = new PDDocument();
-            this.thePDF=document;
-            System.out.println("PDF created");
-
-            PDPage blankPage = new PDPage();
-            document.addPage( blankPage );
-            PDPageContentStream contentStream = new PDPageContentStream(document, blankPage);
-            contentStream.beginText();
-            contentStream.setLeading(14.5f);
-            contentStream.newLineAtOffset(25, 725);
+            beginDocument();
 
             // prints title (goal)
-            contentStream.setFont(PDType1Font.TIMES_BOLD, 16);
-            contentStream.showText("This is the story for goal: " + thePlot.has().toString() );
-            contentStream.newLine();
-            contentStream.newLine();
-            contentStream.endText();
-            contentStream.close();
+
+            addString("This is the story for goal: " + thePlot.has().toString(), 16, PDType1Font.TIMES_BOLD, width);
+
+            //contentStream.newLine();
+            //contentStream.newLine();
+            //contentStream.endText();
+            //contentStream.close();
+
+
 
             for(Dashboard d : theDashboards){
                 ((SimpleDashboard) d).setPDF(document);
+                ((SimpleDashboard) d).setNarrative(this);
                 d.renders();
                 //theRendering=theRendering + ((SimpleDashboard) d).getRendering() + "\n";
             }
 
-            //contentStream.endText();
-            System.out.println("Content added");
-            //contentStream.close();
-            //Saving the document
-            //ZonedDateTime dateTime = ZonedDateTime.now();
-            //DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
-            //String ts=formatter.toString();
-            document.save("/Users/marcel/Documents/RECHERCHE/STUDENTS/Faten/pocdatastory/public/pdfs/data-narrative.pdf");
-
-            //Closing the document
-            document.close();
+           endDocument();
         }
         catch (Exception e){
             e.printStackTrace();

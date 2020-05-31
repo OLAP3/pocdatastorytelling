@@ -26,6 +26,8 @@ public class SimpleDiscourseOnlyDescribeDashboardComponent extends PDFdashboardC
 
             for (int x=0; x<toPrint.length; x++) {
                 if(toPrint[x].startsWith("Message: data")) {
+                    narrative.addDescribeImage(toPrint[x]);
+                    /*
                     contentStream.endText();
                     contentStream.close();
                     PDPage blankPage = new PDPage(); // each act starts a new page
@@ -52,19 +54,22 @@ public class SimpleDiscourseOnlyDescribeDashboardComponent extends PDFdashboardC
                     contentStream.setLeading(14.5f);
                     //Setting the position for the line
                     contentStream.newLineAtOffset(25, 725);
+                    */
+
                 }
                 else{// Episode: text AND THEN message
+                    narrative.addString(toPrint[x],10,PDType1Font.TIMES_ROMAN,narrative.getWidth());
 
-                    contentStream.setFont(PDType1Font.TIMES_ROMAN, 10);
-                    contentStream.showText(toPrint[x]);
-                    contentStream.newLine();
+                   // contentStream.setFont(PDType1Font.TIMES_ROMAN, 10);
+                   // contentStream.showText(toPrint[x]);
+                   // contentStream.newLine();
                 }
 
 
 
             }
-            contentStream.endText();
-            contentStream.close();
+            //contentStream.endText();
+            //contentStream.close();
         }
         catch(Exception e){
             e.printStackTrace();
