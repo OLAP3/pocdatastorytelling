@@ -53,6 +53,7 @@ function processClear (result, endpoint) {
 
          clear("recap");
          clear("listrecap");
+         clear("listrecapintentions");
          clear("goal");
          clear("question");
          clear("observation");
@@ -183,6 +184,7 @@ function processEpisodeClear (result, endpoint) {
                     recallAct(parseInt(count));
                 });
             }
+            /*
             if(endpoint=="message"){ // episode and message have the same count
                 messagecount++;
                 currentcount=actcount;
@@ -201,7 +203,38 @@ function processEpisodeClear (result, endpoint) {
                 recallEpisode(parseInt(count));
                 });
             }
+            */
             // for character, measure, do we recall episode/act? maybe not
+            if(endpoint=="protagonist"){ // episode and message have the same count
+
+                let button = document.createElement("button");
+                button.innerHTML = JSON.parse(message);
+
+                let body = document.getElementById("listrecapintentions");
+                body.appendChild(button);
+
+                button.addEventListener ("click", function() {
+                let text=button.innerText;
+                console.log(text);
+                // recall character as current character
+                recallCharacter(text);
+                });
+            }
+            if(endpoint=="message"){ // episode and message have the same count
+
+                let button = document.createElement("button");
+                button.innerHTML = JSON.parse(message);
+
+                let body = document.getElementById("listrecapintentions");
+                body.appendChild(button);
+
+                button.addEventListener ("click", function() {
+                let text=button.innerText;
+                console.log(text);
+                // recall measure as current measure
+                recallMeasure(text);
+                });
+            }
         }
         else{
             let consoleElt=document.getElementById("console");
@@ -210,6 +243,59 @@ function processEpisodeClear (result, endpoint) {
         }
 }
 
+
+
+function recallCharacter(text){
+    console.log(text);
+    elsaRequest(text, "recallCharacter", displayCharacter, defaulterror,false);
+}
+
+
+function recallMeasure(text){
+    console.log(text);
+    elsaRequest(text, "recallMeasure", displayMeasure, defaulterror,false);
+}
+
+
+
+
+
+function displayCharacter(result){
+    console.log(result);
+    // result contains the info to print for act, episode, measure, character and message
+    // parse JSON, clear and update relevant areas
+     let code=JSON.parse(result).code;
+     let character=JSON.parse(result).message;
+
+     if(code==0){
+        document.getElementById("protagonist").value=character;
+     }
+     else{
+        let consoleElt=document.getElementById("console");
+        consoleElt.innerText="Something went wrong";
+
+     }
+}
+
+
+
+
+function displayMeasure(result){
+    console.log(result);
+    // result contains the info to print for act, episode, measure, character and message
+    // parse JSON, clear and update relevant areas
+     let code=JSON.parse(result).code;
+     let measure=JSON.parse(result).message;
+
+     if(code==0){
+        document.getElementById("message").value=measure;
+     }
+     else{
+        let consoleElt=document.getElementById("console");
+        consoleElt.innerText="Something went wrong";
+
+     }
+}
 
 
 function recallEpisode(count){
@@ -250,7 +336,6 @@ console.log(result);
         consoleElt.innerText="Something went wrong";
 
      }
-
 }
 
 

@@ -227,7 +227,7 @@ public abstract class PDFnarrative implements VisualNarrative {
         contentStream.drawImage(pdImage, startX, yOffset, width, pdImage.getHeight()*scale);
         contentStream.beginText();
 
-
+        contentStream.newLineAtOffset(startX, yOffset);
         //contentStream.setFont(PDType1Font.TIMES_ROMAN, 12);
         //yOffset = startY;
         //contentStream.newLineAtOffset(startX, startY);
@@ -283,6 +283,7 @@ public abstract class PDFnarrative implements VisualNarrative {
         contentStream.drawImage(pdImage, startX, yOffset, width, pdImage.getHeight()*scale);
         contentStream.beginText();
 
+        contentStream.newLineAtOffset(startX, yOffset);
 
         /*
         if (contentStream != null) contentStream.close();

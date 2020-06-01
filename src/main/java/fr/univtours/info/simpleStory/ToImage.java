@@ -254,13 +254,13 @@ public class ToImage {
         //set minimum and maximum value
         meterplot.setRange(new Range(0.0D, 100000D));
 
-        meterplot.addInterval(new MeterInterval("Battery LOW", new Range(0.0D, 10000D),
+        meterplot.addInterval(new MeterInterval("LOW", new Range(0.0D, 10000D),
                 Color.red, new BasicStroke(2.0F), new Color(255, 0, 0, 128)));
 
         meterplot.addInterval(new MeterInterval("Moderate", new Range(10001D, 90000D),
                 Color.yellow, new BasicStroke(2.0F), new Color(255, 255, 0, 64)));
 
-        meterplot.addInterval(new MeterInterval("Battery FULL", new Range(90001D, 100000D),
+        meterplot.addInterval(new MeterInterval("FULL", new Range(90001D, 100000D),
                 Color.green, new BasicStroke(2.0F), new Color(0, 255, 0, 64)));
 
         meterplot.setNeedlePaint(Color.darkGray);
@@ -275,7 +275,7 @@ public class ToImage {
         meterplot.setTickPaint(Color.gray);
         meterplot.setValuePaint(Color.black);
         meterplot.setValueFont(new Font("Arial", 1, 14));
-        JFreeChart meterchart = new JFreeChart("Battery Level",
+        JFreeChart meterchart = new JFreeChart(metaData.getColumnName(1),
                 JFreeChart.DEFAULT_TITLE_FONT, meterplot, true);
 
 

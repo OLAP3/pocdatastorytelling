@@ -9,6 +9,7 @@ import fr.univtours.info.model.intentional.*;
 import fr.univtours.info.model.intentional.Character;
 import fr.univtours.info.model.presentational.VisualNarrative;
 import fr.univtours.info.model.Structural.Plot;
+import fr.univtours.info.pocdatastory.Answer;
 import fr.univtours.info.pocdatastory.EpisodeRecall;
 import org.apache.pdfbox.pdmodel.PDDocument;
 
@@ -95,6 +96,58 @@ public class StoryCreator {
     public PDDocument getThePDF(){
         return thePDF;
     }
+
+
+    public Answer recallCharacter(String text){
+        // lookup in all characters the one wohse text=text
+        Character characterFound=null;
+        int code=1;
+        Collection<Act> ca=thePlot.includes();
+        for(Act a : ca){
+            Collection<Episode> ce = a.includes();
+            for(Episode e : ce){
+                Collection<Character> cc=e.playsIn();
+                for(Character c : cc){
+                    if(c.getText().compareTo(text)==0){
+                        characterFound=c;
+                    }
+                }
+            }
+        }
+
+        if(characterFound!=null) {
+            currentCharacter = characterFound;
+            code=0;
+        }
+        Answer res = new Answer(code, text);
+        return res;
+    }
+
+    public Answer recallMeasure(String text){
+        // lookup in all characters the one wohse text=text
+        Measure measureFound=null;
+        int code=1;
+        Collection<Act> ca=thePlot.includes();
+        for(Act a : ca){
+            Collection<Episode> ce = a.includes();
+            for(Episode e : ce){
+                Collection<Measure> cc=e.refersTo();
+                for(Measure m : cc){
+                    if(m.getText().compareTo(text)==0){
+                        measureFound=m;
+                    }
+                }
+            }
+        }
+
+        if(measureFound!=null) {
+            currentMeasure = measureFound;
+            code=0;
+        }
+        Answer res = new Answer(code, text);
+        return res;
+    }
+
 
     public EpisodeRecall recallAct(Integer nb) {
         Collection<Act> c = thePlot.includes();
@@ -385,6 +438,10 @@ public class StoryCreator {
 
 
 
+
+
+
+    // below outdated, to drop
 
     public static void main(String args[]) throws Exception{
 

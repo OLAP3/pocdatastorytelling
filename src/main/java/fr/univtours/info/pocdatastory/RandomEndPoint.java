@@ -347,6 +347,36 @@ public class RandomEndPoint {
 
 
 
+
+    @PostMapping(value="api/recallCharacter", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public Answer recallCharacter(@RequestBody String msg) {
+
+        Answer res= creator.recallCharacter(msg);
+
+        // if code =1 something went wrong
+        return res ;
+
+
+    }
+
+
+
+    @PostMapping(value="api/recallMeasure", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public Answer recallMeasure(@RequestBody String msg) {
+
+        Answer res= creator.recallMeasure(msg);
+
+        // if code =1 something went wrong
+        return res ;
+
+
+    }
+
+
+
+
     @PostMapping(value="api/modifyEpisode", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public Answer modifyEpisode(@RequestBody String msg) {
@@ -447,6 +477,9 @@ public class RandomEndPoint {
         return new Answer(code,toReturn);
 
     }
+
+
+
 
 
 
