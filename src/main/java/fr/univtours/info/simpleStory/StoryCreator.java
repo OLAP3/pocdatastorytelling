@@ -99,7 +99,9 @@ public class StoryCreator {
 
 
     public Answer recallCharacter(String text){
-        // lookup in all characters the one wohse text=text
+        // lookup in all characters the one whose text=text
+        String theText=text.substring(1,text.length()-1).replace("\\n","\n");
+
         Character characterFound=null;
         int code=1;
         Collection<Act> ca=thePlot.includes();
@@ -108,7 +110,10 @@ public class StoryCreator {
             for(Episode e : ce){
                 Collection<Character> cc=e.playsIn();
                 for(Character c : cc){
-                    if(c.getText().compareTo(text)==0){
+                    //System.out.println(text);
+                    //System.out.println(c.getText());
+
+                    if(c.getText().compareTo(theText)==0){
                         characterFound=c;
                     }
                 }
@@ -119,12 +124,14 @@ public class StoryCreator {
             currentCharacter = characterFound;
             code=0;
         }
-        Answer res = new Answer(code, text);
+        Answer res = new Answer(code, theText);
         return res;
     }
 
     public Answer recallMeasure(String text){
-        // lookup in all characters the one wohse text=text
+        // lookup in all measures the one whose text=text
+
+        String theText=text.substring(1,text.length()-1).replace("\\n","\n");
         Measure measureFound=null;
         int code=1;
         Collection<Act> ca=thePlot.includes();
@@ -133,7 +140,7 @@ public class StoryCreator {
             for(Episode e : ce){
                 Collection<Measure> cc=e.refersTo();
                 for(Measure m : cc){
-                    if(m.getText().compareTo(text)==0){
+                    if(m.getText().compareTo(theText)==0){
                         measureFound=m;
                     }
                 }
@@ -144,7 +151,7 @@ public class StoryCreator {
             currentMeasure = measureFound;
             code=0;
         }
-        Answer res = new Answer(code, text);
+        Answer res = new Answer(code, theText);
         return res;
     }
 

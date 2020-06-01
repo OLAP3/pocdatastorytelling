@@ -36,8 +36,9 @@ function clear(toClear){
         let recaptext = document.getElementById(toClear).value;
         recap.value= "";
         }
-
 }
+
+
 
 function processClear (result, endpoint) {
         let code=JSON.parse(result).code;
@@ -52,8 +53,8 @@ function processClear (result, endpoint) {
          //   recap.value= "";
 
          clear("recap");
-         clear("listrecap");
-         clear("listrecapintentions");
+         $("#listrecap").html("");
+          $("#listrecapintentions").html("");;
          clear("goal");
          clear("question");
          clear("observation");
