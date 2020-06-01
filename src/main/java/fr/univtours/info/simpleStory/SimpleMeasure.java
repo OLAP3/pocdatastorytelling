@@ -30,8 +30,8 @@ public class SimpleMeasure implements Measure {
 
     @Override
     public String toString() {
-
-        return "Measure: " + name + " with value " + value + "\n" + theText;
+        return "Measure: "  + theText;
+        //return "Measure: " + name + " with value " + value + "\n" + theText;
     }
 
     @Override

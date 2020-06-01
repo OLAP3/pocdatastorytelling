@@ -40,9 +40,6 @@ QUERIES
 
 ACT 1 EPISODE 1 - number of cases reported
 
-select sum(cases) as cases, sum(deaths) as deaths
-from covid;
-
 select sum(cases) as number, 'Cases' as measure
 from covid
 union
@@ -57,7 +54,7 @@ select sum(cases) as cases, 'Africa' as location,'Africa' as continent
 from covid
 where continentexp='Africa'
 union
-(select sum(cases) as cases, countriesAndTerritories as location, 'Africa' as continent 
+(select sum(cases) as cases, countriesAndTerritories as location, 'African countries' as continent 
 from covid
 where continentexp='Africa'
 group by countriesAndTerritories
@@ -68,7 +65,7 @@ select sum(cases) as cases, 'Asia' as location, 'Asia' as continent
 from covid
 where continentexp='Asia'
 union
-(select sum(cases) as cases, countriesAndTerritories as location, 'Asia' as continent
+(select sum(cases) as cases, countriesAndTerritories as location, 'Asian countries' as continent
 from covid
 where continentexp='Asia'
 group by countriesAndTerritories
@@ -79,7 +76,7 @@ select sum(cases) as cases, 'America' as location, 'America' as continent
 from covid
 where continentexp='America'
 union
-(select sum(cases) as cases, countriesAndTerritories as location,  'America' as continent
+(select sum(cases) as cases, countriesAndTerritories as location,  'American countries' as continent
 from covid
 where continentexp='America'
 group by countriesAndTerritories
@@ -90,7 +87,7 @@ select sum(cases) as cases, 'Europe' as location, 'Europe' as continent
 from covid
 where continentexp='Europe'
 union
-(select sum(cases) as cases, countriesAndTerritories as location, 'Europe' as continent
+(select sum(cases) as cases, countriesAndTerritories as location, 'European countries' as continent
 from covid
 where continentexp='Europe'
 group by countriesAndTerritories
@@ -101,7 +98,7 @@ select sum(cases) as cases, 'Oceania' as location, 'Oceania' as continent
 from covid
 where continentexp='Oceania'
 union
-(select sum(cases) as cases, countriesAndTerritories as location, 'Oceania' as continent
+(select sum(cases) as cases, countriesAndTerritories as location, 'Oceanian countries' as continent
 from covid
 where continentexp='Oceania'
 group by countriesAndTerritories
@@ -112,7 +109,7 @@ select sum(cases) as cases, 'Other' as location, 'Other' as continent
 from covid
 where continentexp='Other'
 union
-(select sum(cases) as cases, countriesAndTerritories as location, 'Other' as continent
+(select sum(cases) as cases, countriesAndTerritories as location, 'Other countries' as continent
 from covid
 where continentexp='Other'
 group by countriesAndTerritories
@@ -128,7 +125,7 @@ select sum(deaths) as deaths, 'Africa' as location,'Africa' as continent
 from covid
 where continentexp='Africa'
 union
-(select sum(deaths) as deaths, countriesAndTerritories as location, 'Africa' as continent 
+(select sum(deaths) as deaths, countriesAndTerritories as location, 'African countries' as continent 
 from covid
 where continentexp='Africa'
 group by countriesAndTerritories
@@ -139,7 +136,7 @@ select sum(deaths) as deaths, 'Asia' as location, 'Asia' as continent
 from covid
 where continentexp='Asia'
 union
-(select sum(deaths) as deaths, countriesAndTerritories as location, 'Asia' as continent
+(select sum(deaths) as deaths, countriesAndTerritories as location, 'Asian countries' as continent
 from covid
 where continentexp='Asia'
 group by countriesAndTerritories
@@ -150,7 +147,7 @@ select sum(deaths) as deaths, 'America' as location, 'America' as continent
 from covid
 where continentexp='America'
 union
-(select sum(deaths) as deaths, countriesAndTerritories as location,  'America' as continent
+(select sum(deaths) as deaths, countriesAndTerritories as location,  'American countries' as continent
 from covid
 where continentexp='America'
 group by countriesAndTerritories
@@ -161,7 +158,7 @@ select sum(deaths) as deaths, 'Europe' as location, 'Europe' as continent
 from covid
 where continentexp='Europe'
 union
-(select sum(deaths) as deaths, countriesAndTerritories as location, 'Europe' as continent
+(select sum(deaths) as deaths, countriesAndTerritories as location, 'European countries' as continent
 from covid
 where continentexp='Europe'
 group by countriesAndTerritories
@@ -172,7 +169,7 @@ select sum(deaths) as deaths, 'Oceania' as location, 'Oceania' as continent
 from covid
 where continentexp='Oceania'
 union
-(select sum(deaths) as deaths, countriesAndTerritories as location, 'Oceania' as continent
+(select sum(deaths) as deaths, countriesAndTerritories as location, 'Oceanian countries' as continent
 from covid
 where continentexp='Oceania'
 group by countriesAndTerritories
@@ -183,7 +180,7 @@ select sum(deaths) as deaths, 'Other' as location, 'Other' as continent
 from covid
 where continentexp='Other'
 union
-(select sum(deaths) as deaths, countriesAndTerritories as location, 'Other' as continent
+(select sum(deaths) as deaths, countriesAndTerritories as location, 'Other countries' as continent
 from covid
 where continentexp='Other'
 group by countriesAndTerritories

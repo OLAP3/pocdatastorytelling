@@ -205,6 +205,34 @@ public abstract class PDFnarrative implements VisualNarrative {
     }
 
     void addImage(String filename) throws Exception{
+        contentStream.endText();
+        //if (contentStream != null) contentStream.close();
+        PDImageXObject pdImage = PDImageXObject.createFromFile(filename,document);
+
+        float scale = width/pdImage.getWidth();
+        yOffset-=(pdImage.getHeight()*scale);
+        if (yOffset <= 0) {
+            System.out.println("Starting a new page");
+
+            if (contentStream != null) contentStream.close();
+
+            blankPage  = new PDPage();
+            document.addPage(blankPage);
+            contentStream = new PDPageContentStream(document, blankPage);
+            yOffset = startY-(pdImage.getHeight()*scale);
+        }
+        System.out.println("yOffset: " + yOffset);
+        System.out.println("page width: " + width + " imageWidth: " + pdImage.getWidth() + " imageHeight: " + (pdImage.getHeight()*scale) + " scale: " + scale);
+
+        contentStream.drawImage(pdImage, startX, yOffset, width, pdImage.getHeight()*scale);
+        contentStream.beginText();
+
+
+        //contentStream.setFont(PDType1Font.TIMES_ROMAN, 12);
+        //yOffset = startY;
+        //contentStream.newLineAtOffset(startX, startY);
+
+        /*
         //contentStream.endText();
         if (contentStream != null) contentStream.close();
 
@@ -215,7 +243,7 @@ public abstract class PDFnarrative implements VisualNarrative {
 
         PDImageXObject pdImage = PDImageXObject.createFromFile(filename,document);
 
-        contentStream.drawImage(pdImage, 50, 100, 500, 400);
+        contentStream.drawImage(pdImage, 50, 200, 500, 400);
         contentStream.close();
 
         addPage();
@@ -224,11 +252,39 @@ public abstract class PDFnarrative implements VisualNarrative {
         //contentStream.setLeading(14.5f);
         //Setting the position for the line
         //contentStream.newLineAtOffset(25, 725);
+    */
     }
 
 
-    void addDescribeImage(String img) throws Exception{
 
+    void addDescribeImage(String img) throws Exception{
+        contentStream.endText();
+        int index = img.indexOf(',');
+        if (index != -1) img = img.substring(index + 1);
+        byte[] bytes = Base64.getDecoder().decode(new String(img).getBytes("UTF-8"));
+
+        PDImageXObject pdImage = PDImageXObject.createFromByteArray(document, bytes, "insight");
+
+        float scale = width/pdImage.getWidth();
+        yOffset-=(pdImage.getHeight()*scale);
+        if (yOffset <= 0) {
+            System.out.println("Starting a new page");
+
+            if (contentStream != null) contentStream.close();
+
+            blankPage  = new PDPage();
+            document.addPage(blankPage);
+            contentStream = new PDPageContentStream(document, blankPage);
+            yOffset = startY-(pdImage.getHeight()*scale);
+        }
+        System.out.println("yOffset: " + yOffset);
+        System.out.println("page width: " + width + " imageWidth: " + pdImage.getWidth() + " imageHeight: " + (pdImage.getHeight()*scale) + " scale: " + scale);
+
+        contentStream.drawImage(pdImage, startX, yOffset, width, pdImage.getHeight()*scale);
+        contentStream.beginText();
+
+
+        /*
         if (contentStream != null) contentStream.close();
 
         PDPage blankPage = new PDPage(); // each viz starts a new page
@@ -245,10 +301,12 @@ public abstract class PDFnarrative implements VisualNarrative {
         //System.out.println(bytes);
         PDImageXObject pdImage = PDImageXObject.createFromByteArray(document, bytes, "insight");
 
-        contentStream.drawImage(pdImage, 50, 100, 400, 500);
+        contentStream.drawImage(pdImage, 50, 200, 400, 500);
         contentStream.close();
 
         addPage();
+
+         */
     }
 
 

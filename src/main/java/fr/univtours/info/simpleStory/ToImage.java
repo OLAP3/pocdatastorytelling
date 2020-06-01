@@ -5,12 +5,12 @@ import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartUtilities;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.NumberAxis;
-import org.jfree.chart.plot.Plot;
-import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.chart.plot.XYPlot;
+import org.jfree.chart.plot.*;
 import org.jfree.chart.renderer.xy.XYItemRenderer;
+import org.jfree.data.Range;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.general.DefaultPieDataset;
+import org.jfree.data.general.DefaultValueDataset;
 import org.jfree.data.xy.DefaultXYZDataset;
 
 import javax.imageio.ImageIO;
@@ -234,6 +234,57 @@ public class ToImage {
         File pieChart = new File(filename);
 
         ChartUtilities.saveChartAsPNG(pieChart, barChart, width, height);
+        this.nbCharts++;
+
+    }
+
+    // TODO for 1 measure, 1 tuple
+    public void toMeterChart() throws Exception{
+        DefaultValueDataset dataset=new DefaultValueDataset();
+
+        resultSet.beforeFirst();
+        ResultSetIterator rsit = new ResultSetIterator(resultSet);
+        while (rsit.hasNext()) {
+            Object[] tab = rsit.next();
+            dataset.setValue(Double.parseDouble(tab[0].toString()));
+        }
+
+
+        MeterPlot meterplot = new MeterPlot(dataset);
+        //set minimum and maximum value
+        meterplot.setRange(new Range(0.0D, 100000D));
+
+        meterplot.addInterval(new MeterInterval("Battery LOW", new Range(0.0D, 10000D),
+                Color.red, new BasicStroke(2.0F), new Color(255, 0, 0, 128)));
+
+        meterplot.addInterval(new MeterInterval("Moderate", new Range(10001D, 90000D),
+                Color.yellow, new BasicStroke(2.0F), new Color(255, 255, 0, 64)));
+
+        meterplot.addInterval(new MeterInterval("Battery FULL", new Range(90001D, 100000D),
+                Color.green, new BasicStroke(2.0F), new Color(0, 255, 0, 64)));
+
+        meterplot.setNeedlePaint(Color.darkGray);
+        meterplot.setDialBackgroundPaint(Color.white);
+        meterplot.setDialOutlinePaint(Color.black);
+        meterplot.setDialShape(DialShape.CHORD);
+        meterplot.setMeterAngle(180);
+        meterplot.setTickLabelsVisible(true);
+        meterplot.setTickLabelFont(new Font("Arial", 1, 12));
+        meterplot.setTickLabelPaint(Color.black);
+        meterplot.setTickSize(5D);
+        meterplot.setTickPaint(Color.gray);
+        meterplot.setValuePaint(Color.black);
+        meterplot.setValueFont(new Font("Arial", 1, 14));
+        JFreeChart meterchart = new JFreeChart("Battery Level",
+                JFreeChart.DEFAULT_TITLE_FONT, meterplot, true);
+
+
+        int width = 640;    /* Width of the image */
+        int height = 480;   /* Height of the image */
+        filename = "public/img/MeterChart-" + nbCharts + ".png";
+        File pieChart = new File(filename);
+
+        ChartUtilities.saveChartAsPNG(pieChart, meterchart, width, height);
         this.nbCharts++;
 
     }
