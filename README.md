@@ -7,4 +7,4 @@ For each such question, the author can try the different collectors, and inspect
 
 Here is a screenshot of the current version.
 
-![screenshot](/images/screenshot-with-sqlcollector.png)
+![screenshot](/images/screenshot-A1E2.png)
