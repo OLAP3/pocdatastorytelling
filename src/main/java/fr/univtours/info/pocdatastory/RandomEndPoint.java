@@ -191,25 +191,6 @@ public class RandomEndPoint {
     }
 
 
-    // now measure
-    @PostMapping(value="api/message", produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseBody
-    public Answer message(@RequestBody String message) {
-
-
-        String toReturn="No message created! Please create a message first."; //observation ->message
-        int code=1;
-
-        if(creator.getCurrentMessage()!=null){
-            code=0;
-            String res=creator.newMeasure(message);
-            toReturn=res;
-
-        }
-        return new Answer(code,toReturn);
-
-
-    }
 
 
     @PostMapping(value="api/act", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -255,7 +236,7 @@ public class RandomEndPoint {
 
 
 
-
+    // now character
     @PostMapping(value="api/protagonist", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public Answer protagonist(@RequestBody String protagonist) {
@@ -263,17 +244,36 @@ public class RandomEndPoint {
         int code=1;
         String toReturn="No message created! Please create a message first.";
 
-        if(creator.getCurrentMessage()!=null){
-            code=0;
-            String res=creator.newCharacter(protagonist);
-            toReturn=res;
-
+        if(creator.getCurrentMessage()==null){
+            return new Answer(code, toReturn);
         }
-        return new Answer(code, toReturn);
-
+       else{
+           return creator.newCharacter(protagonist);
+        }
 
     }
 
+
+
+    // now measure
+    // message the new name of observation
+    @PostMapping(value="api/message", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public Answer message(@RequestBody String message) {
+
+        String toReturn="No message created! Please create a message first.";
+        int code=1;
+
+        if(creator.getCurrentMessage()==null){
+            return new Answer(code,toReturn);
+        }
+        else{
+            return creator.newMeasure(message);
+        }
+
+
+
+    }
 
 
     @PostMapping(value="api/render", produces = MediaType.APPLICATION_JSON_VALUE)

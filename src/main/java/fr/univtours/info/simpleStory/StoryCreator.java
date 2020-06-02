@@ -97,13 +97,9 @@ public class StoryCreator {
         return thePDF;
     }
 
-
-    public Answer recallCharacter(String text){
-        // lookup in all characters the one whose text=text
-        String theText=text.substring(1,text.length()-1).replace("\\n","\n");
-
+    // TODO maybe trim to remove spaces?
+    private Character lookupCharacter(String theText){
         Character characterFound=null;
-        int code=1;
         Collection<Act> ca=thePlot.includes();
         for(Act a : ca){
             Collection<Episode> ce = a.includes();
@@ -119,7 +115,57 @@ public class StoryCreator {
                 }
             }
         }
+        return characterFound;
+    }
 
+
+    private Measure lookupMeasure(String theText){
+        Measure measureFound=null;
+        Collection<Act> ca=thePlot.includes();
+        for(Act a : ca){
+            Collection<Episode> ce = a.includes();
+            for(Episode e : ce){
+                Collection<Measure> cc=e.refersTo();
+                for(Measure m : cc){
+                    //System.out.println(theText);
+                    //System.out.println(m.getText());
+                    //System.out.println(m.getText().compareTo(theText));
+
+                    if(m.getText().compareTo(theText)==0){
+                        measureFound=m;
+                    }
+                }
+            }
+        }
+        return measureFound;
+    }
+
+
+    public Answer recallCharacter(String text){
+        // lookup in all characters the one whose text=text
+        String theText=text.substring(1,text.length()-1).replace("\\n","\n");
+        int code=1;
+
+        /*
+        Character characterFound=null;
+
+        Collection<Act> ca=thePlot.includes();
+        for(Act a : ca){
+            Collection<Episode> ce = a.includes();
+            for(Episode e : ce){
+                Collection<Character> cc=e.playsIn();
+                for(Character c : cc){
+                    //System.out.println(text);
+                    //System.out.println(c.getText());
+
+                    if(c.getText().compareTo(theText)==0){
+                        characterFound=c;
+                    }
+                }
+            }
+        }
+         */
+        Character characterFound = lookupCharacter(theText);
         if(characterFound!=null) {
             currentCharacter = characterFound;
             code=0;
@@ -132,21 +178,9 @@ public class StoryCreator {
         // lookup in all measures the one whose text=text
 
         String theText=text.substring(1,text.length()-1).replace("\\n","\n");
-        Measure measureFound=null;
         int code=1;
-        Collection<Act> ca=thePlot.includes();
-        for(Act a : ca){
-            Collection<Episode> ce = a.includes();
-            for(Episode e : ce){
-                Collection<Measure> cc=e.refersTo();
-                for(Measure m : cc){
-                    if(m.getText().compareTo(theText)==0){
-                        measureFound=m;
-                    }
-                }
-            }
-        }
 
+        Measure measureFound=lookupMeasure(theText);
         if(measureFound!=null) {
             currentMeasure = measureFound;
             code=0;
@@ -370,19 +404,41 @@ public class StoryCreator {
     }
 
 
-    public String newCharacter(String theCharacter){
-        currentCharacter = new SimpleCharacter();
+    public Answer newCharacter(String theCharacter){
+
+        int code=0;
+
+        // if  exist
+        Character found=lookupCharacter(theCharacter.substring(1,theCharacter.length()-1).replace("\\n","\n"));
+        if(found==null) {
+
+            currentCharacter = new SimpleCharacter();
+        }else{
+            code=2;
+            currentCharacter=found;
+        }
         currentCharacter.addText(theCharacter);
         currentMessage.bringsOut(currentCharacter);
-        return theCharacter;
+        //return theCharacter;
+        return new Answer(code,theCharacter);
     }
 
 
-    public String newMeasure(String theMeasure){
-        currentMeasure  =new SimpleMeasure();
+    public Answer newMeasure(String theMeasure){
+        int code=0;
+
+        // if not exist
+        Measure found=lookupMeasure(theMeasure.substring(1,theMeasure.length()-1).replace("\\n","\n"));
+        if(found==null) {
+            currentMeasure  =new SimpleMeasure();
+        }else{
+            code=2;
+            currentMeasure=found;
+        }
         currentMeasure.addText(theMeasure);
         currentMessage.includes(currentMeasure);
-        return(theMeasure);
+        //return(theMeasure);
+        return new Answer(code,theMeasure);
     }
 
 

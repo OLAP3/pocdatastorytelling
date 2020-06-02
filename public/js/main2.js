@@ -205,8 +205,8 @@ function processEpisodeClear (result, endpoint) {
                 });
             }
             */
-            // for character, measure, do we recall episode/act? maybe not
-            if(endpoint=="protagonist"){ // episode and message have the same count
+            // for character, measure, we do not recall act/episode
+            if(endpoint=="protagonist"){
 
                 let button = document.createElement("button");
                 button.innerHTML = JSON.parse(message);
@@ -221,7 +221,7 @@ function processEpisodeClear (result, endpoint) {
                 recallCharacter(text);
                 });
             }
-            if(endpoint=="message"){ // episode and message have the same count
+            if(endpoint=="message"){
 
                 let button = document.createElement("button");
                 button.innerHTML = JSON.parse(message);
@@ -238,8 +238,17 @@ function processEpisodeClear (result, endpoint) {
             }
         }
         else{
-            let consoleElt=document.getElementById("console");
-            consoleElt.innerText=message;
+            if(code==2){
+            // reuse of existing character or measure
+            console.log(code);
+                let consoleElt=document.getElementById("console");
+                consoleElt.innerText="Reusing " + JSON.parse(message);
+            }
+            else{
+            console.log(code);
+                let consoleElt=document.getElementById("console");
+                consoleElt.innerText=message;
+            }
 
         }
 }
