@@ -28,6 +28,9 @@ public class SimpleSQLCollector implements Collector {
         }
     }
 
+    public String getSQLquery(){
+        return sqlQuery;
+    }
 
     void connectToPostgresql() throws Exception{
 

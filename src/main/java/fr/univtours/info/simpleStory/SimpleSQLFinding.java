@@ -17,6 +17,18 @@ public class SimpleSQLFinding implements Finding {
     private ResultSet resultSet;
     private String filename=null;
     private ResultSetMetaData rsmd;
+    private Collector theCollector;
+
+    @Override
+    public Collector fetches() {
+        return theCollector;
+    }
+
+    @Override
+    public void fetches(Collector theCollector) {
+        this.theCollector=theCollector;
+    }
+
 
     public SimpleSQLFinding(ResultSet aResultSet){
         this.resultSet=aResultSet;
@@ -40,8 +52,10 @@ public class SimpleSQLFinding implements Finding {
         return filename;
     }
 
+
+
     public String toString(){
-        String resultString="";
+        String resultString="Finding: \n";
 
         try {
             for (int i = 1; i <= rsmd.getColumnCount(); i++) {

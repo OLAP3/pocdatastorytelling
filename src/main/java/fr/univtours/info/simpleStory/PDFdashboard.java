@@ -36,6 +36,7 @@ public abstract class PDFdashboard implements Dashboard {
 
 
     public PDFdashboard(){
+
         theComponents=new ArrayList<DashboardComponent>();
     }
 

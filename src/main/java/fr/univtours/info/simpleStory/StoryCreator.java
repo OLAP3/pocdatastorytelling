@@ -45,6 +45,9 @@ public class StoryCreator {
     PDDocument thePDF;
     File thePDFfile;
 
+    String franchiseHTMLfile=null;
+
+
     public StoryCreator(){
 
     }
@@ -334,7 +337,11 @@ public class StoryCreator {
         Collection<Finding> col =c.fetches();
         currentAnswer = col;
 
-         return query;
+        for(Finding f : col){
+            f.fetches(c);
+        }
+
+        return query;
     }
 
     public void addDescribeInsight(byte[] describeResult, String base64){
@@ -364,6 +371,10 @@ public class StoryCreator {
 
         Collection<Finding> col =c.fetches();
         currentAnswer = col;
+
+        for(Finding f : col){
+            f.fetches(c);
+        }
 
         Iterator<Finding> it= col.iterator();
         String res="";
@@ -502,100 +513,26 @@ public class StoryCreator {
 
 
 
-
-
-    // below outdated, to drop
-
-    public static void main(String args[]) throws Exception{
-
-        // I was only for testing purpose, please drop me
-
-        Plot thePlot =new SimplePlot();
-        Goal theGoal = new SimpleGoal();
-        //String goalText="a straight story";
-        //theGoal.addText(goalText);
-        thePlot.has(theGoal);
-
-        Act currentAct =null;
-        Measure currentMeasure =null;
-
-        Exploration theExploration = new SimpleExploration(); // only one exploration
-        theGoal.solves(theExploration);
-
-        boolean stop=false;
-
-        while(!stop){
-            // ask SQL query
-            String query="select sum(lo_revenue), d_year, p_brand \n" +
-                    "from lineorder, date, part, supplier \n" +
-                    " where lo_orderdate = d_datekey \n" +
-                    " and lo_partkey = p_partkey \n" +
-                    " and lo_suppkey = s_suppkey \n" +
-                    " and p_category = 'MFGR#12' \n" +
-                    " and s_region = 'AMERICA' \n" +
-                    " group by d_year, p_brand \n" +
-                    " order by d_year, p_brand;\n"; //fake
-            AnalyticalQuestion anAnalyticalQuestion = new SimpleAnalyticalQuestion();
-            anAnalyticalQuestion.addText(query);
-            Collection<Finding> col = ((SimpleAnalyticalQuestion) anAnalyticalQuestion).answer();
-            theGoal.poses(anAnalyticalQuestion);
-
-            // show insights and ask if worthy
-            boolean isWorthy=true; //Fake
-            if(isWorthy){
-                // ask if new act
-                boolean newAct=true; //Fake
-                if(newAct){
-                    currentAct=new SimpleAct();
-                    thePlot.includes(currentAct);
-                    currentMeasure = new SimpleMeasure();
-
-                    // ask for text
-                }
-
-                Message currentMessage = new SimpleMessage();
-                anAnalyticalQuestion.generates(currentMessage);
-                currentMessage.generates(anAnalyticalQuestion);
-
-                //currentMessage.bringsOut(currentObservation);
-                //currentObservation.addText(anAnalyticalQuestion.toString());
-
-                for(Finding i : col){
-                    // may ask the author if insight is accepted or not
-                    currentMessage.produces(i);
-
-                }
-
-
-
-                Episode currentEpisode= new SimpleEpisode();
-                currentEpisode.narrates(currentMessage);
-                currentAct.includes(currentEpisode);
-               // currentMeasure.bringsOut(currentMessage);
-                currentAct.narrates(currentMeasure);
-
-                // how many protagonists
-                int nbProtagonists = 1; // fake
-                for(int i=0;i<nbProtagonists;i++){
-                    Character aCharacter = new SimpleCharacter();
-                    currentEpisode.playsIn(aCharacter);
-                    currentMessage.bringsOut(aCharacter);
-                }
-
-
-            }
-
-            // ask more analytical questions? else stop
-            stop=true; //fake
-        }
-
-        // ask to complement the story, acts, episodes with texts
-        //theStory.addText("ask the author");
-
-        VisualNarrative vs=new SimpleVisualNarrative();
+    // SQL notebook visual
+    public String renderFranchise(String msg){
+        SQLnotebookNarrative vs=new SQLnotebookNarrative();
         vs.renders(thePlot);  // just attach
         vs.renders(); // and then renders
-        vs.toString(); // and then prints
+        franchiseHTMLfile=((SQLnotebookNarrative) vs).getTheHTML();
+
+        //vs.print(); // and then prints
+        return msg;
+    }
+
+
+
+
+
+    // below for testing
+
+    public static void main(String args[]) throws Exception {
+      StoryCreator s=new StoryCreator();
+      s.renderFranchise("");
     }
 
 
