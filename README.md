@@ -14,7 +14,7 @@ Here is a screenshot of the current version.
 
 **To do**
 
-- Improve PDF rendering
+- Improve PDF and SQL notebook rendering
 - Improve handling of Describe results
 - Print nice SQL tables in the PDF
 - Improve SQL viz generation (check column names, types, number, etc.)
