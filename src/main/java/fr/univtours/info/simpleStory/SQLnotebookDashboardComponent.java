@@ -26,7 +26,7 @@ public class SQLnotebookDashboardComponent implements DashboardComponent {
         String theCell="{\\\"rowId\\\":\\\"" +
                 narrative.getId()
                 +"\\\",\\\"items\\\":[{\\\"query\\\":\\\""
-                + theEpisode.toString()
+                + narrative.replaceNL(theEpisode.toString())
                 +"\\\",\\\"id\\\":\\\""
                 + narrative.getId()
                 +"\\\",\\\"loading\\\":false,\\\"markdown\\\":true}]}";
@@ -40,10 +40,10 @@ public class SQLnotebookDashboardComponent implements DashboardComponent {
              theCell="{\\\"rowId\\\":\\\"" +
                      narrative.getId()
                      +"\\\",\\\"items\\\":[{\\\"query\\\":\\\""
-                     + ((SimpleSQLCollector) c).sqlQuery
+                     + narrative.replaceNL(((SimpleSQLCollector) c).sqlQuery)
                      +"\\\",\\\"id\\\":\\\""
                      + narrative.getId()
-                     +"\\\",\\\"loading\\\":false,\\\"markdown\\\":true}]}";
+                     +"\\\",\\\"loading\\\":false}]}";
 
             narrative.addCell(theCell);
 

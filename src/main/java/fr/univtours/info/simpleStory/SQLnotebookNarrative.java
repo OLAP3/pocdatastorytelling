@@ -57,7 +57,7 @@ public class SQLnotebookNarrative extends HTMLnarrative {
             String theCell="{\\\"rowId\\\":\\\"" +
                     getId()
                     +"\\\",\\\"items\\\":[{\\\"query\\\":\\\""
-                    + thePlot.has().toString()
+                    + replaceNL(thePlot.has().toString())
                     +"\\\",\\\"id\\\":\\\""
                     + getId()
                     +"\\\",\\\"loading\\\":false,\\\"markdown\\\":true}]}";
@@ -114,6 +114,10 @@ public class SQLnotebookNarrative extends HTMLnarrative {
         nbCells++;
     }
 
+
+    String replaceNL(String param){
+        return param.replace("\n","\\\\n");
+    }
 
     int getId(){
         id=id+1;

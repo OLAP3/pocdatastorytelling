@@ -44,7 +44,7 @@ public class SQLnotebookDashboard implements Dashboard {
                 "{\\\"rowId\\\":\\\"" +
                         narrative.getId()
                         +"\\\",\\\"items\\\":[{\\\"query\\\":\\\""
-                        + theAct.toString()
+                        + narrative.replaceNL(theAct.toString())
                         +"\\\",\\\"id\\\":\\\""
                         + narrative.getId()
                         +"\\\",\\\"loading\\\":false,\\\"markdown\\\":true}]}"
