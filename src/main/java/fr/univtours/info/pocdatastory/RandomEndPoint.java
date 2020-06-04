@@ -316,6 +316,26 @@ public class RandomEndPoint {
 
 
 
+    @PostMapping(value="api/renderSQLNB", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public Answer renderSQLNB(@RequestBody String msg) {
+
+        int code=1;
+        String toReturn="No story created! Please create story objects first.";
+
+        if(creator!=null){
+            code=0;
+            String res=creator.renderFranchise(msg);
+            toReturn=res;
+
+        }
+        return new Answer(code, toReturn);
+
+
+    }
+
+
+
 
     @PostMapping(value="api/recallAct", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody

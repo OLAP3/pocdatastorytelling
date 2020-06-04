@@ -37,8 +37,6 @@ public class SQLnotebookNarrative extends HTMLnarrative {
                     d.contains(dbc);
                     dbc.renders(ep);
 
-                    nbCells++;
-
             }
 
             //d.renders(act);
@@ -56,19 +54,24 @@ public class SQLnotebookNarrative extends HTMLnarrative {
 
            // addString("This is the story for goal: " + thePlot.has().toString(), 16, PDType1Font.TIMES_BOLD, width);
 
-            String theCell="{\n" +
-                    "rowId:" + getId() +",\n" +
-                    "items:[{query:" + thePlot.has().toString()+ ",\n" +
-                    "id:"+ getId()+",\n" +
-                    "loading:false,\n" +
-                    "markdown:true}]\n" +
-                    "}";
+            String theCell="{\\\"rowId\\\":\\\"" +
+                    getId()
+                    +"\\\",\\\"items\\\":[{\\\"query\\\":\\\""
+                    + thePlot.has().toString()
+                    +"\\\",\\\"id\\\":\\\""
+                    + getId()
+                    +"\\\",\\\"loading\\\":false,\\\"markdown\\\":true}]}";
+
+
             addCell(theCell);
+
 
             for(Dashboard d : theDashboards){
                 ((SQLnotebookDashboard) d).setNarrative(this);
                 d.renders();
             }
+
+            fw.write(theCells);
 
             endHTML();
         }
@@ -87,8 +90,7 @@ public class SQLnotebookNarrative extends HTMLnarrative {
     }
 
     void endHTML() throws Exception{
-        fw.write("],\n" +
-                "forceRenderToken:"+nbCells);
+        fw.write("],\\\"forceRenderToken\\\":"+nbCells);
         fw.write(endString);
         fw.close();
     }
@@ -109,7 +111,7 @@ public class SQLnotebookNarrative extends HTMLnarrative {
         else{
             this.theCells+=","+theCell;
         }
-
+        nbCells++;
     }
 
 
@@ -202,24 +204,13 @@ public class SQLnotebookNarrative extends HTMLnarrative {
             "<div class=\"loader\" id=\"loader\">Loading Franchise...</div>\n" +
             "<center><a id=\"click\" style=\"display:none\" href=\"https://franchise.cloud/app/\" target=\"_blank\">Click here to open Franchise SQL Notebook</a></center>\n" +
             "<script type=\"text/javascript\">\n" +
-            "const DATA = " +
-            "{\n" +
-            "state:{\n" +
-            "config:{},\n" +
-            "connect:{active:postgres, status:unconfigured},\n" +
-            "trash:{open:false, cells:[]},\n" +
-            "deltas:{open:false, changes:[]},\n" +
-            "notebook:{\n" +
-            "layout:[" ;
+            "const DATA = \"{\\\"state\\\":{\\\"config\\\":{},\\\"connect\\\":{\\\"active\\\":\\\"postgres\\\",\\\"status\\\":\\\"unconfigured\\\"},\\\"trash\\\":{\\\"open\\\":false,\\\"cells\\\":[]},\\\"deltas\\\":{\\\"open\\\":false,\\\"changes\\\":[]},\\\"notebook\\\":{\\\"layout\\\":[" ;
 
 
 
     //{{bin_data}}
-    String endString="}\n" +
-            "},\n" +
-            "autoconnect:false,\n" +
-            "version:2\n" +
-            "};\n" +
+
+    String endString="}},\\\"autoconnect\\\":false,\\\"version\\\":2}\";\n" +
             "</script>\n" +
             "<script type=\"text/javascript\">\n" +
             "function sendData(target, src){\n" +

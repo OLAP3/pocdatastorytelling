@@ -40,13 +40,15 @@ public class SQLnotebookDashboard implements Dashboard {
 
     @Override
     public Act renders() {
-        String theCell="{\n" +
-                "rowId:" + narrative.getId() +",\n" +
-                "items:[{query:" + theAct.toString()+ ",\n" +
-                "id:"+ narrative.getId()+",\n" +
-                "loading:false,\n" +
-                "markdown:true}]\n" +
-                "}";
+        String theCell=
+                "{\\\"rowId\\\":\\\"" +
+                        narrative.getId()
+                        +"\\\",\\\"items\\\":[{\\\"query\\\":\\\""
+                        + theAct.toString()
+                        +"\\\",\\\"id\\\":\\\""
+                        + narrative.getId()
+                        +"\\\",\\\"loading\\\":false,\\\"markdown\\\":true}]}"
+                ;
         narrative.addCell(theCell);
         for(DashboardComponent dc : theComponents){
             ((SQLnotebookDashboardComponent) dc).setNarrative(narrative);

@@ -23,25 +23,28 @@ public class SQLnotebookDashboardComponent implements DashboardComponent {
 
     @Override
     public Episode render() {
-        String theCell="{\n" +
-                "rowId:" + narrative.getId() +",\n" +
-                "items:[{query:" + theEpisode.toString()+ ",\n" +
-                "id:"+ narrative.getId()+",\n" +
-                "loading:false,\n" +
-                "markdown:true}]\n" +
-                "}";
+        String theCell="{\\\"rowId\\\":\\\"" +
+                narrative.getId()
+                +"\\\",\\\"items\\\":[{\\\"query\\\":\\\""
+                + theEpisode.toString()
+                +"\\\",\\\"id\\\":\\\""
+                + narrative.getId()
+                +"\\\",\\\"loading\\\":false,\\\"markdown\\\":true}]}";
+
         narrative.addCell(theCell);
 
         Collection<Finding> theFindings=  theEpisode.narrates().produces();
         for(Finding f : theFindings){
             Collector c =f.fetches();
 
-             theCell="{\n" +
-                    "rowId:" + narrative.getId() +",\n" +
-                    "items:[{query:" + ((SimpleSQLCollector) c).sqlQuery+ ",\n" +
-                    "id:"+ narrative.getId()+",\n" +
-                    "loading:false}]\n" +
-                    "}";
+             theCell="{\\\"rowId\\\":\\\"" +
+                     narrative.getId()
+                     +"\\\",\\\"items\\\":[{\\\"query\\\":\\\""
+                     + ((SimpleSQLCollector) c).sqlQuery
+                     +"\\\",\\\"id\\\":\\\""
+                     + narrative.getId()
+                     +"\\\",\\\"loading\\\":false,\\\"markdown\\\":true}]}";
+
             narrative.addCell(theCell);
 
         }

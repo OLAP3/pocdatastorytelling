@@ -3,9 +3,7 @@ package fr.univtours.info.simpleStory;
 import fr.univtours.info.model.Structural.Plot;
 import fr.univtours.info.model.presentational.Dashboard;
 import fr.univtours.info.model.presentational.VisualNarrative;
-import org.w3c.dom.html.HTMLFieldSetElement;
 
-import javax.swing.text.html.HTML;
 import java.io.File;
 import java.io.FileWriter;
 import java.util.ArrayList;
@@ -15,7 +13,7 @@ public abstract class HTMLnarrative implements VisualNarrative {
     Collection<Dashboard> theDashboards;
     Plot thePlot;
     String theStringRendering = "";
-    String HTMLfile = "/Users/marcel/Documents/RECHERCHE/STUDENTS/Faten/pocdatastory/public/pdfs/sql-data-narrative.html";
+    String HTMLfile = "/Users/marcel/Documents/RECHERCHE/STUDENTS/Faten/pocdatastory/public/html/sql-data-narrative.html";
     File f;
     FileWriter fw;
 

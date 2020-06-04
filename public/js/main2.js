@@ -149,6 +149,26 @@ function processEpisodeClear (result, endpoint) {
 }
 
 
+ function processRenderSQLNB (result, endpoint) {
+        let code=JSON.parse(result).code;
+        let message=JSON.parse(result).message;
+        console.log(code);
+        console.log(message);
+
+        let consoleElt=document.getElementById("console");
+        consoleElt.innerText=JSON.parse(message);
+
+        let pb = function (result) {
+            console.log("debug: ");
+            console.log(result);
+        };
+
+        // import  html file in franchise if the application runs on the server
+        // or if not save or open? + message in the console
+        window.open("html/sql-data-narrative.html");
+
+}
+
 
 
  function processControllerAnswer (result, endpoint) {
@@ -827,6 +847,21 @@ function renderDOListnener() {
     };
     elsaRequest(msg, "renderDO", processRender, pb, false);
 }
+
+
+
+function renderSQLNBListnener() {
+
+   let msg="Story rendered."
+
+  let pb = function (result) {
+        console.log("debug: ");
+        console.log(result);
+    };
+    elsaRequest(msg, "renderSQLNB", processRenderSQLNB, pb, false);
+}
+
+
 
 
 function DBdumpListnener(){
