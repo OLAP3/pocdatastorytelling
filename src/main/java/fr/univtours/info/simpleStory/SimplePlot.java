@@ -67,6 +67,7 @@ public class SimplePlot implements Plot {
 
     /**
      * Restore Plot from the database
+     *
      * @param id object id
      * @return deserialized plot
      */
@@ -79,7 +80,6 @@ public class SimplePlot implements Plot {
             p.connectToPostgresql();
             final Connection conn = p.getConnection();
             final String sql = "select id, text, plot from Plots where id = " + id;
-            System.out.println(sql);
             final PreparedStatement pstmt = conn.prepareStatement(sql);
             final ResultSet rs = pstmt.executeQuery();
             rs.next();
@@ -88,6 +88,7 @@ public class SimplePlot implements Plot {
             p = (SimplePlot) objectIn.readObject();
             rs.close();
             pstmt.close();
+            conn.close();
             return p;
         } catch (final Exception e) {
             e.printStackTrace();
@@ -97,16 +98,16 @@ public class SimplePlot implements Plot {
 
     @Override
     public String store() {
-        try {
-            final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            final ObjectOutputStream oos = new ObjectOutputStream(baos);
+        try (final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+             final ObjectOutputStream oos = new ObjectOutputStream(baos);
+             final PreparedStatement preparedStatement = conn.prepareStatement("insert into Plots(text, plot) values(?, ?)", PreparedStatement.RETURN_GENERATED_KEYS);) {
             oos.writeObject(this);
-            oos.close();
-            // final ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
-            final PreparedStatement preparedStatement = conn.prepareStatement("insert into Plots(text, plot) values(?, ?)");
             preparedStatement.setString(1, text);
             preparedStatement.setBytes(2, baos.toByteArray());
-            return preparedStatement.executeUpdate() + "";
+            preparedStatement.executeUpdate();
+            final ResultSet rs = preparedStatement.getGeneratedKeys();
+            rs.next();
+            return rs.getInt(1) + "";
         } catch (final Exception e) {
             e.printStackTrace();
             return null;
@@ -124,11 +125,9 @@ public class SimplePlot implements Plot {
         final String passwd = props.getProperty("spring.datasource.password");
         final String user = props.getProperty("spring.datasource.user");
         final String url = props.getProperty("spring.datasource.url") + "?user=" + user + "&password=" + passwd;;
-        System.out.println(url);
+        // System.out.println(url);
         conn = DriverManager.getConnection(url);
         try (final Statement stmt = conn.createStatement();) {
-            // final String sqlDrop = "DROP TABLE IF EXISTS Plots";
-            // stmt.execute(sqlDrop);
             final String sqlCreate = "CREATE TABLE IF NOT EXISTS Plots (id SERIAL primary key, text TEXT, plot bytea)";
             stmt.execute(sqlCreate);
         } catch (final Exception e) {
