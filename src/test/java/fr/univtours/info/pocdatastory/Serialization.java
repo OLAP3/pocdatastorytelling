@@ -10,6 +10,9 @@ import fr.univtours.info.simpleStory.*;
 import org.junit.Test;
 
 import java.io.*;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
 
 import static org.junit.Assert.*;
 
@@ -83,6 +86,31 @@ public class Serialization {
             fail();
         }
 
+        assertEquals(p, d);
+    }
+
+    /**
+     * Store/read a plot to/from a SQL table
+     */
+    @Test
+    public void testDBSerialization() {
+        final SimplePlot p = (SimplePlot) setUP(); // create a plot example
+        String id = null;
+        try {
+            p.connectToPostgresql(); // open connection and create `Plots` if it does not exist
+            final Connection c = p.getConnection();
+            assertFalse(c.isClosed());
+            final Statement stmt = c.createStatement();
+            stmt.executeQuery("select * from plots"); // check that this query works (i.e., that the table Plots exists)
+            stmt.close();
+            id = p.store(); // serialize the plot to the database
+            System.out.println("Stored plot: " + id);
+        } catch (final Exception e) {
+            e.printStackTrace();
+            fail(e.getMessage());
+        }
+
+        final Plot d = SimplePlot.restore(id); // read the object from the database
         assertEquals(p, d);
     }
 }

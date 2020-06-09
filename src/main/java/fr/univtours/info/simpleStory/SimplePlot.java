@@ -4,10 +4,9 @@ import fr.univtours.info.model.intentional.Goal;
 import fr.univtours.info.model.Structural.Act;
 import fr.univtours.info.model.Structural.Plot;
 
-import java.io.File;
-import java.io.FileReader;
-import java.sql.Connection;
-import java.sql.DriverManager;
+import java.io.*;
+import java.net.ConnectException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Objects;
@@ -18,14 +17,18 @@ public class SimplePlot implements Plot {
     private String text;
     private ArrayList<Act> theActs;
     private Goal theGoal;
-
     private transient Connection conn;
 
     public SimplePlot(){
         theActs=new ArrayList<Act>();
     }
 
-
+    /**
+     * @return connection to the postgres instance
+     */
+    public Connection getConnection() {
+        return conn;
+    }
 
     @Override
     public void addText(String theText) {
@@ -62,33 +65,74 @@ public class SimplePlot implements Plot {
         return this.theGoal;
     }
 
-    @Override
-    public void store() {
-        try {
-            this.connectToPostgresql();
+    /**
+     * Restore Plot from the database
+     *
+     * @param id object id
+     * @return deserialized plot
+     */
+    public static Plot restore(final String id) {
+        if (id == null || id.isEmpty()) {
+            throw new IllegalArgumentException("Wrong identifier: " + id);
         }
-        catch(Exception e){
+        SimplePlot p = new SimplePlot();
+        try {
+            p.connectToPostgresql();
+            final Connection conn = p.getConnection();
+            final String sql = "select id, text, plot from Plots where id = " + id;
+            final PreparedStatement pstmt = conn.prepareStatement(sql);
+            final ResultSet rs = pstmt.executeQuery();
+            rs.next();
+            final byte[] buf = rs.getBytes(3);
+            final ObjectInputStream objectIn = new ObjectInputStream(new ByteArrayInputStream(buf));
+            p = (SimplePlot) objectIn.readObject();
+            rs.close();
+            pstmt.close();
+            conn.close();
+            return p;
+        } catch (final Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @Override
+    public String store() {
+        try (final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+             final ObjectOutputStream oos = new ObjectOutputStream(baos);
+             final PreparedStatement preparedStatement = conn.prepareStatement("insert into Plots(text, plot) values(?, ?)", PreparedStatement.RETURN_GENERATED_KEYS);) {
+            oos.writeObject(this);
+            preparedStatement.setString(1, text);
+            preparedStatement.setBytes(2, baos.toByteArray());
+            preparedStatement.executeUpdate();
+            final ResultSet rs = preparedStatement.getGeneratedKeys();
+            rs.next();
+            return rs.getInt(1) + "";
+        } catch (final Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    /**
+     * Connect to postgres and create the `Plots` table if it does not exist
+     * @throws Exception in case of error
+     */
+    public void connectToPostgresql() throws Exception {
+        final FileReader fr = new FileReader(new File("src/main/resources/application.properties"));
+        final Properties props = new Properties();
+        props.load(fr);
+        final String passwd = props.getProperty("spring.datasource.password");
+        final String user = props.getProperty("spring.datasource.user");
+        final String url = props.getProperty("spring.datasource.url") + "?user=" + user + "&password=" + passwd;;
+        // System.out.println(url);
+        conn = DriverManager.getConnection(url);
+        try (final Statement stmt = conn.createStatement();) {
+            final String sqlCreate = "CREATE TABLE IF NOT EXISTS Plots (id SERIAL primary key, text TEXT, plot bytea)";
+            stmt.execute(sqlCreate);
+        } catch (final Exception e) {
             e.printStackTrace();
         }
-
-        //TODO
-        // dumps all the story objects in a database:
-        // create schema
-
-
-    }
-    void connectToPostgresql() throws Exception{
-
-        FileReader fr=new FileReader(new File("src/main/resources/application.properties"));
-        Properties props = new Properties();
-        props.load(fr);
-        String url=props.getProperty("spring.datasource.url");
-        String passwd=props.getProperty("spring.datasource.password");
-        String user=props.getProperty("spring.datasource.user");
-        url=url +  "?user=" + user + "&password=" + passwd;
-        System.out.println(url);
-
-        conn = DriverManager.getConnection(url);
     }
 
     @Override
