@@ -3,9 +3,10 @@ package fr.univtours.info.model.intentional;
 
 import fr.univtours.info.model.factual.Collector;
 
+import java.io.Serializable;
 import java.util.Collection;
 
-public interface AnalyticalQuestion {
+public interface AnalyticalQuestion extends Serializable {
     public void addText(String aText);
     public String toString();
 

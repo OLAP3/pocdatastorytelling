@@ -1,8 +1,9 @@
 package fr.univtours.info.model.factual;
 
+import java.io.Serializable;
 import java.util.Collection;
 
-public interface Collector {
+public interface Collector extends Serializable {
 
     public boolean hasInsight();
     public void fetches(Finding aFinding);

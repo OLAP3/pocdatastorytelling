@@ -8,6 +8,7 @@ import fr.univtours.info.model.intentional.Message;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Objects;
 
 public class SimpleEpisode implements Episode {
 
@@ -88,4 +89,19 @@ public class SimpleEpisode implements Episode {
                 + episodeProtagonists + episodeMeasures;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        SimpleEpisode that = (SimpleEpisode) o;
+        return Objects.equals(theText, that.theText) &&
+                Objects.equals(theMessage, that.theMessage) &&
+                Objects.equals(theCharacters, that.theCharacters) &&
+                Objects.equals(theMeasures, that.theMeasures);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(theText, theMessage, theCharacters, theMeasures);
+    }
 }

@@ -1,9 +1,10 @@
 package fr.univtours.info.model.intentional;
 
 
+import java.io.Serializable;
 import java.util.Collection;
 
-public interface Measure {
+public interface Measure extends Serializable {
     public void addText(String aText);
     public String getText();
 

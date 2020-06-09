@@ -11,6 +11,7 @@ import fr.univtours.info.model.intentional.Character;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.Objects;
 
 public class SimpleGoal implements Goal {
     ArrayList<Exploration> theExplorations;
@@ -74,5 +75,20 @@ public class SimpleGoal implements Goal {
         theBroughtOutCharacters.add(aCharacter);
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        SimpleGoal that = (SimpleGoal) o;
+        return Objects.equals(theExplorations, that.theExplorations) &&
+                Objects.equals(theQuestions, that.theQuestions) &&
+                Objects.equals(theBroughtOutCharacters, that.theBroughtOutCharacters) &&
+                Objects.equals(theText, that.theText) &&
+                Objects.equals(thePlot, that.thePlot);
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(theExplorations, theQuestions, theBroughtOutCharacters, theText, thePlot);
+    }
 }
