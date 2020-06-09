@@ -8,6 +8,7 @@ import fr.univtours.info.model.intentional.Character;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Objects;
 
 public class SimpleMessage implements Message {
     String theText;
@@ -89,5 +90,22 @@ public class SimpleMessage implements Message {
     @Override
     public Collection<Measure> includes() {
         return theMeasures;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        SimpleMessage that = (SimpleMessage) o;
+        return Objects.equals(theText, that.theText) &&
+                Objects.equals(theFindings, that.theFindings) &&
+                Objects.equals(theCharacters, that.theCharacters) &&
+                Objects.equals(theMeasures, that.theMeasures) &&
+                Objects.equals(theAnalyticalQuestion, that.theAnalyticalQuestion);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(theText, theFindings, theCharacters, theMeasures, theAnalyticalQuestion);
     }
 }

@@ -1,9 +1,11 @@
 package fr.univtours.info.model.presentational;
 
 import fr.univtours.info.model.Structural.*;
+
+import java.io.Serializable;
 import java.util.Collection;
 
-public interface VisualNarrative {
+public interface VisualNarrative extends Serializable {
 
     public String toString();
 

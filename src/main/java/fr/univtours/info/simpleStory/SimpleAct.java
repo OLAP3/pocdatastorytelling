@@ -6,6 +6,7 @@ import fr.univtours.info.model.intentional.Measure;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Objects;
 
 public class SimpleAct implements Act {
     String actText;
@@ -54,5 +55,20 @@ public class SimpleAct implements Act {
     @Override
     public Collection<Episode> includes() {
         return theEpisodes;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        SimpleAct simpleAct = (SimpleAct) o;
+        return Objects.equals(actText, simpleAct.actText) &&
+                Objects.equals(theEpisodes, simpleAct.theEpisodes) &&
+                Objects.equals(theMeasure, simpleAct.theMeasure);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(actText, theEpisodes, theMeasure);
     }
 }

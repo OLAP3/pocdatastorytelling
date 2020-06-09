@@ -3,10 +3,11 @@ package fr.univtours.info.model.intentional;
 import fr.univtours.info.model.Structural.Plot;
 import fr.univtours.info.model.factual.*;
 
+import java.io.Serializable;
 import java.util.Collection;
 
 
-public interface Goal {
+public interface Goal extends Serializable {
     public void addText(String aText);
     public String toString(); // replace by getText()?
 

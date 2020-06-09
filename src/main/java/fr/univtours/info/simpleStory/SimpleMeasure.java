@@ -6,6 +6,7 @@ import fr.univtours.info.model.intentional.Message;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Objects;
 
 public class SimpleMeasure implements Measure {
     String theText;
@@ -52,7 +53,20 @@ public class SimpleMeasure implements Measure {
     @Override
     public void setValue(float value) {
         this.value=value;
-
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        SimpleMeasure that = (SimpleMeasure) o;
+        return Float.compare(that.value, value) == 0 &&
+                Objects.equals(theText, that.theText) &&
+                Objects.equals(name, that.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(theText, name, value);
+    }
 }

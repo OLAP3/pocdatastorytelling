@@ -8,6 +8,7 @@ import fr.univtours.info.model.intentional.Message;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Objects;
 
 public class SimpleAnalyticalQuestion implements AnalyticalQuestion {
     ArrayList<Collector> theCollectors ;
@@ -80,5 +81,22 @@ public class SimpleAnalyticalQuestion implements AnalyticalQuestion {
 
     public String toString(){
         return "Analytical question: " +theText;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        SimpleAnalyticalQuestion that = (SimpleAnalyticalQuestion) o;
+        return Objects.equals(theCollectors, that.theCollectors) &&
+                Objects.equals(theMessages, that.theMessages) &&
+                Objects.equals(questionPosingMessages, that.questionPosingMessages) &&
+                Objects.equals(theText, that.theText) &&
+                Objects.equals(theGoal, that.theGoal);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(theCollectors, theMessages, questionPosingMessages, theText, theGoal);
     }
 }
