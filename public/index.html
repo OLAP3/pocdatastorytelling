@@ -44,9 +44,32 @@
 
 
         <button class="button-console" onclick="clearStory()">New narrative</button>
-        <button class="button-console" onclick="DBloadListnener()">Load narrative</button>
-        <button class="button-console" onclick="DBsaveListnener()">Save narrative</button>
+        <button class="button-console" onclick="openDBload()">Load narrative</button>
+        <button class="button-console" onclick="openDBsave()">Save narrative</button>
 
+
+        <div class="form-popup" id="DBloadForm">
+            <form action="" class="form-container">
+                <h1>Load narrative</h1>
+
+                <label for="loadText"><b>Description of your narrative</b></label><br>
+                <textarea id="loadText" name="loadText" rows="10" cols="55"></textarea><br>
+
+                <button type="button" class="btn DB" onclick="DBloadListnener()">Load</button>
+            </form>
+        </div>
+
+
+        <div class="form-popup" id="DBsaveForm">
+            <form action="" class="form-container">
+                <h1>Save narrative</h1>
+
+                <label for="plottext"><b>Description of your narrative</b></label><br>
+                <textarea id="plottext" name="plottext" rows="10" cols="55"></textarea><br>
+
+                <button type="button" class="btn DB" onclick="DBsaveListnener()">Save</button>
+            </form>
+        </div>
 
     </div>
 

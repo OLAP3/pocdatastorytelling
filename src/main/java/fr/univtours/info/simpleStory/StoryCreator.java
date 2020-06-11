@@ -54,6 +54,10 @@ public class StoryCreator {
         dbs=new DBservices();
     }
 
+    public void setPlot(Plot aPlot){
+        this.thePlot=aPlot;
+    }
+
     public String getCurrentFilename(){
         return currentFilename;
     }
@@ -528,7 +532,16 @@ public class StoryCreator {
 
 
     public String  saveInDB(String msg){
+        thePlot.addText(msg);
         return "Story with id: " + dbs.store(thePlot) + " saved.";
+    }
+
+
+    public Plot loadFromDB(String msg){
+        System.out.println(msg);
+        String theText=msg.substring(1,msg.length()-1).replace("\\n","\n");
+        Plot p = dbs.restore(theText);
+        return p;
     }
 
 

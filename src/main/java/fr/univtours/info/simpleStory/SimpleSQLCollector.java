@@ -11,9 +11,9 @@ import java.util.Collection;
 import java.util.Properties;
 
 public class SimpleSQLCollector implements Collector {
-    Connection conn;
+    transient Connection conn; // transient needed for serialization
     String sqlQuery;
-    ResultSet resultset;
+    transient ResultSet resultset;
     Collection<Finding> theFindings;
 
 
@@ -52,7 +52,7 @@ public class SimpleSQLCollector implements Collector {
         String passwd=props.getProperty("spring.datasource.password");
         String user=props.getProperty("spring.datasource.user");
         url=url +  "?user=" + user + "&password=" + passwd;
-        System.out.println(url);
+        //System.out.println(url);
 
         conn = DriverManager.getConnection(url);
 

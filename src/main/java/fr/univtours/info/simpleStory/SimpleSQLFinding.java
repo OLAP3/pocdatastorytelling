@@ -14,9 +14,9 @@ import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.DefaultCategoryDataset;
 
 public class SimpleSQLFinding implements Finding {
-    private ResultSet resultSet;
+    private transient ResultSet resultSet; //transient needed for serialization
     private String filename=null;
-    private ResultSetMetaData rsmd;
+    private transient ResultSetMetaData rsmd; //transient needed for serialization
     private Collector theCollector;
 
     @Override

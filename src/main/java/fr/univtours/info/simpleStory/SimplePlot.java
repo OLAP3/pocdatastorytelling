@@ -24,9 +24,9 @@ public class SimplePlot implements Plot {
 
 
     @Override
-    public void addText(String theText) {
-
-        this.text=theText;
+    public void addText(String aText) {
+        this.text=aText.substring(1,aText.length()-1).replace("\\n","\n");
+        //this.text=theText;
     }
 
     @Override

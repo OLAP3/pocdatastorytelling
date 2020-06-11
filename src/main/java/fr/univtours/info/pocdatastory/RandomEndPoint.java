@@ -1,6 +1,7 @@
 package fr.univtours.info.pocdatastory;
 
 import fr.univtours.info.model.Structural.Episode;
+import fr.univtours.info.model.Structural.Plot;
 import fr.univtours.info.model.factual.Finding;
 import fr.univtours.info.simpleStory.SimpleSQLCollector;
 import fr.univtours.info.simpleStory.StoryCreator;
@@ -351,6 +352,25 @@ public class RandomEndPoint {
 
     }
 
+
+    @PostMapping(value="api/DBload", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public Answer DBload(@RequestBody String msg) {
+
+        int code=1;
+        String toReturn="No story found, please try again.";
+
+        creator=new StoryCreator();
+        Plot p = creator.loadFromDB(msg);
+        if(p!=null){
+            creator.setPlot(p);
+            code =0;
+            toReturn=p.toString();
+        }
+        return new Answer(code, toReturn);
+
+
+    }
 
 
 

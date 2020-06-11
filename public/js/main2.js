@@ -126,6 +126,17 @@ function processEpisodeClear (result, endpoint) {
 }
 
 
+
+function processDBload(result, endpoint){
+  let code=JSON.parse(result).code;
+  let message=JSON.parse(result).message;
+  console.log(code);
+  console.log(message);
+  let consoleElt=document.getElementById("console");
+  consoleElt.innerText=message;
+}
+
+
 function processDBsave(result, endpoint){
   let code=JSON.parse(result).code;
   let message=JSON.parse(result).message;
@@ -872,13 +883,16 @@ function renderSQLNBListnener() {
 
 
 
+function openDBsave(){
+    document.getElementById("DBsaveForm").style.display = "block";
+}
+
 
 function DBsaveListnener(){
 
-    // TODO give a name to story to fill in plot.text
-    // popup
+    let msg = document.getElementById("plottext").value;
 
- let msg="Story saved."
+    document.getElementById("DBsaveForm").style.display = "none";
 
   let pb = function (result) {
         console.log("debug: ");
@@ -888,9 +902,23 @@ function DBsaveListnener(){
     elsaRequest(msg, "DBsave", processDBsave, pb, false);
 }
 
+function openDBload(){
+    document.getElementById("DBloadForm").style.display = "block";
+}
 
 
+function DBloadListnener(){
+    let msg = document.getElementById("loadText").value;
 
+    document.getElementById("DBloadForm").style.display = "none";
+
+  let pb = function (result) {
+        console.log("debug: ");
+        console.log(result);
+    };
+
+    elsaRequest(msg, "DBload", processDBload, pb, false);
+}
 
 
 

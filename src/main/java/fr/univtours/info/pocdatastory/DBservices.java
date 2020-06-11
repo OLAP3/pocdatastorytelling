@@ -10,23 +10,27 @@ import java.util.Properties;
 
 public class DBservices {
 
-    private static transient Connection conn=null;
+    private transient Connection conn;
 
     public DBservices(){
+        /*
         try {
             connectToPostgresql();
         }
         catch (Exception e){
             e.printStackTrace();
         }
+
+         */
     }
 
     /**
      * @return connection to the postgres instance
-     */
+    */
     public Connection getConnection() {
         return conn;
     }
+
 
     /**
      * Restore Plot from the database
@@ -34,7 +38,7 @@ public class DBservices {
      * @param id object id
      * @return deserialized plot
      */
-    public  Plot restore(final String id) { //was static?
+    public  Plot restoreFromId(final String id) {
         if (id == null || id.isEmpty()) {
             throw new IllegalArgumentException("Wrong identifier: " + id);
         }
@@ -42,6 +46,8 @@ public class DBservices {
         try {
             // p.connectToPostgresql() ;
             //final Connection conn = p.getConnection();
+
+            connectToPostgresql();
             final String sql = "select id, text, plot from Plots where id = " + id;
             final PreparedStatement pstmt = conn.prepareStatement(sql);
             final ResultSet rs = pstmt.executeQuery();
@@ -60,10 +66,61 @@ public class DBservices {
     }
 
 
+    /**
+     * Restore Plot from the database
+     *
+     * @param text object id
+     * @return deserialized plot
+     */
+    public  Plot restore(final String text) {
+        /*
+        if (text == null || text.isEmpty()) {
+            throw new IllegalArgumentException("Wrong identifier: " + text);
+        }
+
+         */
+        SimplePlot p = new SimplePlot();
+        try {
+            // p.connectToPostgresql() ;
+            //final Connection conn = p.getConnection();
+
+            connectToPostgresql();
+            final String sql = "select id, text, plot from Plots where text = \'" + text +"\'";
+            final PreparedStatement pstmt = conn.prepareStatement(sql,ResultSet.TYPE_SCROLL_INSENSITIVE,
+                    ResultSet.CONCUR_UPDATABLE);
+            final ResultSet rs = pstmt.executeQuery();
+            if (rs.next() == false) {
+               return null;
+            }
+            else{
+                rs.beforeFirst();
+                rs.next();
+                final byte[] buf = rs.getBytes(3);
+                final ObjectInputStream objectIn = new ObjectInputStream(new ByteArrayInputStream(buf));
+                p = (SimplePlot) objectIn.readObject();
+                rs.close();
+                pstmt.close();
+                conn.close();
+                return p;
+            }
+        } catch (final Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+
+
+
+
+    // TODO update (overwrite) if id/text already saved!
     public String store(Plot p) {
-
-        // TODO update if id/text already saved!!!!
-
+        try{
+            connectToPostgresql();
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
         try (final ByteArrayOutputStream baos = new ByteArrayOutputStream();
              final ObjectOutputStream oos = new ObjectOutputStream(baos);
              final PreparedStatement preparedStatement = conn.prepareStatement("insert into Plots(text, plot) values(?, ?)", PreparedStatement.RETURN_GENERATED_KEYS);) {
@@ -73,7 +130,11 @@ public class DBservices {
             preparedStatement.executeUpdate();
             final ResultSet rs = preparedStatement.getGeneratedKeys();
             rs.next();
-            return rs.getInt(1) + "";
+            String res=rs.getInt(1) + "";
+            rs.close();
+            preparedStatement.close();
+            conn.close();
+            return res;
         } catch (final Exception e) {
             e.printStackTrace();
             return null;
@@ -91,7 +152,7 @@ public class DBservices {
         final String passwd = props.getProperty("spring.datasource.password");
         final String user = props.getProperty("spring.datasource.user");
         final String url = props.getProperty("spring.datasource2.url") + "?user=" + user + "&password=" + passwd;;
-        // System.out.println(url);
+         System.out.println(url);
         conn = DriverManager.getConnection(url);
         try (final Statement stmt = conn.createStatement();) {
             final String sqlCreate = "CREATE TABLE IF NOT EXISTS Plots (id SERIAL primary key, text TEXT, plot bytea)";
