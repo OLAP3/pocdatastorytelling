@@ -18,5 +18,5 @@ public interface Plot extends Serializable {
     public void has(Goal aGoal); //setGoal
     public Goal has(); //getGoal
 
-    public String store();
+
 }

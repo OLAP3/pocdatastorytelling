@@ -23,10 +23,8 @@ public class RandomEndPoint {
     @PostMapping(value="api/clear", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public Answer clear(@RequestBody String clear) {
-
             creator=new StoryCreator();
             theCreators.add(creator);
-
 
         return new Answer(0,"New story created");
 
@@ -333,6 +331,26 @@ public class RandomEndPoint {
 
 
     }
+
+
+    @PostMapping(value="api/DBsave", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public Answer DBsave(@RequestBody String msg) {
+
+        int code=1;
+        String toReturn="No story or goal created! Please create story objects first";
+
+        if(creator!=null && creator.getGoal()!=null){
+            code=0;
+            String res=creator.saveInDB(msg);
+            toReturn=res;
+
+        }
+        return new Answer(code, toReturn);
+
+
+    }
+
 
 
 

@@ -44,10 +44,9 @@
 
 
         <button class="button-console" onclick="clearStory()">New narrative</button>
-        <button class="button-console" onclick="DBdumpListnener()">Save narrative</button>
-        <button class="button-presentation" onclick="renderListnener()">PDF of narrative</button>
-        <button class="button-presentation" onclick="renderDOListnener()">PDF of narrative discourse</button>
-        <button class="button-presentation" onclick="renderSQLNBListnener()">SQL notebook</button>
+        <button class="button-console" onclick="DBloadListnener()">Load narrative</button>
+        <button class="button-console" onclick="DBsaveListnener()">Save narrative</button>
+
 
     </div>
 
@@ -196,6 +195,19 @@
         <label for="listrecapintentions"><span class="label other">List of characters and measures</span></label><br>
         <div id="listrecapintentions" name="listrecapintentions" class="recap-box"></div>
     </div>
+
+
+
+
+
+    <div class="presentationButtons">
+        <div id="presentationButtons" name="presentationButtons" class="presentationButtons-box">
+            <button class="button-presentation" onclick="renderListnener()">PDF of narrative</button>
+            <button class="button-presentation" onclick="renderDOListnener()">PDF of narrative discourse</button>
+            <button class="button-presentation" onclick="renderSQLNBListnener()">SQL notebook</button>
+        </div>
+    </div>
+
 
     <!--
 

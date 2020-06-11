@@ -96,21 +96,22 @@ public class Serialization {
     public void testDBSerialization() {
         final SimplePlot p = (SimplePlot) setUP(); // create a plot example
         String id = null;
+        DBservices dbs=new DBservices();
         try {
-            p.connectToPostgresql(); // open connection and create `Plots` if it does not exist
-            final Connection c = p.getConnection();
+            //p.connectToPostgresql(); // open connection and create `Plots` if it does not exist
+            final Connection c = dbs.getConnection();
             assertFalse(c.isClosed());
             final Statement stmt = c.createStatement();
             stmt.executeQuery("select * from plots"); // check that this query works (i.e., that the table Plots exists)
             stmt.close();
-            id = p.store(); // serialize the plot to the database
+            id = dbs.store(p); // serialize the plot to the database
             System.out.println("Stored plot: " + id);
         } catch (final Exception e) {
             e.printStackTrace();
             fail(e.getMessage());
         }
 
-        final Plot d = SimplePlot.restore(id); // read the object from the database
+        final Plot d = dbs.restore(id); // read the object from the database
         assertEquals(p, d);
     }
 }

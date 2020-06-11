@@ -126,8 +126,17 @@ function processEpisodeClear (result, endpoint) {
 }
 
 
+function processDBsave(result, endpoint){
+  let code=JSON.parse(result).code;
+  let message=JSON.parse(result).message;
+  console.log(code);
+  console.log(message);
+  let consoleElt=document.getElementById("console");
+  consoleElt.innerText=message;
+}
 
- function processRender (result, endpoint) {
+
+function processRender (result, endpoint) {
         let code=JSON.parse(result).code;
         let message=JSON.parse(result).message;
         console.log(code);
@@ -149,7 +158,7 @@ function processEpisodeClear (result, endpoint) {
 }
 
 
- function processRenderSQLNB (result, endpoint) {
+function processRenderSQLNB (result, endpoint) {
         let code=JSON.parse(result).code;
         let message=JSON.parse(result).message;
         console.log(code);
@@ -864,8 +873,19 @@ function renderSQLNBListnener() {
 
 
 
-function DBdumpListnener(){
-//to do
+function DBsaveListnener(){
+
+    // TODO give a name to story to fill in plot.text
+    // popup
+
+ let msg="Story saved."
+
+  let pb = function (result) {
+        console.log("debug: ");
+        console.log(result);
+    };
+
+    elsaRequest(msg, "DBsave", processDBsave, pb, false);
 }
 
 

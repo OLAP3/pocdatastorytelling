@@ -35,18 +35,21 @@ public class SQLnotebookDashboardComponent implements DashboardComponent {
 
         Collection<Finding> theFindings=  theEpisode.narrates().produces();
         for(Finding f : theFindings){
+            // check if c is indeed a SQL collector
             Collector c =f.fetches();
 
-             theCell="{\\\"rowId\\\":\\\"" +
-                     narrative.getId()
-                     +"\\\",\\\"items\\\":[{\\\"query\\\":\\\""
-                     + narrative.replaceNL(((SimpleSQLCollector) c).sqlQuery)
-                     +"\\\",\\\"id\\\":\\\""
-                     + narrative.getId()
-                     +"\\\",\\\"loading\\\":false}]}";
+            if(c.getClass().getName().equals("fr.univtours.info.simpleStory.SimpleSQLCollector")) {
 
-            narrative.addCell(theCell);
+                theCell = "{\\\"rowId\\\":\\\"" +
+                        narrative.getId()
+                        + "\\\",\\\"items\\\":[{\\\"query\\\":\\\""
+                        + narrative.replaceNL(((SimpleSQLCollector) c).sqlQuery)
+                        + "\\\",\\\"id\\\":\\\""
+                        + narrative.getId()
+                        + "\\\",\\\"loading\\\":false}]}";
 
+                narrative.addCell(theCell);
+            }
         }
 
 

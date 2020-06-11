@@ -10,6 +10,7 @@ import fr.univtours.info.model.intentional.Character;
 import fr.univtours.info.model.presentational.VisualNarrative;
 import fr.univtours.info.model.Structural.Plot;
 import fr.univtours.info.pocdatastory.Answer;
+import fr.univtours.info.pocdatastory.DBservices;
 import fr.univtours.info.pocdatastory.EpisodeRecall;
 import org.apache.pdfbox.pdmodel.PDDocument;
 
@@ -47,9 +48,10 @@ public class StoryCreator {
 
     String franchiseHTMLfile=null;
 
+    DBservices dbs;
 
     public StoryCreator(){
-
+        dbs=new DBservices();
     }
 
     public String getCurrentFilename(){
@@ -523,6 +525,12 @@ public class StoryCreator {
         //vs.print(); // and then prints
         return msg;
     }
+
+
+    public String  saveInDB(String msg){
+        return "Story with id: " + dbs.store(thePlot) + " saved.";
+    }
+
 
 
 
