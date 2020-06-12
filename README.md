@@ -14,13 +14,12 @@ Here is a screenshot of the current version.
 
 **To do**
 
-- Improve PDF and SQL notebook rendering
+- Improve PDF and SQL notebook rendering (e.g., print nice SQL tables in the PDF)
 - Improve handling of Describe results
-- Print nice SQL tables in the PDF
 - Improve SQL viz generation (check column names, types, number, etc.)
 - Improve console messages (more messages, more meaningful, include advices, etc.)
 - Improve insertion log (summarize long texts, etc.)
-- Enable storage of narrative in the DB
+- Improve storage/loading of narrative to/from the DB (esp. enable browsing stored narratives)
 - Enable schema change (connect to other DB, use csv files, etc.)
 - Enable multi-user and story sharing
 - Generate more stories
