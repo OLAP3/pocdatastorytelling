@@ -355,19 +355,31 @@ public class RandomEndPoint {
 
     @PostMapping(value="api/DBload", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public Answer DBload(@RequestBody String msg) {
+    public EpisodeRecall DBload(@RequestBody String msg) {
 
-        int code=1;
-        String toReturn="No story found, please try again.";
+        //int code=1;
+        //String toReturn="No story found, please try again.";
+
+        EpisodeRecall res;
 
         creator=new StoryCreator();
         Plot p = creator.loadFromDB(msg);
         if(p!=null){
             creator.setPlot(p);
-            code =0;
-            toReturn=p.toString();
+            res= creator.recallEpisode(1);
+
+            //code =0;
+            //toReturn=p.toString();
         }
-        return new Answer(code, toReturn);
+        else{
+            res=new EpisodeRecall(1, "",
+                    "", "", "" ,"");
+
+        }
+
+        return res ;
+
+        //return new Answer(code, toReturn);
 
 
     }
@@ -392,8 +404,6 @@ public class RandomEndPoint {
     @PostMapping(value="api/recallEpisode", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public EpisodeRecall recallEpisode(@RequestBody String msg) {
-
-
 
         EpisodeRecall res= creator.recallEpisode(Integer.valueOf(msg));
 
