@@ -128,29 +128,27 @@ function processEpisodeClear (result, endpoint) {
 
 // TODO display goal, question, and all recaps
 function processDBload(result, endpoint){
-   console.log(result);
+
+    // TODO first recap narrative: goal, act, etc.
+    console.log(result);
       // result contains the info to print for act, episode, measure, character and message
       // parse JSON, clear and update relevant areas
        let code=JSON.parse(result).code;
-       let episode=JSON.parse(result).theEpisode;
-       let act=JSON.parse(result).theAct;
-       let message=JSON.parse(result).theMessage;
-       let measure=JSON.parse(result).theMeasure;
-       let character=JSON.parse(result).theCharacter;
+       let goal=JSON.parse(result).goal;
+       let nbAct=JSON.parse(result).nbActs;
+
 
        if(code==0){
-          console.log(act);
-          actelem=document.getElementById("act");
-          actelem.value=act;
-          document.getElementById("episode").value=episode;
-          document.getElementById("message").value=message;
-          document.getElementById("protagonist").value=character;
-          document.getElementById("observation").value=measure;
+          document.getElementById("goal").value=goal;
+
        }
        else{
           let consoleElt=document.getElementById("console");
           consoleElt.innerText="Something went wrong";
        }
+
+       //TODO end by recall episode 1
+       recallEpisode(1);
 
 }
 

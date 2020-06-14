@@ -12,6 +12,7 @@ import fr.univtours.info.model.Structural.Plot;
 import fr.univtours.info.pocdatastory.Answer;
 import fr.univtours.info.pocdatastory.DBservices;
 import fr.univtours.info.pocdatastory.EpisodeRecall;
+import fr.univtours.info.pocdatastory.NarrativeRecall;
 import org.apache.pdfbox.pdmodel.PDDocument;
 
 import java.io.File;
@@ -275,6 +276,25 @@ public class StoryCreator {
         }
     }
 
+
+    public NarrativeRecall recallNarrative(){
+        String goal=thePlot.has().toString();
+        int nbActs=thePlot.includes().size();
+        int[] nbEpisodes= new int[nbActs];
+        int i=0;
+        for(Act a : thePlot.includes()){
+            nbEpisodes[i]=a.includes().size();
+            i++;
+
+            // todo for all episodes, get measures/characters
+            // carefull with duplicates?
+        }
+
+
+
+        return new NarrativeRecall(0, goal,nbActs,
+                nbEpisodes, null, null);
+    }
 
     public String modifyEpisode(String newText){
         this.currentEpisode.addText(newText);
