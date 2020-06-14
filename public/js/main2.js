@@ -126,28 +126,103 @@ function processEpisodeClear (result, endpoint) {
 }
 
 
-// TODO display goal, question, and all recaps
 function processDBload(result, endpoint){
 
-    // TODO first recap narrative: goal, act, etc.
     console.log(result);
       // result contains the info to print for act, episode, measure, character and message
       // parse JSON, clear and update relevant areas
        let code=JSON.parse(result).code;
        let goal=JSON.parse(result).goal;
-       let nbAct=JSON.parse(result).nbActs;
-
+       let nbActs=JSON.parse(result).nbActs;
+       let nbEpisodes=JSON.parse(result).nbEpisodes;
 
        if(code==0){
           document.getElementById("goal").value=goal;
 
+          // list acts
+
+          for(i=0; i<nbActs;i++){
+            actcount++;
+            currentcount=actcount;
+            console.log(actcount);
+
+            let button = document.createElement("button");
+            button.innerHTML = "Act " + actcount;
+
+            let body = document.getElementById("listrecap");
+            body.appendChild(button);
+
+            button.addEventListener ("click", function() {
+                let text=button.innerText;
+                console.log(text);
+                let pos=text.indexOf(" ");
+                let count=text.substr(pos+1);
+                console.log(count);
+                recallAct(parseInt(count));
+            });
+
+            //list episodes
+          console.log(nbEpisodes[actcount-1]);
+          for(j=0;j<nbEpisodes[actcount-1];j++){
+          episodecount++;
+                      currentcount=episodecount;
+                      let button = document.createElement("button");
+                      button.innerHTML = "episode" + " " + episodecount;
+
+                      let body = document.getElementById("listrecap");
+                      body.appendChild(button);
+
+                      button.addEventListener ("click", function() {
+                          let text=button.innerText;
+                          console.log(text);
+                          let pos=text.indexOf(" ");
+                          let count=text.substr(pos+1);
+                          console.log(count);
+                          recallEpisode(parseInt(count));
+
+                      });
+
+          }
+          }
+        //  list characters and measures
+
+        let listCharacters=JSON.parse(result).listCharacters;
+        let listMeasures=JSON.parse(result).listMeasures;
+        for(k=0;k<listCharacters.length;k++){
+            let button = document.createElement("button");
+            button.innerHTML = listCharacters[k];
+
+            let body = document.getElementById("listrecapintentions");
+            body.appendChild(button);
+
+             button.addEventListener ("click", function() {
+                let text=button.innerText;
+                console.log(text);
+                            // recall character as current character
+                recallCharacter(text);
+             });
+        }
+        for(l=0;l<listMeasures.length;l++){
+            let button = document.createElement("button");
+            button.innerHTML = listMeasures[l];
+
+                            let body = document.getElementById("listrecapintentions");
+                            body.appendChild(button);
+
+                            button.addEventListener ("click", function() {
+                            let text=button.innerText;
+                            console.log(text);
+                            // recall measure as current measure
+                            recallMeasure(text);
+                            });
+        }
        }
        else{
           let consoleElt=document.getElementById("console");
           consoleElt.innerText="Something went wrong";
        }
 
-       //TODO end by recall episode 1
+       //recall episode 1
        recallEpisode(1);
 
 }

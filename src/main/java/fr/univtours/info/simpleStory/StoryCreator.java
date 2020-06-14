@@ -16,6 +16,7 @@ import fr.univtours.info.pocdatastory.NarrativeRecall;
 import org.apache.pdfbox.pdmodel.PDDocument;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 
@@ -281,20 +282,35 @@ public class StoryCreator {
         String goal=thePlot.has().toString();
         int nbActs=thePlot.includes().size();
         int[] nbEpisodes= new int[nbActs];
+        ArrayList<String> listMeasure = new ArrayList<String>();
+        ArrayList<String> listCharacter = new ArrayList<String>();
         int i=0;
         for(Act a : thePlot.includes()){
             nbEpisodes[i]=a.includes().size();
             i++;
 
-            // todo for all episodes, get measures/characters
-            // carefull with duplicates?
+            //  for all episodes, get measures/characters
+            for(Episode e : a.includes()){
+                for(Measure m : e.refersTo()){
+                    if(!listMeasure.contains(m.getText())){
+                        listMeasure.add(m.getText());
+                    }
+                }
+                for(Character c : e.playsIn()){
+                    if(!listCharacter.contains(c.getText())){
+                        listCharacter.add(c.getText());
+                    }
+                }
+            }
         }
 
 
 
         return new NarrativeRecall(0, goal,nbActs,
-                nbEpisodes, null, null);
+                nbEpisodes, listCharacter.toArray(new String[0]),
+                listMeasure.toArray(new String[0]));
     }
+
 
     public String modifyEpisode(String newText){
         this.currentEpisode.addText(newText);
