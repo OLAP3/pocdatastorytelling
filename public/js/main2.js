@@ -467,9 +467,9 @@ function displayEpisode(result){
         actelem=document.getElementById("act");
         actelem.value=act;
         document.getElementById("episode").value=episode;
-        document.getElementById("message").value=message;
+        document.getElementById("observation").value=message;
         document.getElementById("protagonist").value=character;
-        document.getElementById("observation").value=measure;
+        document.getElementById("message").value=measure;
      }
      else{
         let consoleElt=document.getElementById("console");
